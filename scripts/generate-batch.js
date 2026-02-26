@@ -356,6 +356,19 @@ async function generateImage(titleEn, slug, categorySlug) {
 
   console.log(`  Generating image for: ${titleEn}`);
 
+  const MAX_IMAGE_RETRIES = 3;
+
+  for (let attempt = 1; attempt <= MAX_IMAGE_RETRIES; attempt++) {
+
+    if (attempt > 1) {
+
+      console.log(`  Image retry attempt ${attempt}/${MAX_IMAGE_RETRIES}...`);
+
+      await new Promise(r => setTimeout(r, 3000 * attempt));
+
+    }
+
+
   try {
     const setting = categoryPrompts[categorySlug] || 'in a modern home setting, soft natural lighting, clean contemporary background';
     const prompt = `Realistic photograph of ${titleEn} ${setting}, no text, no brand name, no writing, no words, no letters, no numbers. Photorealistic, high quality, professional product photography.`;
@@ -411,6 +424,13 @@ async function generateImage(titleEn, slug, categorySlug) {
     console.error(`  Image generation error: ${error.message}`);
     return false;
   }
+
+
+  }
+
+  console.error('  Image generation failed after all retries');
+
+  return null;
 }
 
 function escapeForTemplate(str) {
