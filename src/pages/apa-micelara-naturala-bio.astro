@@ -1,0 +1,211 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa o apa micelara naturala bio buna?", answer: "O apa micelara naturala bio de calitate costa, in general, intre 35 si 90 de lei pentru un flacon de 200-250 ml. Pretul variaza in functie de brand, certificari si ingrediente, dar poti gasi optiuni excelente in jurul valorii de 50-70 de lei." },
+    { question: "Care e diferenta intre apa micelara naturala si cea conventionala?", answer: "Diferenta majora sta in ingrediente: cea naturala foloseste extracte vegetale, hidrolati si tenside blande, certificate organic, fara chimicale iritante sau parfumuri sintetice. Cea conventionala contine adesea conservanti agresivi, parfumuri artificiale si agenti de curatare mai puternici, care pot irita pielea pe termen lung." },
+    { question: "Merita sa investesc intr-o apa micelara bio certificata?", answer: "Da, merita pe deplin. Certificarile (precum ECOCERT, COSMOS ORGANIC) garanteaza ca produsul respecta standarde stricte privind ingredientele organice, procesul de fabricatie si impactul asupra mediului. E o garantie a calitatii si a faptului ca produsul e cu adevarat natural si sigur pentru piele." },
+    { question: "Cum stiu daca o apa micelara e cu adevarat naturala?", answer: "Verifica lista de ingrediente (INCI): cauta hidrolati (ape florale) la inceputul listei, extracte vegetale si tenside blande, derivate din plante. Cel mai sigur indicator este insa prezenta unei certificari organice recunoscute, cum ar fi ECOCERT sau COSMOS ORGANIC, afisata vizibil pe ambalaj." },
+    { question: "De ce e important sa clatesc fata dupa ce folosesc apa micelara?", answer: "Chiar daca unele produse \"no rinse\", e esential sa clatesti fata dupa folosirea apei micelare. Micelii, agentii de curatare, pot lasa reziduuri pe piele care, pe termen lung, pot bloca porii, irita tenul sau pot impiedica absorbtia eficienta a produselor de ingrijire aplicate ulterior." },
+    { question: "Unde gasesc apa micelara naturala bio in Romania?", answer: "Poti gasi apa micelara naturala bio in magazinele online specializate pe produse bio si naturale, in farmacii naturiste, in drogherii mari cu sectiuni dedicate produselor organice, sau chiar in supermarketuri mari care au o gama extinsa de cosmetice bio. Cauta branduri precum Sanoflore, Avril, Melvita, Lavera sau Cattier." },
+    { question: "Apa micelara bio expira repede?", answer: "Apele micelare bio au, in general, o durata de valabilitate similara cu cele conventionale, undeva intre 6 si 12 luni de la deschidere (indicata de simbolul PAO - Period After Opening). Datorita conservantilor naturali, pot avea o durata de viata putin mai scurta decat cele cu conservanti sintetici puternici, dar nu \"expira repede\" in sensul ca ar strica la cateva saptamani." },
+    { question: "E ok sa folosesc apa micelara naturala pe ten sensibil?", answer: "Absolut, apa micelara naturala bio este, de cele mai multe ori, o alegere excelenta pentru tenul sensibil. Formulele sale blande, bazate pe hidrolati si extracte calmante (precum albastrele, musetel sau aloe vera), minimizeaza riscul de iritatii. Cauta produse special formulate pentru ten sensibil si verifica mereu lista de ingrediente pentru a evita potentialii alergeni." }
+];
+
+const formattedDate = new Date("2026-02-26T10:00:01.592Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Apa micelara naturala bio - GreenCert"
+  description="Daca vrei o piele curata, fara sa o incarci cu chimicale, o apa micelara naturala bio e cea mai buna alegere. Iti spun din start ca nu toate etichetele bio sunt la fel, asa ca trebuie sa stii exact ce sa cauti si la ce sa te uiti pe lista de ingrediente ca sa nu iei teapa."
+  image="/images/articles/apa-micelara-naturala-bio.webp"
+  type="article"
+  publishedTime="2026-02-26T10:00:01.592Z"
+  modifiedTime="2026-02-26T10:00:01.592Z"
+  author="Alexandra Florea"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/cosmetice-naturale/">Cosmetice Naturale</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Apa micelara naturala bio</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Cosmetice Naturale</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Apa micelara naturala bio</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/apa-micelara-naturala-bio.webp" alt="Apa micelara naturala bio" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#section-1"><span class="toc-number">1</span>Piele curata, fara chimicale dubioase: Ce apa micelara naturala bio merita atentia ta?</a></li>
+          <li><a href="#section-2"><span class="toc-number">2</span>Top 5 ape micelare bio care nu te lasa la greu (si cat te costa distractia)</a></li>
+          <li><a href="#section-3"><span class="toc-number">3</span>Cum sa alegi o apa micelara naturala bio: Ghidul tau anti-marketing agresiv</a></li>
+          <li><a href="#section-4"><span class="toc-number">4</span>Apa micelara naturala vs. apa micelara normala: Merita diferenta de pret?</a></li>
+          <li><a href="#section-5"><span class="toc-number">5</span>Greseli frecvente cu apa micelara (si cum sa le eviti ca un pro)</a></li>
+          <li><a href="#section-6"><span class="toc-number">6</span>Verdictul meu sincer: Ce apa micelara bio sa iei, in functie de buzunar</a></li>
+        </ol>
+      </nav>
+
+    <section id="section-1">
+      <h2>Piele curata, fara chimicale dubioase: Ce apa micelara naturala bio merita atentia ta?</h2>
+      <p>Uite care-i treaba: cand vine vorba de curatarea tenului, mai ales seara, dupa o zi lunga, vrei ceva eficient, dar mai ales bland. Si sincer, dupa atatia ani de testat tot felul de produse, am ajuns la concluzia ca o <strong>apa micelara naturala bio</strong> e, de departe, cea mai buna optiune pentru majoritatea tipurilor de piele.</p>
+        <p>De ce? Pentru ca nu irita, nu usuca si nu lasa acea senzatie ciudata de "film" pe fata, cum fac multe dintre cele conventionale. Gandeste-te putin: vrei sa-ti cureti pielea cu extracte de plante, cu ingrediente despre care stii ca vin din agricultura ecologica, sau cu o lista lunga de chimicale cu nume greu de pronuntat? Eu zic ca alegerea e destul de clara, nu?</p>
+        <p>Recomandarea mea directa, fara ocolisuri, e sa te orientezi spre formule care au la baza hidrolati florali – adica ape florale. Uite, cele cu albastrele sunt geniale pentru ochi, calmeaza si decongestioneaza. Sau cele cu trandafir, care sunt super pentru hidratare si tonifiere. Astea sunt, cum sa zic, baza de la care pornesti cand cauti o <strong>apa micelara naturala bio</strong> de calitate.</p>
+        <p>Nu te astepta la minuni peste noapte, dar pe termen lung, pielea ta o sa-ti multumeasca. Mai ales daca ai ten sensibil sau cu tendinte acneice, produsele naturale fac o diferenta enorma. Am avut prietene care s-au chinuit ani de zile cu iritatii si cosuri, iar dupa ce au trecut la o rutina 100% naturala, inclusiv cu apa micelara bio, tenul lor a aratat mult mai bine. Na, asta e experienta mea si a celor din jur.</p>
+        <p>Si inca ceva, foarte important: o <strong>apa micelara naturala bio</strong> nu ar trebui sa aiba nevoie de clatire, dar eu mereu recomand sa o faci, mai ales daca ai ten gras sau mixt. E un pas in plus, dar iti asigura ca nu raman reziduuri pe piele care sa blocheze porii. Pana la urma, scopul e sa ai o piele curata si fericita, nu?</p>
+    </section>
+
+    <section id="section-2">
+      <h2>Top 5 ape micelare bio care nu te lasa la greu (si cat te costa distractia)</h2>
+      <p>Bun, acum ca am lamurit de ce e important sa alegi natural, hai sa trecem la concret. Am testat eu si am auzit de la multi, asa ca am adunat cateva produse care chiar merita banii. Preturile sunt orientative, ca stii cum e, difera de la un magazin la altul, dar iti faci o idee.</p>
+        <ul><li><strong>Apa Micelara Bio cu Albastrele de la Sanoflore (aprox. 65-80 RON/200ml)</strong><br>Asta e un clasic, pe bune. E super delicata, perfecta pentru ochi sensibili si demachiere. Eu am folosit-o vreo 3 luni non-stop si n-am avut nicio problema, ba chiar simteam ca imi calmeaza zona ochilor. Miroase discret, a plante, nu a parfum artificial. Singurul minus, daca pot sa-i zic asa, e ca poate nu face fata la machiajul waterproof super rezistent dintr-o singura incercare. Dar pentru machiaj lejer si curatare zilnica, e top.
+</li><li><strong>Apa Micelara Bio cu Aloe Vera de la Avril (aprox. 35-50 RON/250ml)</strong><br>Daca vrei ceva mai accesibil, dar la fel de bun, asta e o optiune excelenta. Certificata Ecocert, contine aloe vera, care e minunata pentru hidratare si calmare. Un prieten cu ten foarte uscat si sensibil a zis ca asta e singura care nu-l strangea de fata. Dezavantajul? Poate fi putin lipicioasa daca nu o clatesti imediat, dar e un compromis mic pentru pret si calitate.
+</li><li><strong>Apa Micelara Bio cu Apa Florala de Trandafir de la Melvita (aprox. 70-90 RON/200ml)</strong><br>Melvita e un brand pe care il apreciez mult pentru ingredientele lor curate. Aceasta <strong>apa micelara naturala bio</strong> cu trandafir e super pentru tenul normal spre uscat, ii da o senzatie de prospetime si hidratare. Miroase divin, a trandafir natural, nu sintetic. Pretul e un pic mai ridicat, recunosc, dar calitatea se simte. N-am testat-o personal pe termen lung, dar din ce am auzit, e foarte laudata. Unii zic ca sticluta se consuma cam repede, dar asta depinde de cat de des o folosesti, ma rog.
+</li><li><strong>Apa Micelara Bio cu Apa de Hamamelis de la Lavera (aprox. 50-65 RON/200ml)</strong><br>Pentru tenul mixt sau gras, Lavera e o alegere inspirata. Hamamelisul e cunoscut pentru proprietatile astringente si purificatoare, asa ca ajuta la controlul sebumului si la inchiderea porilor. Nu usuca, ceea ce e un mare plus pentru o <strong>apa micelara naturala bio</strong> destinata tenului gras. Unii au raportat ca poate lasa o senzatie usoara de "tine" pe fata, dar asta e subiectiv si depinde de fiecare. Oricum, merita incercata daca ai probleme cu luciul excesiv.
+</li><li><strong>Apa Micelara Bio cu Apa de Ceai Verde de la Cattier (aprox. 55-75 RON/200ml)</strong><br>Cattier e un brand francez cu traditie, iar apa lor micelara cu ceai verde e un hit. Ceaiul verde e un antioxidant puternic si ajuta la purificarea tenului. E buna pentru toate tipurile de ten, inclusiv cel sensibil. Am o colega care jura pe ea, zice ca ii lasa pielea super curata si luminoasa. Ca minus, nu e la fel de usor de gasit in toate magazinele fizice, poate trebuie sa o comanzi online, dar asta e o chestie minora.
+</ul>
+    </section>
+
+    <section id="section-3">
+      <h2>Cum sa alegi o apa micelara naturala bio: Ghidul tau anti-marketing agresiv</h2>
+      <p>Aici e partea in care trebuie sa devii un detectiv. Nu te lasa pacalit de ambalajele verzi sau de cuvintele "natural" si "bio" scrise mare. Uite cateva criterii esentiale la care sa te uiti cand vrei sa cumperi o <strong>apa micelara naturala bio</strong>, ca sa nu arunci banii pe fereastra.</p>
+        <ul><li><strong>Certificarile conteaza enorm:</strong> Cauta logo-uri de la organisme recunoscute, gen ECOCERT, COSMOS ORGANIC, BDIH, Natrue. Astea nu sunt doar niste buline dragute, ci garanteaza ca produsul respecta niste standarde stricte privind ingredientele, procesul de fabricatie si impactul asupra mediului. Fara ele, "natural" poate insemna orice, inclusiv 1% ingrediente naturale si restul chimicale.
+</li><li><strong>Lista de ingrediente (INCI):</strong> Asta e biblia ta. Ingredientele sunt listate in ordine descrescatoare a concentratiei. Cauta la inceputul listei hidrolati (Rosa Damascena Flower Water, Centaurea Cyanus Flower Water), extracte vegetale (Aloe Barbadensis Leaf Juice, Camellia Sinensis Leaf Extract) si tenside blande, de origine vegetala (Coco-Glucoside, Caprylyl/Capryl Glucoside). Evita alcoolul denaturat (Alcohol Denat.) daca ai ten sensibil sau uscat, parfumurile sintetice (Parfum/Fragrance fara specificatii clare), PEG-uri, parabeni, ftalati si coloranti artificiali. Uite, cu cat lista e mai scurta si mai usor de inteles, cu atat mai bine, zic si eu.
+</li><li><strong>Tipul tau de ten:</strong> Nu toate apele micelare bio sunt universale. Daca ai ten gras, cauta ingrediente purificatoare si matifiante (hamamelis, ceai verde, rozmarin). Pentru ten uscat, aloe vera, trandafir, musetel sunt excelente. Pentru ten sensibil, albastrele, musetel, galbenele sunt calmante. Citeste descrierea produsului, dar mai ales lista de ingrediente.
+</li><li><strong>Ambalajul:</strong> Ideala e sticla, dar si plasticul reciclat sau reciclabil e o optiune buna. Evita ambalajele excesive, inutile. La urma urmei, e vorba si de responsabilitatea fata de planeta, nu?
+</li><li><strong>Mirosul:</strong> O <strong>apa micelara naturala bio</strong> ar trebui sa aiba un miros discret, natural, de plante sau flori, nu un miros puternic, dulceag sau chimic. Aia e un semnal de alarma.
+</li></ul>
+        <p>Nu te grabi la cumparaturi. Citeste, compara si investeste intr-un produs care iti respecta atat pielea, cat si principiile.</p>
+    </section>
+
+    <section id="section-4">
+      <h2>Apa micelara naturala vs. apa micelara "normala": Merita diferenta de pret?</h2>
+      <p>Aici e o discutie pe care o am des cu prietenele mele. "De ce sa dau mai multi bani pe o <strong>apa micelara naturala bio</strong> cand aia din supermarket e la jumatate de pret?" E o intrebare legitima, pe bune. Dar raspunsul nu e doar despre pret, ci despre ce pui pe pielea ta si ce efecte are pe termen lung.</p>
+        <p>Uite care-i diferenta principala: ingredientele. Apele micelare "normale" (sau conventionale, cum le zic eu) sunt pline de tot felul de chimicale. Vorbesc de parfumuri sintetice care pot irita, conservanti agresivi (parabeni, phenoxyethanol) care sunt controversati, sau agenti de curatare (tenside) mai putin blanzi, care pot usca sau dezechilibra bariera protectoare a pielii.</p>
+        <p>Pe termen scurt, poate nu simti mare lucru, dar in timp, pielea ta poate deveni mai sensibila, mai reactiva, mai predispusa la iritatii sau chiar la acnee.</p>
+        <p>Pe de alta parte, o <strong>apa micelara naturala bio</strong> se bazeaza pe ingrediente vegetale, cultivate organic. Asta inseamna ca nu au fost tratate cu pesticide si erbicide. Contine hidrolati, extracte din plante cu proprietati calmante, hidratante, antioxidante. Tensiunile sunt blande, derivate din zaharuri sau uleiuri vegetale. Adica, iti cureti fata cu ceva ce e mai aproape de natura, mai putin procesat, mai "curat".</p>
+        <p>Acum, despre pret. Da, de multe ori o <strong>apa micelara naturala bio</strong> e mai scumpa. De ce? Pentru ca ingredientele organice sunt mai costisitoare de produs, procesele de fabricatie sunt mai riguroase si certificarea bio implica niste costuri. Nu e doar un moft, e o garantie a calitatii si a eticii. Daca ma intrebi pe mine, merita fiecare leu in plus. Gandeste-te la asta ca la o investitie in sanatatea pielii tale pe termen lung.</p>
+        <p>Am avut un caz, stiu o fata care folosea o apa micelara super ieftina si se plangea constant de "cosuri ciudate" si "piele care o tinea". Dupa ce a trecut la o varianta bio, tenul ei s-a calmat vizibil. Nu spun ca e o solutie magica pentru toate problemele, dar e un pas important spre o piele mai sanatoasa. Plus, e mai prietenos cu mediul, daca iti pasa si de aspectul asta, ceea ce ar trebui sa ne pese tuturor, nu?</p>
+    </section>
+
+    <section id="section-5">
+      <h2>Greseli frecvente cu apa micelara (si cum sa le eviti ca un pro)</h2>
+      <p>Chiar si cu o <strong>apa micelara naturala bio</strong> de top, poti sa dai gres daca nu o folosesti corect. Si crede-ma, am vazut o gramada de greseli pe parcursul anilor. Uite cateva dintre cele mai comune si cum sa le eviti, ca sa profiti la maximum de produsul tau.</p>
+        <ul><li><strong>Nu clatesti fata dupa:</strong> Asta e greseala numarul unu! Chiar daca scrie pe ambalaj "no rinse", eu iti recomand sa clatesti mereu. Apele micelare, chiar si cele naturale, contin agenti tensioactivi (miceli) care, daca raman pe piele, pot bloca porii sau pot provoca iritatii, mai ales pe termen lung. O clatire rapida cu apa calduta sau o stergere cu un prosop umed, curat, face minuni.
+</li><li><strong>Folosesti prea multa:</strong> Nu e nevoie sa-ti ineci discheta demachianta. Cateva picaturi sunt suficiente pentru a curata o zona. Daca o inunzi, nu faci decat sa irosesti produsul si sa lasi mai multe reziduuri pe piele.
+</li><li><strong>O folosesti ca singur produs de curatare:</strong> Apa micelara e excelenta pentru demachiere si curatarea superficiala, dar nu inlocuieste un cleanser. Gandeste-te la ea ca la primul pas dintr-o curatare dubla: mai intai apa micelara pentru a indeparta machiajul si impuritatile de la suprafata, apoi un gel sau o spuma de curatare pentru a curata porii in profunzime. Mai ales daca ai ten gras sau porti machiaj zilnic, acest pas e crucial.
+</li><li><strong>Freci prea tare:</strong> Pielea ta nu e o tabla de razuit. Fii bland, mai ales in zona ochilor. Tamponeaza usor, lasa discheta imbibata cu <strong>apa micelara naturala bio</strong> sa actioneze cateva secunde pe pleoape inainte de a sterge delicat. Frecatul agresiv duce la iritatii si, pe termen lung, la aparitia ridurilor.
+</li><li><strong>Nu citesti lista de ingrediente:</strong> Am mai zis, dar repet. Marketingul e agresiv. Nu te baza doar pe "natural" sau "bio" de pe eticheta frontala. Intoarce sticla, citeste INCI. Cauta certificari. E singura modalitate sa te asiguri ca produsul e cu adevarat ce promite.
+</li></ul>
+        <p>Asa ca, data viitoare cand te demachiezi, aminteste-ti sfaturile astea. O sa vezi o diferenta, iti garantez!</p>
+    </section>
+
+    <section id="section-6">
+      <h2>Verdictul meu sincer: Ce apa micelara bio sa iei, in functie de buzunar</h2>
+      <p>Bun, am vorbit despre ce e <strong>apa micelara naturala bio</strong>, de ce e buna si cum sa o folosesti. Acum, hai sa vedem ce alegere faci in functie de cat esti dispus sa cheltui. Am sa fiu direct, ca de obicei.</p>
+        <ul><li><strong>Buget mic (sub 50 RON):</strong><br>Aici, recomandarea mea clara e <strong>Apa Micelara Bio cu Aloe Vera de la Avril</strong>. E certificata, are ingrediente curate si un pret super decent, undeva la 35-50 de lei. Face treaba buna, e blanda, si chiar daca poate lasa o senzatie putin lipicioasa daca nu o clatesti, e un compromis excelent pentru pretul ei. E perfecta pentru incepatori in lumea bio sau pentru cei care vor sa nu sparga banca.
+</li><li><strong>Buget mediu (50-80 RON):</strong><br>Daca ai un buget undeva la mijloc, ai mai multe optiuni faine. As merge pe <strong>Apa Micelara Bio cu Albastrele de la Sanoflore</strong> sau pe <strong>Apa Micelara Bio cu Apa de Hamamelis de la Lavera</strong>. Sanoflore e super pentru tenul sensibil si demachierea ochilor, e un clasic. Lavera e mai potrivita pentru tenul mixt/gras, ajuta la echilibrare si purificare. Ambele sunt optiuni solide, certificate, care nu te dezamagesc. Sanoflore e un pic mai "luxoasa" ca senzatie, Lavera mai "functionala".
+</li><li><strong>Buget mare (peste 80 RON):</strong><br>Aici poti sa te rasfeti un pic mai mult. <strong>Apa Micelara Bio cu Apa Florala de Trandafir de la Melvita</strong> e o alegere excelenta. Miroase absolut superb, e hidratanta si lasa pielea catifelata. E o experienta in sine, nu doar un produs de curatare. Da, e mai scumpa, dar calitatea se simte la fiecare utilizare. E genul de produs pe care il cumperi cand vrei sa-ti faci un cadou sau cand vrei ce e mai bun fara sa te uiti la pret. Eu, personal, as investi in ea pentru o experienta completa de ingrijire.
+</li></ul>
+        <p>Indiferent de buget, cel mai important e sa alegi o <strong>apa micelara naturala bio</strong> care sa se potriveasca tipului tau de ten si care sa aiba certificari credibile. Nu uita, pielea ta merita ce e mai bun, iar natura are o multime de lucruri bune de oferit. Alege inteligent!</p>
+    </section>
+
+      <section class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">AF</div>
+        <div class="author-info">
+          <h4>Alexandra Florea</h4>
+          <p class="author-role">Specialist Cosmetice Bio</p>
+          <p class="author-bio">Alexandra lucreaza de peste 6 ani in industria cosmeticelor naturale. Testeaza si recomanda doar produse cu ingrediente certificate organic si fara chimicale nocive.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="apa-micelara-naturala-bio"
+    currentCategory="cosmetice-naturale"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+</script>

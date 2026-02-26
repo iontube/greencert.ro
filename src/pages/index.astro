@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import fs from 'fs';
+import path from 'path';
+
+// Load keywords data
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const categories = [
+  { name: 'Alimentatie Sanatoasa', slug: 'alimentatie-sanatoasa', icon: '🥗', description: 'Superalimente si nutritie' },
+  { name: 'Fitness Acasa', slug: 'fitness-acasa', icon: '🏋️', description: 'Echipamente si antrenamente' },
+  { name: 'Cosmetice Naturale', slug: 'cosmetice-naturale', icon: '🌿', description: 'Ingrijire bio si naturala' },
+  { name: 'Casa Eco Friendly', slug: 'casa-eco-friendly', icon: '🏡', description: 'Produse eco pentru casa' },
+  { name: 'Remedii Naturiste', slug: 'remedii-naturiste', icon: '🍵', description: 'Ceaiuri si suplimente' }
+];
+
+// Get completed articles
+const articles = keywordsData.completed.map((item: any) => {
+  const slug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${slug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+}).sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+// Count articles per category
+const categoryCounts = categories.map(cat => ({
+  ...cat,
+  count: articles.filter((a: any) => a.categorySlug === cat.slug).length
+}));
+---
+
+<Layout
+  title="GreenCert - Stil de Viata Verde si Sanatate Naturala"
+  description="Descopera cele mai bune sfaturi pentru un stil de viata sanatos si ecologic. Articole despre alimentatie, fitness, cosmetice naturale si remedii naturiste."
+>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-icon">🌱</span>
+          Blog de stil de viata verde
+        </div>
+        <h1>Traieste <span class="text-gradient">sanatos</span> si <span class="text-gradient">natural</span></h1>
+        <p class="hero-text">
+          Descopera ghiduri complete, recenzii oneste si sfaturi practice pentru o viata mai sanatoasa, mai naturala si mai prietenoasa cu mediul.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section style="padding: var(--space-2xl) 0;">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: var(--space-xl);">Exploreaza categoriile</h2>
+      <div class="categories-grid">
+        {categoryCounts.map(cat => (
+          <a href={`/${cat.slug}/`} class="category-card">
+            <div class="category-icon">{cat.icon}</div>
+            <h3>{cat.name}</h3>
+            <span class="category-count">{cat.count} {cat.count === 1 ? 'articol' : 'articole'}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Articles Section -->
+  {articles.length > 0 && (
+    <section style="padding: var(--space-2xl) 0; background: var(--color-stone-50);">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Articole recente</h2>
+        </div>
+        <div class="articles-grid">
+          {articles.slice(0, 6).map((article: any) => (
+            <ArticleCard
+              title={article.title}
+              slug={article.slug}
+              excerpt={article.excerpt}
+              image={article.image}
+              category={article.category}
+              categorySlug={article.categorySlug}
+              date={article.date}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- About Section -->
+  <section style="padding: var(--space-3xl) 0;">
+    <div class="container">
+      <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h2>Despre GreenCert</h2>
+        <p style="font-size: 1.0625rem; color: var(--color-stone-600);">
+          GreenCert este resursa ta de incredere pentru informatii verificate despre stilul de viata verde si sanatatea naturala. Echipa noastra de experti testeaza produse, cerceteaza cele mai noi tendinte si ofera sfaturi practice pentru o viata mai buna.
+        </p>
+        <p style="font-size: 1.0625rem; color: var(--color-stone-600);">
+          Fie ca vrei sa mananci mai sanatos, sa faci sport acasa, sa folosesti cosmetice naturale sau sa ai o casa mai eco, aici gasesti tot ce ai nevoie.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

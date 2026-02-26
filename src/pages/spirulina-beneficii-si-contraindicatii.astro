@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa spirulina in Romania?", answer: "Un pachet de spirulina pulbere de 200g incepe de la 40-50 lei pentru variantele non-bio si poate ajunge la peste 100-120 lei pentru cele certificate organic, din surse premium. Tabletele sau capsulele sunt in plaja de 35-90 lei pentru un flacon cu 100-200 bucati, in functie de brand si concentratie." },
+    { question: "Spirulina te ajuta sa slabesti?", answer: "Spirulina nu este un produs de slabit minune, dar poate contribui la gestionarea greutatii prin faptul ca este bogata in proteine si fibre, oferind o senzatie de satietate mai indelungata. De asemenea, poate reduce pofta de mancare si sustine metabolismul, fiind un adjuvant intr-un regim alimentar echilibrat si un stil de viata activ." },
+    { question: "Care sunt cele mai importante beneficii ale spirulinei?", answer: "Printre cele mai importante beneficii ale spirulinei se numara cresterea nivelului de energie, sustinerea sistemului imunitar, detoxifierea blanda a organismului, imbunatatirea digestiei si aportul bogat de proteine si fier. Este un superaliment complet, ideal pentru un boost nutritional general si pentru combaterea oboselii cronice." },
+    { question: "Cine nu are voie sa ia spirulina? (Contraindicatii)", answer: "Spirulina este contraindicata persoanelor cu boli autoimune (lupus, artrita reumatoida), celor care iau medicamente anticoagulante din cauza continutului de vitamina K, femeilor insarcinate sau care alapteaza (fara aviz medical), si persoanelor cu fenilcetonurie. E bine sa consulti un medic inainte de a incepe orice supliment." },
+    { question: "Cum se ia spirulina corect?", answer: "Spirulina se ia de obicei dimineata, pe stomacul gol, sau intre mese, cu un pahar mare de apa. Pentru pulbere, poti incepe cu 1-2 grame pe zi, crescand treptat pana la 3-5 grame, adaugand-o in smoothie-uri sau sucuri reci. Tabletele/capsulele se iau conform indicatiilor de pe ambalaj, de obicei 2-3 pe zi." },
+    { question: "Spirulina are efecte adverse?", answer: "Da, spirulina poate avea efecte adverse, mai ales la inceput sau la doze mari. Acestea pot include greata, diaree, balonare, dureri de cap sau o usoara febra. Aceste simptome sunt adesea semnul unei detoxifieri initiale si se diminueaza pe masura ce corpul se adapteaza. E important sa incepi cu o doza mica si sa cresti treptat." },
+    { question: "De unde cumpar spirulina de calitate in Romania?", answer: "Spirulina de calitate o gasesti in magazinele naturiste specializate (online si fizice), la plafaruri mari sau in farmacii care au sectiuni de suplimente. Cauta branduri cunoscute si cu reputatie buna, cum ar fi Bio Earth, Solaris, Pronatura, sau Pukka. Asigura-te ca produsul are certificare bio si o sursa clara de provenienta." },
+    { question: "Care e diferenta intre spirulina pulbere si tablete?", answer: "Spirulina pulbere are avantajul unei absorbtii mai rapide si o versatilitate mai mare in utilizare (smoothie-uri, sucuri), dar are un gust puternic si necesita dozare. Tabletele sau capsulele sunt mai comode, fara gust, usor de transportat si de administrat, insa pot avea o absorbtie usor mai lenta si pot contine excipienti." }
+];
+
+const formattedDate = new Date("2026-02-09T15:10:01.822Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Spirulina beneficii si contraindicatii - GreenCert"
+  description="Uite care-i treaba cu spirulina: e un superaliment plin de nutrienti, un fel de boost pentru energie si imunitate, dar sa stii ca nu e pentru toata lumea si are si cateva contraindicatii importante, mai ales daca ai anumite conditii medicale sau iei medicamente. Pe scurt, beneficiile spirulinei sunt multe, dar trebuie sa fii atent la detalii inainte sa te arunci."
+  image="/images/articles/spirulina-beneficii-si-contraindicatii.webp"
+  type="article"
+  publishedTime="2026-02-09T15:10:01.822Z"
+  modifiedTime="2026-02-09T15:10:01.822Z"
+  author="Ioana Verdes"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/alimentatie-sanatoasa/">Alimentatie Sanatoasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Spirulina beneficii si contraindicatii</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Alimentatie Sanatoasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Spirulina beneficii si contraindicatii</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/spirulina-beneficii-si-contraindicatii.webp" alt="Spirulina beneficii si contraindicatii" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#section-1"><span class="toc-number">1</span>Spirulina: un boost sanatos sau doar un moft? Cand merita sa o incerci si cand stai cuminte</a></li>
+          <li><a href="#section-2"><span class="toc-number">2</span>Top 4 variante de spirulina pe care le-as recomanda (sau pe care le-am testat)</a></li>
+          <li><a href="#section-3"><span class="toc-number">3</span>Cum alegi spirulina potrivita pentru tine? Criterii esentiale ca sa nu dai gres</a></li>
+          <li><a href="#section-4"><span class="toc-number">4</span>Spirulina vs. Chlorella: care e mai buna pentru tine? Un duel al algelor verzi</a></li>
+          <li><a href="#section-5"><span class="toc-number">5</span>Greseli frecvente cand iei spirulina si cum sa le eviti pentru rezultate maxime</a></li>
+          <li><a href="#section-6"><span class="toc-number">6</span>Verdict pe buget: Ce spirulina alegi in functie de cati bani esti dispus sa dai?</a></li>
+        </ol>
+      </nav>
+
+    <section id="section-1">
+      <h2>Spirulina: un boost sanatos sau doar un moft? Cand merita sa o incerci si cand stai cuminte</h2>
+      <p>Bun, hai sa fim directi, ca stiu ca de-aia ai ajuns aici. <strong>Spirulina beneficii si contraindicatii</strong> - asta te intereseaza si pe buna dreptate. Pe scurt, spirulina e o alga albastra-verde, un superaliment, cum ii zic multi, plin de proteine, vitamine, minerale si antioxidanti. E un fel de concentrat de bunatati care iti poate da un impuls serios de energie si sa-ti sustina sanatatea generala, adica pe bune.</p><p>Daca ma intrebi pe mine, merita sa o incerci daca simti ca ai nevoie de un plus de vitalitate, o detoxifiere blanda sau vrei sa-ti intaresti imunitatea, mai ales in perioadele alea cand te simti cam sleit. E o sursa excelenta de fier, ceea ce e super pentru cei cu anemie sau care nu mananca multa carne. Plus ca ajuta la reglarea glicemiei, asta e un mare plus.</p><p>Pe de alta parte, e super important sa stii ca nu e pentru oricine. Aici vin <strong>contraindicatiile spirulinei</strong> si trebuie sa le iei in serios. Daca ai o boala autoimuna, cum ar fi lupus, artrita reumatoida sau scleroza multipla, ar fi bine sa eviti spirulina. Ea poate stimula sistemul imunitar, ceea ce, in cazul bolilor autoimune, nu e deloc ce-ti doresti, ba chiar poate agrava simptomele. Zic si eu, mai bine previi decat sa tratezi.</p><p>Apoi, daca iei medicamente anticoagulante, cele care subtiaza sangele, stai departe de spirulina. Are un continut destul de mare de vitamina K, care poate interfera cu efectul acestor medicamente si sa-ti creeze probleme. Femeile insarcinate sau care alapteaza ar trebui sa o evite sau sa ceara neaparat sfatul medicului. Nu exista suficiente studii care sa confirme siguranta ei in aceste cazuri, asa ca, na, nu te juca cu sanatatea ta sau a bebelusului.</p><p>Si inca o chestie: daca ai fenilcetonurie, o boala genetica rara, spirulina e interzisa din cauza continutului de fenilalanina. Deci, cum vezi, nu e chiar o bomboana inofensiva. Chiar daca <strong>beneficiile spirulinei</strong> sunt tentante, e crucial sa stii si partea intunecata, adica <strong>contraindicatiile spirulinei</strong>.</p>
+        <p>Un doctor sau un nutritionist bun te poate lamuri cel mai bine daca e ok pentru tine. Nu te baza doar pe ce citesti pe net, nici macar pe ce zic eu aici, fa-ti temele si discuta cu un specialist. Sanatatea ta e pe primul loc, nu?</p><p>Am avut un prieten care a inceput sa ia spirulina fara sa citeasca nimic si, cum avea o tiroida autoimuna, a inceput sa se simta mai rau. Normal, ca spirulina ii stimula sistemul imunitar si ii facea mai mult rau decat bine. A oprit-o imediat la sfatul medicului si s-a simtit mai bine. E un exemplu concret ca nu e de glumit cu asta. Nu e panaceu universal, e doar un ajutor, si asta doar daca se potriveste profilului tau de sanatate.</p>
+    </section>
+
+    <section id="section-2">
+      <h2>Top 4 variante de spirulina pe care le-as recomanda (sau pe care le-am testat)</h2>
+      <p>Bun, acum ca am lamurit cu cine e si cine nu e spirulina, hai sa vedem ce gasim pe piata. Ca sa nu te pierzi printre atatea optiuni, am selectat cateva produse care mi se par ok, din experienta mea sau din ce am auzit de la oameni de incredere. Preturile sunt orientative, ca stii cum e, fluctueaza.</p><p><strong>1. Spirulina pulbere Bio Earth (200g) - pret: 65-80 lei</strong></p><ul><li><strong>Avantaje:</strong> E varianta mea preferata pentru ca e certificata organic, ceea ce-mi da o oarecare liniste ca nu are tot felul de chimicale. Pulberea e versatila, o poti pune in smoothie-uri, sucuri de fructe sau chiar in iaurt. Absorbtia e de obicei mai buna la pulbere. Eu o pun in smoothie-ul de dimineata si nici nu-i simt gustul ala specific, care, sa fim sinceri, nu e pentru toata lumea.</li><li><strong>Dezavantaje:</strong> Gustul, na, e un dezavantaj major pentru multi. E pamantos, alga. Daca nu o maschezi bine, s-ar putea sa-ti fie greu sa o bei. Si e mai complicat de dozat si de luat cu tine cand esti pe fuga, fata de tablete.</li></ul><p><strong>2. Spirulina tablete Solaris (200 tablete) - pret: 45-60 lei</strong></p><ul><li><strong>Avantaje:</strong> Asta e o optiune populara si accesibila. Tabletele sunt super comode, le iei repede cu un pahar de apa si gata. Nu ai problema gustului. E o marca romaneasca destul de cunoscuta, deci e usor de gasit in majoritatea magazinelor naturiste sau chiar la plafar. Cantitatea e decenta pentru un inceput.</li><li><strong>Dezavantaje:</strong> Fiind tablete, s-ar putea sa nu aiba aceeasi rata de absorbtie ca pulberea. Nu e intotdeauna certificata bio, deci trebuie sa verifici eticheta. Si, uneori, tabletele pot contine si alti excipienti, mai putin doriti, dar la Solaris, in general, sunt ok.</li></ul><p><strong>3. Spirulina organica de la Pronatura (100g pulbere) - pret: 50-65 lei</strong></p><ul><li><strong>Avantaje:</strong> O alta varianta bio, de calitate buna. Pronatura e un brand de incredere in Romania, cu produse naturiste serioase. Desi e o cantitate mai mica, e perfecta pentru cineva care vrea sa testeze spirulina fara sa investeasca mult intr-un borcan mare. Eu am incercat-o si mi-a placut, n-am avut nicio problema.</li><li><strong>Dezavantaje:</strong> Pretul per gram e putin mai mare decat la alte variante mai mari. Si, evident, raman dezavantajele gustului si dozarii specifice pulberii. Pentru un consumator constant, s-ar putea sa devina cam scumpa pe termen lung.</li></ul><p><strong>4. Spirulina de la Alevia (120 capsule) - pret: 35-50 lei</strong></p><ul><li><strong>Avantaje:</strong> Capsulele sunt cele mai usor de inghitit si de transportat. Fara gust, fara batai de cap. Alevia e un brand destul de prezent in farmacii, deci accesibilitatea e un plus. E o optiune buna pentru incepatori sau pentru cei care pur si simplu nu suporta gustul de alga.</li><li><strong>Dezavantaje:</strong> Capsulele pot fi mai putin concentrate decat pulberea pura, deci s-ar putea sa ai nevoie de mai multe pentru aceeasi doza. Si, la fel ca la tablete, exista posibilitatea sa contina si alti ingredienti in capsula. Nu e mereu bio, deci, din nou, citeste eticheta cu atentie.</li></ul><p>Na, asta e o mica selectie. Ideea e sa alegi ce ti se potriveste tie cel mai bine, in functie de preferinte, buget si, evident, de cum reactioneaza corpul tau. Nu toate brandurile sunt la fel, chiar daca vorbim de acelasi produs, spirulina. Calitatea sursei conteaza enorm aici, stii tu, ca la orice aliment.</p>
+    </section>
+
+    <section id="section-3">
+      <h2>Cum alegi spirulina potrivita pentru tine? Criterii esentiale ca sa nu dai gres</h2>
+      <p>Daca te-ai hotarat sa incerci spirulina, felicitari! Dar acum vine partea mai grea, cum sa alegi varianta aia buna, ca sa te bucuri de <strong>beneficiile spirulinei</strong> fara surprize neplacute. Nu e asa simplu sa zici 'vreau spirulina' si sa iei prima care-ti iese in cale. Sunt cateva chestii la care trebuie sa te uiti cu atentie.</p><p>In primul rand, <strong>sursa si puritatea</strong>. Asta e CRUCIAL. Spirulina, fiind o alga, absoarbe tot din mediul in care creste.</p>
+        <p>Daca apa e poluata cu metale grele sau alte toxine, ghici ce? Le absoarbe si spirulina, si le vei inghiti si tu. Deci, cauta spirulina care provine din surse controlate, ideal din ferme acvatice izolate, unde calitatea apei e monitorizata constant. Certificarea bio (organic) e un indicator bun aici.</p>
+        <p>Daca scrie 'bio' sau 'organic' pe eticheta, e un semn ca au fost respectate niste standarde.</p><p>Apoi, <strong>forma de prezentare</strong>. Ai de ales intre pulbere, tablete sau capsule. Fiecare are avantajele si dezavantajele ei, cum am zis mai sus.</p>
+        <p>Pulberea e mai versatila si, in general, se absoarbe mai bine, dar gustul e o provocare. Tabletele si capsulele sunt comode, fara gust, dar s-ar putea sa fie mai putin concentrate sau sa contina excipienti. Gandeste-te ce-ti e mai la indemana si ce poti sa respecti pe termen lung.</p>
+        <p>Nu are rost sa iei pulbere daca stii ca n-o vei folosi din cauza gustului.</p><p><strong>Concentratia si dozajul</strong> sunt si ele importante. Verifica eticheta sa vezi cata spirulina pura e intr-o tableta sau capsula, sau cata se recomanda per portie de pulbere. Unele produse au concentratii mai mici si trebuie sa iei mai multe pastile pentru a ajunge la doza eficienta. Asa ca, fa un calcul rapid sa vezi cat te costa doza zilnica, nu doar pachetul in sine.</p><p><strong>Ambalajul</strong> conteaza si el. Spirulina e sensibila la lumina si umiditate, asa ca un ambalaj opac, sigilat ermetic, e de preferat. Asta ii pastreaza proprietatile nutritive intacte pentru mai mult timp. Nu vrei sa cumperi un borcan transparent care a stat in vitrina in soare, nu?</p><p>Si nu uita de <strong>pret</strong>. Nu te arunca la cele mai ieftine variante, ca s-ar putea sa platesti mai tarziu cu sanatatea, din cauza puritatii indoielnice. Dar nici nu trebuie sa spargi banca. Cauta un echilibru intre calitate si pret. Un pachet de 200g de spirulina bio pulbere la 70-80 de lei e un pret decent, zic eu. Sub 40 de lei pentru aceeasi cantitate, m-as cam gandi de doua ori.</p><p>Eu am patit odata sa iau o spirulina super ieftina de la un magazin dubios. Nu numai ca avea un miros ciudat, dar am si avut niste probleme digestive dupa cateva zile. Am aruncat-o imediat. De atunci, sunt mult mai atent la certificari si la reputatia brandului. Nu merita riscul, pe bune. Asa ca, ia-ti timp sa citesti etichetele si sa te informezi. E vorba de sanatatea ta, pana la urma.</p>
+    </section>
+
+    <section id="section-4">
+      <h2>Spirulina vs. Chlorella: care e mai buna pentru tine? Un duel al algelor verzi</h2>
+      <p>Adesea, cand cauti informatii despre <strong>spirulina beneficii si contraindicatii</strong>, dai si peste chlorella. Si e normal sa te intrebi care e diferenta, ca ambele sunt alge verzi, superalimente si par sa faca cam acelasi lucru. Ei bine, nu e chiar asa. Sunt asemanatoare, dar fiecare are punctele ei forte si e buna pentru altceva, sau cel putin, exceleaza in anumite aspecte.</p><p><strong>Spirulina</strong>, prietena noastra de azi, e o alga albastra-verde, o procariota, adica o celula fara nucleu. E mai bogata in proteine decat chlorella, cam 60-70% din compozitia ei e proteina, ceea ce o face o sursa excelenta pentru vegetarieni, vegani sau sportivi. Mai contine si o cantitate impresionanta de fier, vitamine din complexul B, antioxidanti puternici (cum e ficocianina, care ii da si culoarea albastra-verzuie) si acizi grasi esentiali.</p>
+        <p>E super pentru energie, imunitate si detoxifiere blanda, sustine sanatatea ochilor si a pielii. Practic, e un boost nutritional general.</p><p><strong>Chlorella</strong>, pe de alta parte, e o alga verde, o eucariota, cu nucleu celular. Principala ei caracteristica e peretele celular dur, care trebuie spart (variantele 'cracked cell wall') ca nutrientii sa poata fi absorbiti. Chlorella e celebra pentru puterea ei de detoxifiere, mai ales in ceea ce priveste metalele grele.</p>
+        <p>Are o capacitate uimitoare de a se lega de toxine si de a le elimina din corp. E o sursa buna de clorofila, cea mai mare dintre toate plantele cunoscute, ceea ce o face excelenta pentru purificarea sangelui si sustinerea functiei hepatice. Contine si fibre, vitamine, minerale, dar e putin mai slaba la capitolul proteine si fier fata de spirulina.</p>
+        <p>E mai mult un agent de curatare profunda.</p><p>Pe scurt, daca vrei un <strong>supliment nutritional complet, un boost de energie si proteine</strong>, spirulina e alegerea. Daca scopul tau principal e <strong>detoxifierea intensa si eliminarea metalelor grele</strong>, atunci chlorella e campioana. Multi aleg sa le ia pe amandoua, pentru ca se completeaza reciproc foarte bine. Spirulina iti da energie si nutrienti, iar chlorella curata organismul. Un fel de yin si yang al algelor, daca ma intelegi.</p><p>Preturile sunt cam similare. O pulbere de chlorella de 200g, bio, costa cam 70-90 lei, deci e in aceeasi plaja cu spirulina. Tabletele sau capsulele de chlorella sunt si ele pe acolo, in jur de 50-70 lei pentru un pachet de 200 de bucati.</p>
+        <p>Decizia depinde de ce nevoi ai tu in momentul de fata. Nu e una 'mai buna' decat cealalta in absolut, ci 'mai buna' pentru un anumit scop. Eu personal, daca ar fi sa aleg una singura, as merge pe spirulina pentru boost-ul general.</p>
+        <p>Dar pentru o cura de detox, clar as adauga si chlorella.</p>
+    </section>
+
+    <section id="section-5">
+      <h2>Greseli frecvente cand iei spirulina si cum sa le eviti pentru rezultate maxime</h2>
+      <p>Am vazut de-a lungul timpului o gramada de oameni care se entuziasmeaza de spirulina, o cumpara, dar apoi nu obtin rezultatele dorite sau, mai rau, se simt ciudat. De ce? De cele mai multe ori, e din cauza unor greseli simple, dar care pot anula toate <strong>beneficiile spirulinei</strong>.</p><p><strong>1. Nu citesti eticheta si nu verifici sursa.</strong> Asta e greseala numarul unu. Am mai zis-o si o repet: spirulina absoarbe tot din mediul ei. Daca nu e de la o sursa de incredere, certificata bio, risti sa inghiti metale grele si alte chimicale. Si atunci, in loc sa te detoxifiezi, te incarci si mai mult. Nu te lasa pacalit de pretul mic, ca s-ar putea sa platesti mai mult pe sanatate. Intotdeauna cauta 'organic' sau 'bio' si verifica tara de provenienta.</p><p><strong>2. Ignori <strong>contraindicatiile spirulinei</strong>.</strong> Multi se arunca la suplimente fara sa-si cunoasca propriul corp sau istoricul medical. Daca ai o boala autoimuna, daca esti insarcinata, alaptezi, sau iei medicamente anticoagulante, spirulina nu e pentru tine. Sau cel putin, nu fara un aviz medical clar. Nu te juca cu asta, e pe bune. O doza mare de vitamina K poate fi periculoasa pentru cineva care ia Warfarina, de exemplu.</p><p><strong>3. Nu esti consecvent cu administrarea.</strong> Ca orice supliment natural, spirulina nu e o pastila magica care actioneaza instant. Are nevoie de timp sa-si faca efectul.</p>
+        <p>Sa iei cateva zile, apoi sa uiti o saptamana, apoi sa reiei, nu o sa-ti aduca rezultate. Trebuie sa fii constant, sa o iei zilnic, conform dozajului recomandat, pentru cel putin 2-3 luni ca sa simti cu adevarat <strong>beneficiile spirulinei</strong>. Eu personal am vazut diferente notabile dupa o luna si jumatate de consum zilnic.</p><p><strong>4. Dozajul gresit.</strong> Unii iau prea putin si nu simt nimic, altii iau prea mult de la inceput si pot avea reactii adverse, cum ar fi greata, diaree sau dureri de cap. E bine sa incepi cu o doza mica si sa cresti treptat, ca sa-i dai corpului timp sa se adapteze. De obicei, 1-3 grame pe zi e o doza de intretinere, dar pentru anumite scopuri, cum ar fi detoxifierea, se poate merge pana la 5-10 grame, dar asta doar sub supraveghere sau daca stii ca o tolerezi bine.</p><p><strong>5. Asteptari nerealiste.</strong> Spirulina e un superaliment, nu o solutie miraculoasa. Nu o sa te transforme peste noapte intr-un Hulk plin de energie sau sa-ti vindece toate bolile. E un adjuvant, un sprijin pentru un stil de viata sanatos. Daca mananci prost, nu dormi, nu faci miscare si te stresezi constant, spirulina nu o sa te salveze. E parte dintr-un intreg, nu intregul in sine.</p><p><strong>6. O combini prost.</strong> Daca o pui in cafea fierbinte sau in sucuri acide, s-ar putea sa-i degradezi o parte din nutrienti. E mai bine sa o adaugi in smoothie-uri reci, apa, iaurt sau chiar in salate. Incearca sa o iei dimineata, pe stomacul gol, sau intre mese, pentru o absorbtie optima. Tips: unii zic ca vitamina C ajuta la absorbtia fierului din spirulina, deci un pahar de suc de portocale, de exemplu, ar merge de minune.</p><p>Evitand greselile astea, vei maximiza sansele sa te bucuri din plin de tot ce are spirulina de oferit. E o investitie in sanatatea ta, asa ca merita sa faci lucrurile ca la carte.</p>
+    </section>
+
+    <section id="section-6">
+      <h2>Verdict pe buget: Ce spirulina alegi in functie de cati bani esti dispus sa dai?</h2>
+      <p>Bun, ajungem la capitolul buget. Ca stii cum e, fiecare are buzunarul lui si nu toata lumea isi permite sa arunce cu banii pe suplimente. Dar, chiar si cu un buget limitat, poti sa gasesti o varianta de spirulina decenta, care sa-ti aduca <strong>beneficiile spirulinei</strong> fara sa te falimenteze. Hai sa vedem ce optiuni ai, in functie de cat esti dispus sa cheltuiesti.</p><h4>Buget mic (sub 50 lei)</h4><p>Daca bugetul e strans, nu te astepta la minuni, dar poti gasi ceva. Cauta spirulina tablete sau capsule de la branduri mai accesibile, cum ar fi <strong>Solaris</strong> sau <strong>Alevia</strong>. Un pachet de 100-200 de tablete sau capsule ar trebui sa se incadreze in acest buget, cam 35-50 lei.</p>
+        <p>Nu vor fi probabil certificate bio, dar sunt o optiune de inceput. Verifica totusi eticheta sa nu aiba excipienti dubiosi. Sunt bune pentru a testa cum reactioneaza corpul tau la spirulina, fara o investitie mare.</p>
+        <p>Nu te astepta la cea mai pura varianta de pe piata, dar pentru un inceput e ok. Eu zic ca e mai bine decat nimic, dar cu o doza de precautie.</p><h4>Buget mediu (50-80 lei)</h4><p>Aici e zona de aur, unde gasesti cel mai bun raport calitate-pret. Poti sa te orientezi spre spirulina pulbere sau tablete/capsule de la branduri care ofera certificare bio, cum ar fi <strong>Bio Earth</strong> sau <strong>Pronatura</strong>. Un pachet de 200g de pulbere bio sau 200-300 de tablete bio se incadreaza in acest interval, cam 60-80 lei.</p>
+        <p>Aici ai sanse mult mai mari sa gasesti o spirulina de calitate, cu o puritate verificata si fara contaminanti. Asta e varianta pe care o recomand cel mai des, pentru ca ofera siguranta si eficienta la un pret rezonabil. Am testat personal cateva din gama asta si am fost multumit.</p>
+        <p>E un compromis bun intre pret si calitate.</p><h4>Buget mare (peste 80 lei)</h4><p>Daca nu te uiti la bani si vrei ce-i mai bun, atunci poti sa te orientezi spre branduri premium, care ofera spirulina din surse ultra-controlate, cu analize de laborator detaliate disponibile public. Aici intra adesea spirulina cultivata in Hawai sau Japonia, renumita pentru puritatea ei. Un pachet de 200g de pulbere sau un numar similar de tablete/capsule poate depasi usor 90-100 lei, chiar si 150 lei, in functie de brand si de procesul de productie.</p>
+        <p>Aceste variante promit o concentratie mai mare de nutrienti si o absortie superioara, minimizand riscul de <strong>contraindicatii</strong> legate de impuritati. Daca vrei sa fii 100% sigur de calitate si puritate, asta e calea de urmat. Dar, sa fim sinceri, pentru majoritatea oamenilor, varianta de buget mediu e mai mult decat suficienta.</p>
+        <p>Diferentele de efect nu sunt intotdeauna proportionale cu diferenta de pret, stii cum e cu marketingul.</p><p>Pana la urma, cel mai important e sa alegi o spirulina de la un vanzator de incredere, sa citesti eticheta si sa te asiguri ca e potrivita pentru tine. Indiferent de buget, e esential sa fii informat si sa nu cazi in plasa ofertelor prea bune ca sa fie adevarate. Sanatatea nu are pret, dar asta nu inseamna ca trebuie sa arunci banii pe fereastra fara sa te informezi. Fa o alegere inteleapta, na.</p>
+    </section>
+
+      <section class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">IV</div>
+        <div class="author-info">
+          <h4>Ioana Verdes</h4>
+          <p class="author-role">Nutritionist Certificat</p>
+          <p class="author-bio">Ioana are peste 8 ani de experienta in nutritie si alimentatie sanatoasa. Pasionata de superalimente si diete echilibrate, ofera sfaturi practice pentru o viata mai sanatoasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="spirulina-beneficii-si-contraindicatii"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+</script>

@@ -1,0 +1,148 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import fs from 'fs';
+import path from 'path';
+
+export function getStaticPaths() {
+  const keywordsPath = path.join(process.cwd(), 'keywords.json');
+  const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+  const categories = [
+    { name: 'Alimentatie Sanatoasa', slug: 'alimentatie-sanatoasa', description: 'Descopera superalimente, diete sanatoase si sfaturi de nutritie pentru o viata plina de energie.' },
+    { name: 'Fitness Acasa', slug: 'fitness-acasa', description: 'Echipamente de fitness, rutine de antrenament si sfaturi pentru a te mentine in forma acasa.' },
+    { name: 'Cosmetice Naturale', slug: 'cosmetice-naturale', description: 'Produse de ingrijire naturale, cosmetice bio si sfaturi pentru o piele sanatoasa.' },
+    { name: 'Casa Eco Friendly', slug: 'casa-eco-friendly', description: 'Produse ecologice pentru casa ta, de la detergenti naturali la decoratiuni sustenabile.' },
+    { name: 'Remedii Naturiste', slug: 'remedii-naturiste', description: 'Ceaiuri medicinale, suplimente naturale si remedii traditionale pentru sanatatea ta.' }
+  ];
+
+  const paths: any[] = [];
+  const articlesPerPage = 12;
+
+  categories.forEach(cat => {
+    const catArticles = keywordsData.completed.filter((item: any) => item.categorySlug === cat.slug);
+    const totalPages = Math.max(1, Math.ceil(catArticles.length / articlesPerPage));
+
+    for (let i = 1; i <= totalPages; i++) {
+      paths.push({
+        params: {
+          category: cat.slug,
+          page: i === 1 ? undefined : String(i)
+        },
+        props: {
+          categoryData: cat,
+          currentPage: i,
+          totalPages
+        }
+      });
+    }
+  });
+
+  return paths;
+}
+
+const { category, page } = Astro.params;
+const { categoryData, currentPage, totalPages } = Astro.props;
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const articlesPerPage = 12;
+
+const allArticles = keywordsData.completed
+  .filter((item: any) => item.categorySlug === category)
+  .map((item: any) => {
+    const slug = item.keyword.toLowerCase()
+      .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+      .replace(/ș/g, 's').replace(/ț/g, 't')
+      .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+    return {
+      title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+      slug,
+      excerpt: item.excerpt || '',
+      image: `/images/articles/${slug}.webp`,
+      category: item.category,
+      categorySlug: item.categorySlug,
+      date: item.date
+    };
+  })
+  .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const startIndex = (currentPage - 1) * articlesPerPage;
+const paginatedArticles = allArticles.slice(startIndex, startIndex + articlesPerPage);
+---
+
+<Layout
+  title={`${categoryData.name} - GreenCert`}
+  description={categoryData.description}
+>
+  <section class="category-header">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Acasa</a>
+        <span class="breadcrumb-separator">/</span>
+        <span>{categoryData.name}</span>
+      </nav>
+      <h1>{categoryData.name}</h1>
+      <p class="category-description">{categoryData.description}</p>
+    </div>
+  </section>
+
+  <section style="padding: var(--space-2xl) 0;">
+    <div class="container">
+      {paginatedArticles.length > 0 ? (
+        <>
+          <div class="articles-grid">
+            {paginatedArticles.map((article: any) => (
+              <ArticleCard
+                title={article.title}
+                slug={article.slug}
+                excerpt={article.excerpt}
+                image={article.image}
+                category={article.category}
+                categorySlug={article.categorySlug}
+                date={article.date}
+              />
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <nav class="pagination">
+              {currentPage > 1 && (
+                <a href={currentPage === 2 ? `/${category}/` : `/${category}/${currentPage - 1}/`}>
+                  &larr; Anterior
+                </a>
+              )}
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => (
+                pageNum === currentPage ? (
+                  <span class="current">{pageNum}</span>
+                ) : (
+                  <a href={pageNum === 1 ? `/${category}/` : `/${category}/${pageNum}/`}>
+                    {pageNum}
+                  </a>
+                )
+              ))}
+
+              {currentPage < totalPages && (
+                <a href={`/${category}/${currentPage + 1}/`}>
+                  Urmator &rarr;
+                </a>
+              )}
+            </nav>
+          )}
+        </>
+      ) : (
+        <div style="text-align: center; padding: var(--space-3xl) 0;">
+          <p style="font-size: 1.125rem; color: var(--color-stone-500);">
+            Inca nu exista articole in aceasta categorie. Revino curand!
+          </p>
+          <a href="/" class="btn btn-primary" style="margin-top: var(--space-lg);">
+            Inapoi la pagina principala
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const categories = [
+  { name: 'Alimentatie Sanatoasa', slug: 'alimentatie-sanatoasa' },
+  { name: 'Fitness Acasa', slug: 'fitness-acasa' },
+  { name: 'Cosmetice Naturale', slug: 'cosmetice-naturale' },
+  { name: 'Casa Eco Friendly', slug: 'casa-eco-friendly' },
+  { name: 'Remedii Naturiste', slug: 'remedii-naturiste' }
+];
+
+const articles = keywordsData.completed.map((item: any) => {
+  const slug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug,
+    category: item.category,
+    categorySlug: item.categorySlug
+  };
+});
+
+const articlesByCategory = categories.map(cat => ({
+  ...cat,
+  articles: articles.filter((a: any) => a.categorySlug === cat.slug)
+}));
+---
+
+<Layout
+  title="Sitemap - GreenCert"
+  description="Harta site-ului GreenCert. Gaseste rapid toate paginile si articolele disponibile."
+>
+  <section class="page-header">
+    <div class="container">
+      <h1>Sitemap</h1>
+      <p style="color: var(--color-stone-600);">
+        Toate paginile si articolele de pe GreenCert
+      </p>
+    </div>
+  </section>
+
+  <section class="page-content" style="max-width: 1000px;">
+    <div class="sitemap-section">
+      <h2>Pagini principale</h2>
+      <ul class="sitemap-list">
+        <li><a href="/">Acasa</a></li>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/privacy-policy/">Politica de Confidentialitate</a></li>
+        <li><a href="/terms/">Termeni si Conditii</a></li>
+        <li><a href="/cookies/">Politica Cookies</a></li>
+      </ul>
+    </div>
+
+    <div class="sitemap-section">
+      <h2>Categorii</h2>
+      <ul class="sitemap-list">
+        {categories.map(cat => (
+          <li><a href={`/${cat.slug}/`}>{cat.name}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    {articlesByCategory.map(cat => cat.articles.length > 0 && (
+      <div class="sitemap-section">
+        <h2>{cat.name}</h2>
+        <ul class="sitemap-list">
+          {cat.articles.map((article: any) => (
+            <li><a href={`/${article.slug}/`}>{article.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+</Layout>

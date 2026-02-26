@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa semintele de chia in Romania?", answer: "Semintele de chia in Romania costa, in general, intre 15 lei si 35 lei pentru o punga de 500g. Preturile variaza in functie de certificarea bio, brand si magazin, cele bio fiind de obicei in intervalul 20-35 lei, iar cele non-bio mai aproape de 15-20 lei." },
+    { question: "Ce diferenta e intre semintele de chia albe si negre?", answer: "Diferenta principala intre semintele de chia albe si negre este culoarea lor, profilul nutritional fiind aproape identic. Cele albe sunt preferate pentru preparate unde se doreste mentinerea unei culori deschise, iar cele negre sunt mai raspandite si adesea mai accesibile ca pret." },
+    { question: "Merita sa cumpar seminte de chia bio?", answer: "Da, merita sa cumperi seminte de chia bio pentru a evita pesticidele si alte substante chimice folosite in agricultura conventionala. Certificarea ecologica ofera o garantie ca produsul este mai curat si respecta standarde stricte de cultivare, contribuind la o alimentatie mai sanatoasa." },
+    { question: "Cum se pastreaza semintele de chia corect?", answer: "Semintele de chia trebuie pastrate intr-un recipient etans, intr-un loc racoros, intunecat si uscat, ferite de lumina directa a soarelui si umezeala. Ideal este sa le tii in camara sau in frigider, mai ales dupa deschiderea ambalajului, pentru a preveni rancezirea." },
+    { question: "De ce se rancezesc semintele de chia?", answer: "Semintele de chia se rancezesc din cauza continutului lor ridicat de acizi grasi Omega-3, care sunt sensibili la oxidare in prezenta luminii, aerului si caldurii. Pastrarea incorecta, in ambalaje transparente sau in locuri calde, accelereaza acest proces, alterandu-le gustul si proprietatile." },
+    { question: "Care sunt cele mai bune seminte de chia pentru budinca?", answer: "Pentru budinca, cele mai bune seminte de chia sunt cele bio, de la branduri precum SanoVita sau Solaris, care se hidrateaza uniform si formeaza un gel cremos, fara gusturi straine. Poti alege atat varianta alba, cat si cea neagra, in functie de preferintele estetice ale preparatului." },
+    { question: "Unde gasesc seminte de chia de calitate in Romania?", answer: "Seminte de chia de calitate se gasesc in supermarketuri mari (Mega Image, Kaufland, Carrefour) la raioanele bio, in magazine naturiste specializate si in magazine online dedicate produselor sanatoase. Cauta branduri consacrate precum SanoVita Bio sau Solaris Bio." },
+    { question: "Cum verific daca semintele de chia sunt proaspete?", answer: "Pentru a verifica prospetimea semintelor de chia, uita-te la data de expirare si, daca e disponibila, la data productiei. Semintele proaspete au un miros neutru si o textura ferma. Daca miros a ranced sau au un gust amarui, sunt vechi si nu ar trebui consumate." }
+];
+
+const formattedDate = new Date("2026-02-04T17:41:26.051Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Cele mai bune seminte de chia - GreenCert"
+  description="Uite care-i treaba, daca vrei <strong>cele mai bune seminte de chia</strong>, sa stii ca nu exista o singura varianta perfecta pentru toata lumea, dar daca ma intrebi pe mine, cele bio, de la un producator serios, sunt mereu prima optiune. Vorbim de seminte de chia certificate ecologic, fara pesticide, ambalate bine, preferabil la punga resigilabila, care sa le protejeze de lumina si umezeala."
+  image="/images/articles/cele-mai-bune-seminte-de-chia.webp"
+  type="article"
+  publishedTime="2026-02-04T17:41:26.051Z"
+  modifiedTime="2026-02-04T17:41:26.051Z"
+  author="Ioana Verdes"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/alimentatie-sanatoasa/">Alimentatie Sanatoasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Cele mai bune seminte de chia</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Alimentatie Sanatoasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Cele mai bune seminte de chia</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/cele-mai-bune-seminte-de-chia.webp" alt="Cele mai bune seminte de chia" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#section-1"><span class="toc-number">1</span>Chia de Top: Cum alegi aurul mic din natura?</a></li>
+          <li><a href="#section-2"><span class="toc-number">2</span>Top 4 Recomandari: Seminte de Chia care merita banii</a></li>
+          <li><a href="#section-3"><span class="toc-number">3</span>Criterii de aur: Pe ce sa pui accent cand alegi seminte de chia</a></li>
+          <li><a href="#section-4"><span class="toc-number">4</span>Chia Alba vs. Chia Neagra: Ce diferenta face culoarea?</a></li>
+          <li><a href="#section-5"><span class="toc-number">5</span>Greseli frecvente si tips-uri de insider pentru cele mai bune seminte de chia</a></li>
+          <li><a href="#section-6"><span class="toc-number">6</span>Verdict pe buget: Cum alegi seminte de chia bune pentru orice buzunar</a></li>
+        </ol>
+      </nav>
+
+    <section id="section-1">
+      <h2>Chia de Top: Cum alegi aurul mic din natura?</h2>
+      <p>Bun, hai sa fim directi. Daca ai ajuns aici, vrei sa stii care sunt <strong>cele mai bune seminte de chia</strong> si cum sa nu dai banii pe ceva mediocru. Adevarul e ca piata e plina, de la branduri mari la cele mai mici, bio, non-bio, din Mexic, din Paraguay, din Argentina. E o jungla, stiu.</p><p>Sincer, primul meu sfat e sa te uiti dupa certificarea ecologica. Asta e, cum sa zic, garantia ca nu bagi in tine cine stie ce reziduuri de pesticide. Mai departe, conteaza si cum sunt ambalate. O punga groasa, opaca, cu zip-lock, e mult mai buna decat una subtire, transparenta, care lasa lumina sa intre si sa le altereze. Lumina si aerul sunt inamicii numarul unu ai semintelor de chia, le fac sa rancezeasca mai repede.</p><p>Apoi, conteaza si prospetimea. Verifica data de expirare, evident, dar si data productiei, daca e disponibila. Cu cat sunt mai proaspete, cu atat sunt mai potente si mai pline de nutrienti. Am avut si eu odata o punga, luata de la un magazin mai mic, care, desi nu expirase, mirosea putin ciudat cand am deschis-o. Le-am aruncat, na, mai bine previi decat sa tratezi.</p><p>Deci, pe scurt: bio, ambalaj bun, si cat mai proaspete. Astea sunt criteriile de baza pentru <strong>cele mai bune seminte de chia</strong>.</p><p>Nu te lasa pacalit de pretul prea mic. Semintele de chia de calitate au un cost. Daca vezi o punga de 500g la 10-12 lei, e posibil sa fie un compromis la calitate. Ori sunt vechi, ori nu sunt bio, ori au fost pastrate in conditii dubioase. Nu merita sa risti pentru cativa lei.</p><p>Personal, am observat ca brandurile care se specializeaza pe produse bio au, in general, o calitate mai constanta. Nu e o regula batrana, dar e o observatie. Uite, la SanoVita, Solaris, sau la cele de la Sanovita Bio, am avut experiente bune de fiecare data.</p><p>Pana la urma, e vorba de incredere. Daca gasesti un brand care iti place si care respecta aceste criterii, ramai la el. E mai simplu si mai sigur. Nu e rocket science, dar nici nu trebuie tratat cu superficialitate.</p>
+    </section>
+
+    <section id="section-2">
+      <h2>Top 4 Recomandari: Seminte de Chia care merita banii</h2>
+      <p>Ok, acum ca am stabilit bazele, hai sa vorbim concret. Am testat, am intrebat, am gatit cu zeci de tipuri de seminte de chia. Aici e o lista cu ce am gasit eu ca fiind optiuni solide pentru <strong>cele mai bune seminte de chia</strong> pe piata romaneasca, cu bune si cu rele.</p><ul><li><h3>1. Seminte de Chia Bio SanoVita</h3><p><strong>Pret orientativ:</strong> 25-30 lei / 500g</p><p><strong>Avantaje:</strong> SanoVita e un nume de incredere la noi, si pe buna dreptate. Semintele lor sunt certificate bio, au o granulatie uniforma, se hidrateaza excelent si nu au gusturi ciudate. Ambalajul e ok, o punga resigilabila care le protejeaza destul de bine. Le folosesc de ani de zile pentru budinci de chia, smoothie-uri si ca adaus in iaurt. Niciodata nu m-au dezamagit.</p><p><strong>Dezavantaje:</strong> Uneori, pretul poate fi putin mai ridicat decat la alte optiuni non-bio. Nu e cel mai fancy ambalaj, dar isi face treaba. Na, asta e, nu poti sa le ai pe toate.</p></li><li><h3>2. Seminte de Chia Bio Solaris</h3><p><strong>Pret orientativ:</strong> 28-33 lei / 500g</p><p><strong>Avantaje:</strong> Solaris e alt gigant pe segmentul bio. Semintele lor de chia sunt de o calitate superioara, iar asta se vede in gelul uniform pe care il formeaza cand se hidrateaza. Gust neutru, perfecte pentru orice reteta.</p>
+        <p>Ambalajul e si el bun, rezistent, cu fereastra transparenta, dar oricum ar trebui sa le tii intr-un loc intunecat. Le-am folosit intr-o gramada de retete si au fost mereu la inaltime. Un prieten de-al meu, care e super-exigent cu mancarea, zicea ca astea sunt singurele pe care le cumpara.</p><p><strong>Dezavantaje:</strong> Pretul e in zona superioara a pietei. Uneori, disponibilitatea poate fi o problema in supermarketuri mai mici, dar online le gasesti fara probleme.</p></li><li><h3>3. Seminte de Chia Bio de la branduri proprii (ex. Mega Image Bio, Kaufland Bio)</h3><p><strong>Pret orientativ:</strong> 20-25 lei / 500g</p><p><strong>Avantaje:</strong> Astea sunt o optiune decenta pentru buget. Sunt certificate bio, pretul e mai accesibil si le gasesti usor. De obicei, calitatea e constanta, dar nu la fel de premium ca la SanoVita sau Solaris. Am testat cele de la Mega Image Bio si au fost ok, se hidrateaza bine, nu au avut probleme de gust. Pentru consum zilnic, fara pretentii de masterchef, sunt o varianta buna.</p><p><strong>Dezavantaje:</strong> Calitatea poate varia usor de la un lot la altul. Ambalajul e de cele mai multe ori mai simplu si mai putin rezistent. Nu stii exact de unde provin semintele, desi sunt bio, transparenta e mai mica.</p></li><li><h3>4. Seminte de Chia Vrac Bio (de la magazine naturiste)</h3><p><strong>Pret orientativ:</strong> 40-50 lei / kg (echivalent 20-25 lei / 500g)</p><p><strong>Avantaje:</strong> Daca ai un magazin naturist de incredere in zona, asta poate fi o varianta super buna. Pretul e adesea mai avantajos pe kilogram, si poti sa vezi marfa inainte sa o cumperi. Poti sa cumperi exact cat ai nevoie, ceea ce e super pentru a le pastra proaspete. Am avut o experienta excelenta cu un magazin local care le aducea de la un producator bio din Spania.</p><p><strong>Dezavantaje:</strong> Mare atentie la igiena magazinului si la cum sunt pastrate semintele. Daca stau in recipiente deschise, expuse la aer si lumina, se altereaza rapid. Nu ai ambalajul original, deci e mai greu sa verifici certificari sau data de productie. Aici e o chestie de incredere in vanzator, pe bune.</p></ul>
+    </section>
+
+    <section id="section-3">
+      <h2>Criterii de aur: Pe ce sa pui accent cand alegi seminte de chia</h2>
+      <p>Sa alegi <strong>cele mai bune seminte de chia</strong> nu e doar o chestiune de brand. Sunt cateva aspecte la care ar trebui sa te uiti cu atentie, ca sa nu zici ca nu ti-am zis. Astea sunt detaliile care fac diferenta intre o experienta buna si una... meh.</p><p>Unul dintre cele mai importante e <strong>certificarea ecologica</strong>. Cauta sigla cu frunza verde a UE sau alte certificari bio recunoscute. Asta inseamna ca semintele au fost cultivate fara pesticide sintetice, erbicide sau ingrasaminte chimice. E un pas esential spre un stil de viata sanatos, nu doar o moda.</p><p>Apoi, <strong>ambalajul</strong>. Si am mai zis, dar repet, e vital. O punga groasa, opaca, de preferat cu sistem de resigilare (zip-lock), e sfanta. Protejeaza semintele de lumina, aer si umezeala, care le pot rancezi. Daca vezi o punga subtire, transparenta, oricat de bio ar fi, e un semnal de alarma. Merita sa investesti intr-un ambalaj bun, ca sa nu arunci jumatate de punga.</p><p><strong>Tara de origine</strong> poate sa conteze. Semintele de chia sunt originare din Mexic si Guatemala, dar se cultiva si in America de Sud (Argentina, Paraguay, Bolivia) sau chiar in Australia. In general, cele din America de Sud sunt de o calitate foarte buna. Nu e un criteriu eliminatoriu, dar e bine de stiut. Unele branduri de la noi aduc din Paraguay, de exemplu, si sunt excelente.</p><p><strong>Prospetimea</strong>. Asta e clara. Verifica data de expirare, da, dar si data productiei, daca e trecuta. Cu cat mai proaspete, cu atat mai bine. Semintele vechi isi pierd din proprietati si pot avea un gust usor amarui sau ranced. Eu, personal, prefer sa cumpar pungi mai mici, pe care le consum mai repede, decat pungi mari care stau deschise luni de zile.</p><p><strong>Aspectul semintelor</strong>. Ar trebui sa fie mici, ovale, cu o culoare variata de gri, negru, alb sau maro. Nu ar trebui sa vezi seminte sparte in exces sau praf. Daca sunt multe impuritati sau seminte deteriorate, e un semn ca procesul de selectie si ambalare nu a fost cel mai bun. Odata am luat de la un magazin obscur si erau pline de coji si bucatele de tulpini, am zis pas.</p><p><strong>Pretul</strong>, desigur. Ca am zis, nu te zgarci prea tare. Calitatea costa. Dar nici nu trebuie sa platesti o avere. Cauta un echilibru. <strong>Cele mai bune seminte de chia</strong> nu sunt neaparat cele mai scumpe, dar nici cele mai ieftine.</p><p>Acestea sunt, zic eu, principalele lucruri la care ar trebui sa fii atent. Nu e complicat, dar e nevoie de putina atentie la detalii.</p>
+    </section>
+
+    <section id="section-4">
+      <h2>Chia Alba vs. Chia Neagra: Ce diferenta face culoarea?</h2>
+      <p>Aici e o intrebare clasica, pe care o primesc des: care sunt mai bune, <strong>semintele de chia</strong> albe sau cele negre? Sincer, multi cred ca e o diferenta majora, dar adevarul e ca nu e chiar asa. Uite care-i treaba.</p><p>Din punct de vedere nutritional, diferenta dintre chia alba si chia neagra este, hai sa zic, aproape insesizabila. Ambele sunt pline de fibre, acizi grasi Omega-3, proteine, antioxidanti si minerale esentiale. Nu exista studii concludente care sa arate ca una ar fi semnificativ superioara celeilalte in ceea ce priveste profilul nutritional.</p><p>Principala diferenta e, evident, culoarea. Semintele de chia negre sunt cele mai comune si le gasesti peste tot. Cele albe sunt mai putin raspandite si, uneori, putin mai scumpe. De ce? Probabil din cauza cererii si ofertei, si pentru ca sunt percepute ca fiind mai 'exotice' sau 'speciale'.</p><p>Unde conteaza culoarea? In estetica preparatelor. Daca vrei sa faci o budinca de chia cu fructe de padure si vrei ca budinca sa ramana deschisa la culoare, fara puncte negre, atunci vei alege chia alba. Pentru o budinca de ciocolata sau un smoothie intunecat, culoarea nu mai conteaza asa mult.</p><p>Eu, personal, folosesc mai mult chia neagra, pentru ca e mai usor de gasit la un pret bun si, na, nu ma deranjeaza punctele negre in mancare. Nu am observat niciodata o diferenta de gust sau de textura intre ele.</p><p>Deci, daca te intrebi care sunt <strong>cele mai bune seminte de chia</strong> din punct de vedere al culorii, raspunsul e simplu: nu conteaza. Alege-le pe cele care iti plac mai mult estetic sau pe cele pe care le gasesti la o calitate buna si un pret rezonabil. Nu te stresa prea mult pe aspectul asta.</p><p>Unii zic ca chia alba ar fi mai pura, dar asta e un mit. Ambele sunt la fel de pure, atata timp cat sunt cultivate in conditii bune si sunt certificate bio. Nu e o chestie de puritate, ci de pigmentatie naturala a plantei.</p><p>Am avut ocazia sa testez ambele variante de la acelasi producator, SanoVita Bio, si, sincer, nu am simtit nicio diferenta semnificativa. Deci, fa-ti viata mai usoara si alege ce iti pica la mana, atata timp cat sunt de calitate.</p>
+    </section>
+
+    <section id="section-5">
+      <h2>Greseli frecvente si tips-uri de insider pentru cele mai bune seminte de chia</h2>
+      <p>Ok, am vazut o gramada de lume facand greseli cand vine vorba de <strong>semintele de chia</strong>, si nu numai la alegere, ci si la utilizare si pastrare. Hai sa le luam pe rand, ca sa nu patesti si tu la fel.</p><p><strong>Greseli frecvente:</strong></p><ul><li><strong>Cumpararea in cantitati prea mari:</strong> Am mai zis, dar e important. Chia rancezeste. Nu cumpara un kilogram daca stii ca il vei consuma in 6-8 luni. Mai bine pungi de 250-500g, pe care le termini in 1-2 luni. Prospetimea e cheia.</li><li><strong>Pastrarea incorecta:</strong> Asta e o greseala uriasa. Daca le tii intr-un borcan transparent, pe blatul de bucatarie, langa fereastra, le distrugi. Lumina, aerul si caldura sunt inamicii lor. Le rancezesti si isi pierd din proprietati.</li><li><strong>Nu le hidratezi suficient:</strong> Multi arunca semintele de chia in iaurt si gata. Nu e suficient. Au nevoie de timp sa absoarba lichidul si sa formeze gelul ala caracteristic. Minim 15-20 de minute, dar ideal e sa le lasi o ora sau chiar peste noapte in frigider. Altfel, nu iti vor oferi satietatea dorita si nici nu se vor digera la fel de bine.</li><li><strong>Folosirea in exces:</strong> Desi sunt sanatoase, nu trebuie sa exagerezi. Sunt pline de fibre, iar un consum prea mare, mai ales daca nu esti obisnuit, poate duce la disconfort digestiv. O lingura sau doua pe zi e suficient pentru majoritatea oamenilor.</li><li><strong>Ignorarea calitatii:</strong> Daca iei orice seminte de chia, doar ca sunt ieftine, risti sa ai o experienta neplacuta. Gust amarui, textura nisipoasa, lipsa gelului. Nu merita sa faci compromisuri la <strong>cele mai bune seminte de chia</strong>.</li></ul><p><strong>Tips-uri de insider:</strong></p><ul><li><strong>Pastreaza-le la rece si intuneric:</strong> Dupa deschidere, ideal ar fi sa le tii intr-un recipient etans, intr-un loc intunecat si racoros. Eu le tin in camara, intr-un borcan de sticla opaca, sau chiar in frigider daca e cald in casa.</li><li><strong>Macina-le pentru absorbtie maxima:</strong> Daca vrei sa te asiguri ca absorbi toti nutrientii, mai ales Omega-3, le poti macina in rasnita de cafea inainte de a le consuma. Nu le macina in cantitati mari, doar cat ai nevoie pe loc, pentru ca se oxideaza rapid.</li><li><strong>Fa-ti o budinca de baza:</strong> Prepara o cantitate mai mare de budinca de chia (seminte cu lapte vegetal) si pastreaz-o la frigider. O poti folosi 2-3 zile si adaugi fructe, miere sau scortisoara in fiecare zi. E un mic dejun rapid si sanatos.</li><li><strong>Experimenteaza in bucatarie:</strong> Nu te limita la budinci. Poti sa le pui in clatite, in paine, in chiftele vegetariene, ca agent de ingrosare pentru sosuri sau chiar ca inlocuitor de ou in retetele vegane (1 lingura de chia macinata + 3 linguri de apa = 1 ou).</li><li><strong>Verifica sursa:</strong> Daca ai ocazia, cumpara de la producatori locali sau de la magazine naturiste de incredere care pot oferi informatii despre sursa si certificari. E un plus de transparenta si te asigura ca ai <strong>cele mai bune seminte de chia</strong>.</li></ul>
+    </section>
+
+    <section id="section-6">
+      <h2>Verdict pe buget: Cum alegi seminte de chia bune pentru orice buzunar</h2>
+      <p>Stiu ca bugetul e o chestie reala, si nu toata lumea isi permite sa rupa banca pentru <strong>semintele de chia</strong>. Dar, cu putina strategie, poti gasi optiuni decente indiferent de cati bani esti dispus sa cheltuiesti. Uite cum vad eu treaba, impartita pe categorii de buget.</p><h3>Buget Mic (pana in 20 lei / 500g)</h3><p>Daca esti foarte limitat la bani, optiunile se restrang, dar nu dispar. Aici, cel mai probabil, vei gasi seminte de chia non-bio sau branduri mai putin cunoscute. Nu e ideal, dar e mai bine decat nimic.</p><ul><li><strong>Ce sa cauti:</strong> Verifica in supermarketuri, la rafturile cu produse vrac sau branduri proprii non-bio. Uneori, poti gasi oferte bune la pungi de 250g sau 500g.</li><li><strong>La ce sa renunti:</strong> Probabil la certificarea bio. Ambalajul s-ar putea sa nu fie cel mai grozav, asa ca va trebui sa le transferi tu intr-un borcan etans, opac, odata ajuns acasa. Fii atent la miros si aspect, sa nu fie rancede sau pline de impuritati.</li><li><strong>Recomandare:</strong> Cauta branduri precum Dried Fruits sau alte etichete proprii de supermarketuri, dar fii foarte vigilent la data de expirare si la cum arata semintele. Nu te astepta la <strong>cele mai bune seminte de chia</strong>, dar pot fi decente.</li></ul><h3>Buget Mediu (20-30 lei / 500g)</h3><p>Aici e zona de aur, unde gasesti cel mai bun raport calitate-pret. Majoritatea brandurilor bio decente se incadreaza aici. Ai optiuni bune si nu trebuie sa faci compromisuri majore la calitate.</p><ul><li><strong>Ce sa cauti:</strong> Branduri precum SanoVita Bio, Solaris (daca prinzi o oferta), sau brandurile proprii bio ale marilor lanturi de supermarketuri (Mega Image Bio, Kaufland Bio).</li><li><strong>La ce sa te astepti:</strong> Certificare bio, ambalaj decent (cel putin resigilabil), calitate constanta. Semintele se vor hidrata bine si vor avea un gust neutru.</li><li><strong>Recomandare:</strong> Sincer, cele de la SanoVita Bio sunt un pariu sigur in aceasta categorie. Le gasesti usor si ofera o calitate foarte buna pentru pretul cerut. Aici incepi sa te apropii de <strong>cele mai bune seminte de chia</strong> disponibile.</li></ul><h3>Buget Mare (peste 30 lei / 500g)</h3><p>Daca nu ai probleme cu bugetul, poti sa te rasfeti cu optiuni premium. Aici vei gasi seminte de chia de la producatori specializati, cu certificari multiple, ambalaje de top si, uneori, si un plus de transparenta legat de sursa.</p><ul><li><strong>Ce sa cauti:</strong> Branduri bio premium, importuri speciale de la magazine naturiste de nisa, sau chiar seminte de chia raw, cu procesare minima.</li><li><strong>La ce sa te astepti:</strong> Calitate exceptionala, ambalaj superior care le pastreaza perfect, si o garantie aproape totala a prospetimii si puritatii. Poate chiar si gusturi usor mai intense, daca exista diferente subtile.</li><li><strong>Recomandare:</strong> Solaris Bio (la pret intreg), sau cauta in magazinele naturiste online branduri mai mici, specializate pe superalimente. Aici sunt, fara indoiala, <strong>cele mai bune seminte de chia</strong> pe care le poti gasi, dar, na, vin si cu un pret pe masura.</li></ul><p>Pana la urma, important e sa alegi in functie de prioritatile tale. Daca sanatatea e pe primul loc, incearca sa nu faci rabat la calitatea bio, chiar daca asta inseamna sa cumperi o cantitate mai mica.</p>
+    </section>
+
+      <section class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">IV</div>
+        <div class="author-info">
+          <h4>Ioana Verdes</h4>
+          <p class="author-role">Nutritionist Certificat</p>
+          <p class="author-bio">Ioana are peste 8 ani de experienta in nutritie si alimentatie sanatoasa. Pasionata de superalimente si diete echilibrate, ofera sfaturi practice pentru o viata mai sanatoasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="cele-mai-bune-seminte-de-chia"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+</script>

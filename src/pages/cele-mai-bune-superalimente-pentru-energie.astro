@@ -1,0 +1,177 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Pot folosi superalimente daca am anumite afectiuni medicale?", answer: "Este esential sa discuti cu medicul tau sau cu un nutritionist inainte de a introduce superalimente in dieta, mai ales daca ai afectiuni medicale preexistente sau iei medicamente. Anumite superalimente pot interactiona cu tratamentele." },
+    { question: "Care este diferenta dintre spirulina si chlorella?", answer: "Ambele sunt alge, insa spirulina este albastra-verzuie si bogata in proteine, vitamine B si fier. Chlorella este verde si recunoscuta pentru continutul ridicat de clorofila, fiind excelenta pentru detoxifiere." },
+    { question: "Superalimentele pot inlocui mesele principale?", answer: "Nu, superalimentele sunt suplimente nutritive, nu inlocuiesc mesele principale. Ele completeaza o dieta echilibrata, oferind un aport concentrat de nutrienti, dar nu pot furniza toate elementele necesare organismului pentru o zi." },
+    { question: "Cat timp dureaza pana observ efectele?", answer: "Timpul variaza in functie de persoana, de produs si de dieta generala. Unii pot observa imbunatatiri in cateva zile, altii pot avea nevoie de cateva saptamani. Constanta si rabdarea sunt cheia." },
+    { question: "Exista efecte secundare la consumul de superalimente?", answer: "In general, sunt bine tolerate. Totusi, la inceput, unele persoane pot experimenta usoare tulburari digestive. Este important sa incepi cu doze mici si sa cresti treptat pentru a permite corpului sa se adapteze." },
+    { question: "Pot da superalimente copiilor?", answer: "Pentru copii, este recomandat sa consulti medicul pediatru sau un nutritionist. Dozele si tipurile de superalimente pot varia in functie de varsta si nevoile copilului." }
+];
+
+const formattedDate = new Date("2026-01-18T12:34:02.000Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Cele mai bune superalimente pentru energie - GreenCert"
+  description="Simt ca energia mea fluctueaza uneori, mai ales in zilele aglomerate. Am inceput sa caut alternative naturale, ceva care sa ma ajute sa trec peste momentele alea fara sa apelez la cafea in exces sau la zahar. Si am gasit cateva chestii care chiar fac diferenta, si vreau sa ti le povestesc si tie."
+  image="/images/articles/cele-mai-bune-superalimente-pentru-energie.webp"
+  type="article"
+  publishedTime="2026-01-18T12:34:02.000Z"
+  modifiedTime="2026-01-31T12:34:02.000Z"
+  author="Ioana Verdes"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/alimentatie-sanatoasa/">Alimentatie Sanatoasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Cele mai bune superalimente pentru energie</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Alimentatie Sanatoasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Cele mai bune superalimente pentru energie</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/cele-mai-bune-superalimente-pentru-energie.webp" alt="Cele mai bune superalimente pentru energie" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#section-1"><span class="toc-number">1</span>Cand energia pare sa te paraseasca</a></li>
+          <li><a href="#section-2"><span class="toc-number">2</span>Ce sa pui in cosul de cumparaturi</a></li>
+          <li><a href="#section-3"><span class="toc-number">3</span>Cum sa faci cea mai buna alegere</a></li>
+          <li><a href="#section-4"><span class="toc-number">4</span>Ce functioneaza cu adevarat si ce e doar marketing</a></li>
+          <li><a href="#section-5"><span class="toc-number">5</span>Sfaturi ca sa nu dai cu bata-n balta</a></li>
+          <li><a href="#section-6"><span class="toc-number">6</span>Ce aș alege eu, pe moment</a></li>
+        </ol>
+      </nav>
+
+    <section id="section-1">
+      <h2>Cand energia pare sa te paraseasca</h2>
+      <p>Stii cum e, te trezesti dimineata si parca ai dormit 3 ore. Sau ai o zi plina la birou, iar dupa pranz te simti ca un burete stors. Eu am trecut prin asta de multe ori. Nu e placut deloc. Te simti lent, irascibil, ai chef de nimic. Si apoi incepi sa cauti solutii rapide: o ciocolata, o cafea in plus, poate chiar o bautura energizanta. Dar stii si tu, astea sunt solutii temporare, iar pe termen lung, fac mai mult rau decat bine.</p><p>Am realizat ca organismul meu are nevoie de altceva. Are nevoie de nutrienti de calitate, care sa ii dea energie pe bune, sustenabila. Nu un boost artificial care te lasa apoi si mai obosit. Si am inceput sa ma documentez. Am citit despre alimente care au un continut ridicat de vitamine, minerale, antioxidanti si alte substante benefice. Si am descoperit lumea asta minunata a superalimentelor.</p><p>Sunt convinsa ca si tu ai auzit de ele. Poate ai vazut prin magazine pachetele alea mici cu pudre colorate sau fructe uscate ciudate. La inceput si eu am fost un pic sceptica. Pareau prea bune ca sa fie adevarate. Dar am zis ca merit sa incerc. Si am inceput sa le integrez in dieta mea, incet, pe rand. Rezultatele au inceput sa apara. Nu peste noapte, evident. Dar am inceput sa ma simt mai echilibrata, mai plina de viata.</p><p>Acest articol e pentru tine daca te simti adesea lipsit de energie. Daca vrei sa reduci consumul de cafea sau de dulciuri. Daca esti pur si simplu curios sa afli cum natura ne poate oferi resurse nebanuite pentru a ne simti mai bine. Nu e vorba de miracole, ci de alegeri inteligente. De a ne asculta corpul si a-i oferi ce are nevoie. Si superalimentele sunt o parte importanta din aceasta poveste.</p><p>Eu nu sunt medic si nu pretind ca am toate raspunsurile. Dar impartasesc din experienta mea. Ce a functionat pentru mine, ce am invatat pe parcurs. Si sper sa te inspire sa faci si tu propriile tale descoperiri. Pentru ca meriti sa te simti plin de energie, sa te bucuri de fiecare zi la maxim. Si natura ne pune la dispozitie tot ce avem nevoie.</p>
+    </section>
+
+    <section id="section-2">
+      <h2>Ce sa pui in cosul de cumparaturi</h2>
+      <p>Am testat destul de multe chestii pana acum si am gasit cateva care mi se par esentiale. Fiecare are un profil nutritional aparte si ofera beneficii specifice. Hai sa vedem cateva exemple concrete.</p><p><strong>Spirulina</strong>: Cred ca e printre cele mai cunoscute. E o alga albastra-verzuie, plina de proteine, vitamine (mai ales complexul B), minerale (fier, magneziu) si antioxidanti. Eu o iau sub forma de pudra.</p>
+        <p>O lingurita in smoothie dimineata si nici nu o simt. Uneori o pun si in sucuri proaspete. Daca nu iti place gustul, poti incerca capsulele.</p>
+        <p>O cutie de 100g pudra de spirulina de la un brand bun costa cam 30-40 RON. Avantaj: e o sursa completa de proteine. Dezavantaj: gustul poate fi puternic pentru unii.</p><p><strong>Chlorella</strong>: E tot o alga, dar de data asta verde. E si mai bogata in clorofila decat spirulina si ajuta la detoxifiere. E si ea plina de vitamine si minerale. La fel, o gasesti sub forma de pudra sau capsule. Pretul e similar cu spirulina, cam 30-45 RON pentru 100g pudra. E bine sa o iei in combinatie cu spirulina, daca vrei un efect maxim. Avantaj: excelenta pentru detoxifiere. Dezavantaj: gustul poate fi si mai intens.</p><p><strong>Macese pudra</strong>: Asta cred ca e mai putin cunoscuta ca superaliment, dar e o sursa incredibila de vitamina C. Mult mai mult decat citricele, de exemplu. E grozava pentru imunitate, mai ales toamna si iarna. Eu o folosesc in ceaiuri sau o adaug in iaurt. O punga de 100g pudra de macese costa cam 15-25 RON. E o varianta mai accesibila. Avantaj: vitamina C naturala si puternica. Dezavantaj: nu ofera spectrul complet de nutrienti ca algele.</p><p><strong>Seminte de canepa</strong>: Aceste seminte mici sunt o sursa excelenta de proteine complete, acizi grasi omega-3 si omega-6, fibre si minerale. Le poti presara peste salate, iaurt, smoothie-uri sau le poti manca ca atare. Un pachet de 200g costa cam 20-30 RON. Sunt foarte versatile. Avantaj: gust placut, usor de integrat in dieta. Dezavantaj: mai putin concentrate decat pudrele de alge.</p><p><strong>Pudra de maca</strong>: Provine dintr-o radacina peruviana si e cunoscuta pentru proprietatile sale de adaptogen, adica ajuta organismul sa faca fata stresului. E buna si pentru energie fizica si mentala, si pentru echilibru hormonal. O gasesti sub forma de pudra, de obicei de culoare bej sau maronie. O lingurita in smoothie sau in terci de ovaz e perfecta. O cutie de 100g pudra de maca costa cam 40-55 RON. Avantaj: sustine rezistenta la stres. Dezavantaj: gustul e distinct, pamantiu.</p>
+    </section>
+
+    <section id="section-3">
+      <h2>Cum sa faci cea mai buna alegere</h2>
+      <p>Cand te uiti la atatea optiuni, e normal sa te intrebi ce e mai bun pentru tine. Eu am invatat sa ma uit la cateva lucruri esentiale inainte sa cumpar ceva.</p><p>In primul rand, <strong>sursa si provenienta</strong>. Unde a fost cultivat produsul? A fost crescut sustenabil? Asta e important pentru mine, pentru ca vreau sa fac alegeri cat mai prietenoase cu planeta. Caut produse organice, certificate. Asta inseamna ca nu au fost folosite pesticide sau erbicide.</p><p>Apoi, <strong>metoda de procesare</strong>. Cum a fost transformat produsul in pudra sau alta forma? Procesarea la temperaturi joase (liofilizare sau uscare la soare) pastreaza mai multi nutrienti. Evita produsele care au trecut prin tratamente termice agresive.</p><p><strong>Lista de ingrediente</strong>. Asta e cruciala. Citeste cu atentie eticheta. Un superaliment bun ar trebui sa aiba un singur ingredient: spirulina, de exemplu. Evita produsele care au adaos de zahar, arome artificiale, coloranti sau alti aditivi. Asta le strica tot farmecul.</p><p><strong>Ambalajul</strong>. Prefer ambalajele care protejeaza produsul de lumina si aer, cum ar fi pungile cu sigiliu resigilabil sau borcanele de sticla. Asta ajuta la pastrarea prospetimii si a nutrientilor.</p><p><strong>Pretul</strong>. Nu intotdeauna cel mai scump e si cel mai bun, dar nici cel mai ieftin nu e o garantie a calitatii. Compara preturile de la mai multi producatori. Ia in calcul si cantitatea. Uneori, un pachet mai mare poate fi mai avantajos pe termen lung.</p><p><strong>Recenziile altor cumparatori</strong>. Pe langa informatiile de pe eticheta, e util sa citesti ce spun si alti oameni care au folosit produsul. Asta iti poate da o idee despre gust, eficacitate si experienta generala.</p><p>Nu te sfii sa ceri informatii de la producator sau de la magazin daca ai nelamuriri. Un magazin bun, fie el online sau fizic, ar trebui sa aiba personal informat si dispus sa te ajute.</p>
+    </section>
+
+    <section id="section-4">
+      <h2>Ce functioneaza cu adevarat si ce e doar marketing</h2>
+      <p>Sincer, nu tot ce se vinde sub denumirea de "superaliment" chiar face minuni. Unele sunt fantastice, altele... mai putin. E important sa fim realisti.</p><p><strong>Ce functioneaza clar</strong>: Alimentele bogate in nutrienti esentiali. Spirulina, chlorella, maca, semințele de cânepă, macesele – astea au un profil nutritional solid, demonstrat prin studii. Ele aduc un plus real de vitamine, minerale, proteine sau antioxidanți. Beneficiile se vad în timp, prin creșterea nivelului de energie, o mai bună imunitate, o piele mai sănătoasă.</p><p><strong>Ce poate functiona, dar cu precautii</strong>: Unele amestecuri de "superalimente" gata făcute. Multe dintre ele conțin ingrediente bune, dar uneori proporțiile nu sunt optime sau sunt adăugate "umpluturi" mai puțin valoroase. Trebuie să citești eticheta cu mare atenție. Dacă vezi o listă lungă de ingrediente, s-ar putea să fie mai mult marketing.</p><p><strong>Ce e adesea exagerat</strong>: Promisiunile de "vindecare miraculoasă" sau "energie instantă". Superalimentele nu sunt medicamente. Ele susțin corpul, îl ajută să funcționeze mai bine, dar nu rezolvă probleme medicale grave singure. Energia pe care o oferă este naturală, sustenabilă, nu un "rush" artificial.</p><p><strong>Greseli de evitat</strong>: Să crezi că dacă mănânci o linguriță de spirulină pe zi, poți mânca orice altceva nesănătos. Superalimentele funcționează cel mai bine ca parte a unei diete echilibrate și a unui stil de viață sănătos. Nu sunt o scuză să ignori restul alimentației.</p><p>De asemenea, am observat că uneori entuziasmul inițial scade dacă nu vezi rezultate imediate. Dar trebuie să ai răbdare. Corpul are nevoie de timp să asimileze noii nutrienți și să se adapteze. Nu te descuraja dacă după o săptămână nu te simți ca un supererou.</p><p>Și încă ceva: gustul. Unele superalimente au gusturi foarte puternice, care nu plac tuturor. Asta nu înseamnă că nu sunt bune, ci doar că trebuie să găsești modalitatea potrivită de a le consuma. Poate într-un smoothie mai complex, cu fructe dulci, sau în combinații pe care le descoperi treptat.</p>
+    </section>
+
+    <section id="section-5">
+      <h2>Sfaturi ca sa nu dai cu bata-n balta</h2>
+      <p>Am greșit și eu la început, așa că vreau să te ajut să eviți capcanele. Sunt lucruri simple, dar care fac o mare diferență.</p><p><strong>Începe lent</strong>. Nu te apuca să combini 5 superalimente noi în prima zi. Introdu câte unul, observă cum reacționează corpul tău. Poate începi cu o jumătate de linguriță de spirulină, apoi crești doza. Asta te ajută să identifici ce îți place și ce nu, și să eviți eventualele reacții neplăcute.</p><p><strong>Ascultă-ți corpul</strong>. Fiecare suntem diferiți. Ce funcționează pentru mine s-ar putea să nu funcționeze la fel de bine pentru tine. Dacă un produs îți provoacă disconfort, nu îl forța. Poate nu e potrivit pentru tine sau trebuie ajustată doza.</p><p><strong>Nu exagera cu doza</strong>. Mai mult nu înseamnă neapărat mai bine. Respectă instrucțiunile de pe ambalaj sau recomandările unui specialist. Un exces de anumiți nutrienți poate fi contraproductiv.</p><p><strong>Fii atent la "super-amestecuri"</strong>. Cum spuneam, mulți combină tot felul de ingrediente. Unele pot fi bune, dar verifică lista. Uneori, principalele ingrediente sunt "diluate" cu alte mai puțin valoroase, doar ca să arate bine pe etichetă. Și prețul lor e adesea mult mai mare.</p><p><strong>Depozitarea corectă</strong>. Superalimentele, mai ales cele sub formă de pudră, sunt sensibile la lumină, căldură și umiditate. Păstrează-le în ambalajul original, închis ermetic, într-un loc răcoros și întunecos. Asta le va menține prospețimea și potența.</p><p><strong>Calitatea contează enorm</strong>. Nu te zgârci la acest capitol. Un produs de calitate inferioară, chiar dacă e mai ieftin, nu îți va oferi beneficiile dorite și poate fi chiar nesănătos dacă e contaminat sau procesat greșit.</p><p><strong>Variază</strong>. Nu te baza pe un singur superaliment. Corpul are nevoie de o gamă largă de nutrienți. Alternează între diferite tipuri de alge, semințe, fructe sau pudre pentru a asigura un aport complet.</p><p>Și cel mai important: <strong>distrează-te în proces!</strong> Găsește rețete noi, experimentează cu combinații de arome. Transformă alimentația sănătoasă într-o plăcere, nu într-o corvoadă.</p>
+    </section>
+
+    <section id="section-6">
+      <h2>Ce aș alege eu, pe moment</h2>
+      <p>Dacă ar fi să aleg acum, pentru o persoană ca mine, care caută energie naturală și un boost general, aș merge pe o combinație clasică și eficientă. Simplu, dar de efect.</p><p>Pentru mine, <strong>spirulina</strong> este un "must-have". O iau aproape zilnic. O linguriță de pudră de spirulină bio, de la un producător de încredere (cam 35 RON pentru 100g). O pun în smoothie-ul de dimineață, amestecată cu fructe de pădure, o banană și puțin lapte vegetal. Gustul nu se mai simte deloc, iar energia pe care mi-o dă e constantă, fără fluctuații.</p><p>Apoi, aș adăuga <strong>semințele de cânepă</strong>. Le consider extrem de versatile și nutritive. Le presar peste iaurtul de dimineață, în salate sau le adaug în terciul de ovăz. Oferă o textură plăcută și o doză bună de proteine și grăsimi sănătoase. Un pachet de 200g costă cam 25 RON și îmi ajunge o perioadă bună.</p><p>Pentru imunitate și un "plus" de vitamine, mai ales în sezonul rece, aș recurge la <strong>pudra de macese</strong>. E ieftină și extrem de eficientă. O linguriță în ceaiul de seară sau amestecată cu miere. E un mod simplu și accesibil de a-mi proteja organismul. Un pachet de 100g e cam 20 RON.</p><p>Aceste trei produse oferă un pachet complet: proteine, vitamine, minerale, antioxidanți și fibre. Sunt ușor de integrat în dietă, nu necesită pregătire specială și au un preț rezonabil. Sunt potrivite pentru cineva care este la început de drum cu superalimentele, dar și pentru cei care vor o bază solidă.</p><p>Nu aș începe cu produse foarte scumpe sau cu gusturi extrem de puternice, cum ar fi pudra de goji sau anumite tipuri de alge mai rare, dacă nu sunt sigur că le voi folosi. Spirulina, semințele de cânepă și macesele sunt un punct de plecare excelent. Sunt sustenabile, benefice și ușor de găsit. E o combinație care a funcționat pentru mine și cred că ar putea funcționa și pentru mulți alții, mai ales pentru cei care caută să își crească nivelul de energie într-un mod natural și sănătos.</p>
+    </section>
+
+      <section class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">IV</div>
+        <div class="author-info">
+          <h4>Ioana Verdes</h4>
+          <p class="author-role">Nutritionist Certificat</p>
+          <p class="author-bio">Ioana are peste 8 ani de experienta in nutritie si alimentatie sanatoasa. Pasionata de superalimente si diete echilibrate, ofera sfaturi practice pentru o viata mai sanatoasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="cele-mai-bune-superalimente-pentru-energie"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+</script>
