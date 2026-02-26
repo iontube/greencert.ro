@@ -90,6 +90,27 @@ function shouldRunToday(keywordsPath) {
   }
 }
 
+// Generate stats.json with article count for the panou sync
+function generateStats() {
+  const pagesDir = path.join(process.cwd(), 'src', 'pages');
+  const publicDir = path.join(process.cwd(), 'public');
+  const excludePages = new Set(['index', 'contact', 'cookies', 'privacy-policy', 'privacy', 'gdpr', 'sitemap', '404', 'about', 'terms']);
+
+  const files = fs.readdirSync(pagesDir);
+  const articles = files.filter(f => {
+    if (!f.endsWith('.astro')) return false;
+    const name = f.replace('.astro', '');
+    if (name.startsWith('[')) return false;
+    if (excludePages.has(name)) return false;
+    return true;
+  });
+
+  const stats = { articlesCount: articles.length, lastUpdated: new Date().toISOString() };
+  if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
+  fs.writeFileSync(path.join(publicDir, 'stats.json'), JSON.stringify(stats, null, 2));
+  log(`Stats generated: ${articles.length} articles`);
+}
+
 async function main() {
   log('='.repeat(60));
   log('AUTO-GENERATE STARTED - greencert.ro');
@@ -188,6 +209,9 @@ async function main() {
 
   fs.writeFileSync(keywordsPath, JSON.stringify(keywordsData, null, 2));
   log(`Keywords updated. Generated: ${successful.length}, Failed: ${selectedArticles.length - successful.length}, Remaining: ${newPending.length}`);
+
+  // Generate stats.json before build
+  generateStats();
 
   // Build site
   try {
