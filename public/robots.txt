@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://greencert.ro/sitemap-index.xml
-Sitemap: https://greencert.ro/sitemap-images.xml
