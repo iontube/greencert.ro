@@ -1,0 +1,249 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa un borcan de miere de Manuka in Romania?", answer: "Un borcan de 250g de miere de Manuka in Romania costa intre 80-100 lei pentru variantele UMF 5+ (MGO 83+) si poate depasi 400-500 lei pentru cele cu UMF 20+ (MGO 829+). Pretul variaza in functie de concentratia de MGO/UMF si brand." },
+    { question: "Care e diferenta intre mierea de Manuka UMF si MGO?", answer: "UMF (Unique Manuka Factor) este un sistem de clasificare mai complex, care testeaza mai multi compusi (MGO, leptosperin, DHA), oferind o garantie mai larga a autenticitatii si calitatii mierii de Manuka. MGO (Metilglioxal) masoara doar concentratia principala a compusului antibacterian, fiind un indicator direct al puterii terapeutice, mai usor de inteles." },
+    { question: "Merita sa cumperi miere de Manuka cu UMF mic, de exemplu UMF 5+?", answer: "Da, mierea de Manuka UMF 5+ merita pentru intretinere generala, un boost usor de imunitate si ca indulcitor sanatos, avand un pret mai accesibil, in jur de 90-120 lei/250g. Nu este la fel de puternica pentru afectiuni serioase, dar ofera beneficii de baza si este o optiune buna pentru a te familiariza cu produsul." },
+    { question: "De ce e mierea de Manuka asa scumpa?", answer: "Mierea de Manuka este scumpa din mai multe motive: este produsa exclusiv in Noua Zeelanda, cantitatea este limitata, procesul de recoltare si certificare este riguros, iar proprietatile sale antibacteriene si antiinflamatorii unice ii confera o valoare terapeutica ridicata. Costurile de productie si testare contribuie semnificativ la pretul final." },
+    { question: "Cum stiu daca mierea de Manuka e autentica?", answer: "Pentru a verifica autenticitatea mierii de Manuka, cauta pe eticheta o certificare UMF sau MGO cu o cifra clara, verifica originea (Noua Zeelanda) si asigura-te ca produsul provine de la un brand reputabil. Multe branduri ofera certificate de analiza pentru fiecare lot, pe care le poti solicita." },
+    { question: "Cum se pastreaza corect mierea de Manuka?", answer: "Mierea de Manuka se pastreaza corect la temperatura camerei, intr-un loc racoros si uscat, ferita de lumina directa a soarelui. Asigura-te ca borcanul este bine inchis dupa fiecare utilizare pentru a preveni oxidarea si contaminarea. Nu necesita refrigerare, iar pastrarea in conditii optime ii mentine proprietatile pe termen lung." },
+    { question: "Pot folosi mierea de Manuka pentru copii?", answer: "Da, mierea de Manuka poate fi folosita pentru copii, dar numai dupa varsta de 1 an, din cauza riscului de botulism infantil. Pentru copiii mici, se recomanda concentratii UMF mai mici (5+ sau 10+) si un dozaj de o jumatate de lingurita pe zi, pentru a sustine imunitatea sau a calma durerile in gat." },
+    { question: "Unde gasesc miere de Manuka de incredere in Romania?", answer: "Mierea de Manuka de incredere poate fi gasita in farmacii mari (ex: Catena, Dr. Max), magazine naturiste specializate (online si fizice), si pe platforme online cunoscute care colaboreaza direct cu importatori autorizati. Verifica intotdeauna reputatia vanzatorului si certificarea produsului inainte de a cumpara." }
+];
+
+const formattedDate = new Date("2026-03-01T10:59:07.199Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Miere de manuka beneficii si preturi - GreenCert"
+  description="Uite care-i treaba cu mierea de Manuka: merita banii pentru proprietatile ei antibacteriene si antiinflamatorii unice, mai ales daca ai probleme digestive, imunitate scazuta sau vrei sa o folosesti topic, dar preturile pot varia mult, de la 80-100 de lei pentru un borcan mic de UMF 5+ pana la peste 400-500 de lei pentru variantele UMF 20+ sau mai mult. Pe scurt, e un superaliment, dar trebuie sa stii ce si cum sa alegi."
+  image="/images/articles/miere-de-manuka-beneficii-si-preturi.webp"
+  type="article"
+  publishedTime="2026-03-01T10:59:07.199Z"
+  modifiedTime="2026-03-01T10:59:07.199Z"
+  author="Ioana Verdes"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/alimentatie-sanatoasa/">Alimentatie Sanatoasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Miere de manuka beneficii si preturi</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Alimentatie Sanatoasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Miere de manuka beneficii si preturi</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/miere-de-manuka-beneficii-si-preturi.webp" alt="Miere de manuka beneficii si preturi" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#section-1"><span class="toc-number">1</span>Mierea de Manuka: Merita sa bagi banii in ea? Beneficii la care sa te astepti</a></li>
+          <li><a href="#section-2"><span class="toc-number">2</span>Top 4 Marci de Miere de Manuka pe care le-am testat (sau mi-au placut)</a></li>
+          <li><a href="#section-3"><span class="toc-number">3</span>Cum sa Nu Dai Bani pe Falsuri: Criterii esentiale cand alegi Miere de Manuka</a></li>
+          <li><a href="#section-4"><span class="toc-number">4</span>MGO vs. UMF: Ce e mai important? O comparatie directa intre tipurile de Miere de Manuka</a></li>
+          <li><a href="#section-5"><span class="toc-number">5</span>Greseli comune cu Mierea de Manuka si cum sa o folosesti corect</a></li>
+          <li><a href="#section-6"><span class="toc-number">6</span>Verdict pe Buget: Miere de Manuka pentru Orice Buzunar</a></li>
+        </ol>
+      </nav>
+
+    <section id="section-1">
+      <h2>Mierea de Manuka: Merita sa bagi banii in ea? Beneficii la care sa te astepti</h2>
+      <p>Am sa fiu direct, ca nu-mi place sa te tin cu sufletul la gura: da, <strong>mierea de Manuka</strong> merita. Pe bune. Nu e un moft sau o fita, e un produs cu niste proprietati demonstrate, care o scot din liga mierii "normale" si o duc direct in cea a suplimentelor naturale serioase. Dar, stai putin, nu orice borcan, si nu pentru orice buzunar, ca aici e smecheria.</p>
+        <p>Principalul ei atu, cel pentru care toata lumea o lauda si, na, o si cumpara, e capacitatea antibacteriana superioara. Exista un compus in ea, metilglioxalul (MGO), care nu se gaseste in aceleasi concentratii in alte tipuri de miere. Asta o face un adversar redutabil pentru o gramada de bacterii nasoale, inclusiv cele rezistente la antibiotice.</p>
+        <p>E o chestie pe care am simtit-o pe pielea mea, cand am avut o infectie in gat care nu mai trecea cu nimic. Doua lingurite pe zi si, cum sa zic, alta viata.</p>
+        <p>Pe langa asta, vorbim de <strong>miere de Manuka beneficii</strong> antiinflamatorii. Daca ai probleme cu stomacul, gastrita, reflux, chestii de genul, e aur curat. Calmeaza mucoasa iritata, ajuta la cicatrizare. Un prieten de-al meu a avut mari probleme cu o infectie cu Helicobacter Pylori si, pe langa tratamentul clasic, a introdus si mierea asta. Zicea ca diferenta a fost uriasa, mai ales la disconfortul post-masa. Nu e un medicament, clar, dar e un adjuvant de nota 10.</p>
+        <p>Si pentru imunitate, e top. Mai ales in perioadele astea reci sau cand simti ca te ia raceala. O lingurita dimineata, pe stomacul gol, te ajuta sa te pui pe picioare. Nu e doar un boost de energie, e o sustinere reala pentru sistemul imunitar. Am testat eu personal asta, mai ales in sezonul rece, cand toata lumea din birou stranuta si tusea. Eu, mai putin. Coincidenta? Nu cred.</p>
+        <p>Acum, sa vorbim despre <strong>preturi miere de Manuka</strong>, ca aici e partea care mai doare. Nu e ieftina, nici pe departe. Un borcan de 250g poate incepe de la 80-100 de lei pentru o concentratie UMF 5+ si poate sari de 400-500 de lei pentru un UMF 20+ sau chiar mai mult.</p>
+        <p>Diferenta asta de pret e data in mare parte de concentratia de MGO, adica de puterea ei terapeutica. Cu cat e mai mare cifra UMF sau MGO, cu atat e mai scumpa. E o investitie, da, dar una care, de multe ori, isi merita fiecare banut, mai ales daca ai o problema specifica de rezolvat.</p>
+        <p>Nu e miere de pus pe clatite in fiecare zi, e mai degraba un "medicament" natural.</p>
+        <p>Deci, daca ma intrebi pe mine, merita sa te interesezi de <strong>miere de Manuka beneficii si preturi</strong>. Dar nu te arunca la primul borcan. Informeaza-te, vezi ce UMF sau MGO ti se potriveste si, mai ales, cumpara din surse sigure. Asta e cel mai important. Falsurile sunt la tot pasul, iar tu vrei sa te asiguri ca primesti ce platesti.</p>
+    </section>
+
+    <section id="section-2">
+      <h2>Top 4 Marci de Miere de Manuka pe care le-am testat (sau mi-au placut)</h2>
+      <p>Bun, dupa ce am lamurit de ce e buna, hai sa trecem la concret. Pe piata sunt o gramada de branduri, si e usor sa te pierzi. Eu am testat cateva, am mai auzit de la prieteni, am mai citit.</p>
+        <p>Uite ce cred ca merita atentia ta, cu mentiunea ca preturile sunt orientative si pot varia in functie de magazin si promotii. Cand cauti <strong>miere de Manuka beneficii si preturi</strong>, e bine sa ai niste repere.
+<strong>1. Manuka Health (Noua Zeelanda) - UMF 15+ / MGO 514+</strong><br>Asta e un clasic, si pe buna dreptate.</p>
+        <p>E printre primele branduri care au intrat pe piata si au pastrat o calitate constanta. Am folosit-o de cateva ori pentru probleme digestive si a functionat impecabil. Gustul e destul de intens, amarui-pamantos, nu te astepta la miere de tei.</p>
+        <p>Pe mine m-a ajutat sa-mi reglez tranzitul intestinal si sa scap de o senzatie de arsura. Un borcan de 250g UMF 15+ e cam 250-300 de lei. E o investitie serioasa, dar eficienta.</p>
+        <ul><li><strong>Avantaje:</strong> Calitate constanta, certificari clare, eficacitate dovedita pentru probleme digestive si imunitate. E un reper.</li><li><strong>Dezavantaje:</strong> Pretul e destul de sus. Nu e pentru oricine. Gustul e puternic, nu neaparat pe placul tuturor.</li></ul>
+        <p><strong>2. Comvita (Noua Zeelanda) - UMF 10+ / MGO 263+</strong><br>Comvita e un alt nume mare, respectat. Eu am luat varianta UMF 10+ pentru intretinere si pentru copii (peste 1 an, evident) cand raceau mai usor. E mai accesibila ca pret fata de un 15+, cam 180-220 de lei pentru 250g. Gustul e putin mai bland, dar tot are acel "specific" de Manuka. Cred ca e o optiune excelenta pentru cineva care vrea <strong>miere de Manuka beneficii</strong> fara sa sparga pusculita la fel de tare.</p>
+        <ul><li><strong>Avantaje:</strong> Brand de incredere, calitate buna, pret ceva mai "uman" pentru un UMF mediu. Perfecta pentru intretinere si imunitate.</li><li><strong>Dezavantaje:</strong> Poate nu e suficient de puternica pentru afectiuni foarte serioase, unde ai nevoie de un UMF mai mare.</li></ul>
+        <p><strong>3. Kiva (SUA, cu miere din NZ) - MGO 400+</strong><br>Asta n-am testat-o personal, dar am auzit multe pareri bune. E un brand american care importa miere de Manuka direct din Noua Zeelanda si o ambaleaza sub propriul nume.</p>
+        <p>Au certificari MGO clare si preturi competitive, cam 200-250 de lei pentru 250g de MGO 400+. Un prieten, care e foarte atent la ce mananca, si-a luat de la ei si a fost incantat de gust si de efecte. Zicea ca a ajutat mult la o problema cu gingiile.</p>
+        <p>N-am pus mana in foc, dar suna bine.</p>
+        <ul><li><strong>Avantaje:</strong> Raport calitate-pret bun, certificare MGO clara, populara in SUA.</li><li><strong>Dezavantaje:</strong> Nu e un brand traditional neozeelandez, unii prefera sa cumpere direct de la sursa. Disponibilitatea in Romania poate fi mai limitata.</li></ul>
+        <p><strong>4. Biosun Manuka Honey (Noua Zeelanda) - UMF 5+ / MGO 83+</strong><br>Daca vrei sa incerci <strong>mierea de Manuka</strong> si nu vrei sa dai o avere, asta e o optiune de luat in calcul. Un borcan de 250g UMF 5+ e cam 90-120 de lei.</p>
+        <p>E mai mult pentru intretinere generala, ca indulcitor sanatos sau pentru un boost usor de imunitate. Nu te astepta la efecte terapeutice spectaculoase, dar e o introducere buna in lumea Manuka. Eu am folosit-o in ceai (cand era caldut, nu fierbinte!) sau in iaurt.</p>
+        <p>Sincer, e ok pentru inceput.</p>
+        <ul><li><strong>Avantaje:</strong> Cel mai accesibil pret, bun pentru initiere si intretinere.</li><li><strong>Dezavantaje:</strong> Concentratie scazuta, nu e potrivita pentru afectiuni specifice care necesita putere mare.</li></ul>
+        <p>Pana la urma, alegerea depinde de ce vrei sa faci cu mierea asta si, bineinteles, de cat esti dispus sa platesti. Dar, zic si eu, mai bine iei un UMF mai mic de la un brand serios decat un UMF mare de la unul dubios, doar pentru ca e mai ieftin. Autenticitatea e cheia aici.</p>
+    </section>
+
+    <section id="section-3">
+      <h2>Cum sa Nu Dai Bani pe Falsuri: Criterii esentiale cand alegi Miere de Manuka</h2>
+      <p>Aici e un punct super important, credeti-ma. Piata e plina de tot felul de produse care se dau drept <strong>miere de Manuka</strong>, dar care n-au treaba cu calitatea reala. Ca sa nu-ti iei teapa si sa stii exact pe ce dai banii, mai ales cand vorbim de <strong>miere de Manuka beneficii si preturi</strong>, trebuie sa fii atent la cateva chestii esentiale.</p>
+        <p>Nu e complicat, dar cere un pic de atentie.
+<strong>1. Certificarea UMF sau MGO: Asta e sfanta!</strong><br>Aici e miezul problemei. Mierea de Manuka autentica trebuie sa aiba pe eticheta un sistem de clasificare care sa-i ateste puterea.</p>
+        <p>Cele mai cunoscute sunt UMF (Unique Manuka Factor) si MGO (Metilglioxal). UMF e un standard mai complex, care masoara mai multi compusi, nu doar MGO, si e considerat de multi cel mai de incredere. MGO masoara doar concentratia de metilglioxal, dar e mai usor de inteles.</p>
+        <p>Retine: cu cat cifra de langa UMF sau MGO e mai mare (ex: UMF 15+, MGO 400+), cu atat mierea e mai puternica si, evident, mai scumpa. Fara una din astea, e doar miere obisnuita, indiferent ce scrie pe borcan.</p>
+        <ul><li><strong>UMF 5+ pana la 9+:</strong> Pentru intretinere generala, un boost de imunitate.</li><li><strong>UMF 10+ pana la 14+:</strong> Pentru sustinerea imunitatii, probleme digestive usoare.</li><li><strong>UMF 15+ pana la 19+:</strong> Pentru afectiuni mai serioase, inflamatii, infectii.</li><li><strong>UMF 20+ si peste:</strong> Cea mai puternica, pentru probleme acute, uz topic.</li></ul>
+        <p><strong>2. Originea: Noua Zeelanda, punct.</strong><br>Planta de Manuka (Leptospermum scoparium) creste in mod natural doar in Noua Zeelanda si, intr-o masura mai mica, in sud-estul Australiei. Daca vezi <strong>miere de Manuka</strong> "facuta" in alta parte, e o mare problema.</p>
+        <p>Tot ce e autentic vine din Noua Zeelanda si e ambalat acolo sau importat direct sub licenta. Verifica pe eticheta "Product of New Zealand". Simplu.
+<strong>3.</p>
+        <p>Testele de laborator si transparenta.</strong><br>Brandurile serioase nu au nimic de ascuns. Ba din contra, se lauda cu testele lor. Multe ofera pe site-uri sau la cerere certificate de analiza pentru fiecare lot de miere.</p>
+        <p>Acolo vei vedea exact nivelul de MGO, DHA (precursorul MGO), leptosperin si alte chestii. Daca un brand e vag sau evita sa-ti dea informatii clare, fugi! E un semn de intrebare mare.
+<strong>4. Consistenta si gustul.</strong><br>Mierea de Manuka e de obicei mai densa, mai groasa decat mierea de salcam, sa zicem.</p>
+        <p>Culoarea variaza de la crem la maro inchis, in functie de lot. Gustul e inconfundabil: puternic, pamantos, cu o tenta usor amaruie si o nota medicinala. Nu e dulceata aia florala la care te-ai astepta de la o miere obisnuita.</p>
+        <p>Daca gustul e prea dulce, prea floral, sau consistenta e lichida, s-ar putea sa nu fie ce trebuie. Am patit eu, am luat odata un borcan "la oferta" si era apa de ploaie cu zahar. Nu m-a invatat minte decat o data.
+<strong>5.</p>
+        <p>Ambalajul si sigiliul.</strong><br>Pare un detaliu, dar e important. Borcanele trebuie sa fie sigilate impecabil. Nu vrei sa cumperi un produs desigilat sau deteriorat.</p>
+        <p>De obicei, sunt borcane de sticla, care pastreaza mai bine proprietatile mierii. Verifica si data de expirare, desi mierea autentica nu prea expira, e mai mult o formalitate. Deci, cand te uiti la <strong>miere de Manuka beneficii si preturi</strong>, nu te lasa pacalit de etichete frumoase sau oferte "prea bune ca sa fie adevarate".</p>
+        <p>Fii un detectiv, verifica detaliile. E vorba de sanatatea ta, pana la urma.</p>
+    </section>
+
+    <section id="section-4">
+      <h2>MGO vs. UMF: Ce e mai important? O comparatie directa intre tipurile de Miere de Manuka</h2>
+      <p>Aici e o discutie care apare des: MGO sau UMF? Care e mai bun? Care e mai important? Cand cauti <strong>miere de Manuka beneficii si preturi</strong>, o sa vezi ambele notatii pe borcane si e normal sa te simti un pic confuz. Hai sa clarificam, ca sa stii ce alegi.</p>
+        <p><strong>MGO (Metilglioxal): Masoara puterea antibacteriana directa.</strong><br>MGO e compusul activ principal din <strong>mierea de Manuka</strong>, cel responsabil de majoritatea proprietatilor sale antibacteriene. Cand vezi pe eticheta MGO 100+, MGO 250+, MGO 400+, etc., asta inseamna ca in fiecare kilogram de miere sunt cel putin 100, 250 sau 400 de miligrame de metilglioxal. E un indicator direct si usor de inteles al puterii antibacteriene.</p>
+        <p>Cu cat cifra e mai mare, cu atat e mai puternica.</p>
+        <p><strong>UMF (Unique Manuka Factor): O abordare mai holistica si mai cuprinzatoare.</strong><br>UMF e un sistem de clasificare dezvoltat de Unique Manuka Factor Honey Association (UMFHA) din Noua Zeelanda. Ei testeaza mierea nu doar pentru MGO, ci si pentru alte trei elemente cheie: leptosperin (un marker unic al mierii de Manuka), DHA (precursorul MGO) si hidroxilmetilfurfural (HMF), un indicator al prospetimii mierii si al procesarii termice.</p>
+        <p>Practic, UMF iti da o imagine mai completa despre autenticitatea si calitatea mierii, nu doar despre puterea antibacteriana. E ca si cum MGO e doar o piesa dintr-un puzzle mai mare. Un UMF 10+ e echivalent cu un MGO 263+, UMF 15+ cu MGO 514+, iar UMF 20+ cu MGO 829+.</p>
+        <p><strong>Care e "mai bun"?</strong><br>Sincer, ambele sunt bune. Daca vrei o masura rapida si clara a puterii antibacteriene, MGO e suficient de elocvent. E usor de inteles si de comparat.</p>
+        <p>Dar, daca vrei sa fii absolut sigur ca ai cumparat <strong>miere de Manuka</strong> autentica, de cea mai buna calitate, care nu e doar puternica, dar si pura si bine conservata, atunci UMF e sistemul mai complet. Eu personal, prefer UMF, pentru ca mi se pare ca ofera mai multa siguranta. E o garantie in plus ca nu iei teapa.</p>
+        <p>Acum, ca <strong>preturi miere de Manuka</strong>, de obicei, cele certificate UMF tind sa fie putin mai scumpe pentru o putere echivalenta MGO, tocmai pentru ca implica mai multe teste si o asociatie care garanteaza calitatea.</p>
+        <p><strong>Comparatie directa: Manuka UMF 10+ vs. Manuka MGO 263+</strong><br>Din punct de vedere al puterii antibacteriene, sunt cam la fel. Ambele sunt potrivite pentru sustinerea imunitatii si pentru probleme digestive usoare.</p>
+        <p>Diferenta e ca mierea cu certificare UMF 10+ iti ofera si garantia ca e autentica, ca are si leptosperin si ca a fost procesata corect (nivel scazut de HMF). Un MGO 263+ poate fi si el autentic, dar nu ai aceleasi garantii suplimentare pe care le ofera sigla UMFHA. Costul pentru ambele variante e undeva intre 180 si 250 de lei pentru un borcan de 250g, in functie de producator si magazin.</p>
+        <p>Daca gasesti un UMF 10+ la un pret similar cu un MGO 263+, eu as merge pe UMF.</p>
+        <p>Pana la urma, important e sa alegi un produs cu o certificare clara si recunoscuta, nu doar o eticheta "Manuka Honey" fara detalii. Fara o eticheta cu MGO sau UMF si cifra aferenta, e doar miere, indiferent de ce spune marketingul. Cand te uiti la <strong>miere de Manuka beneficii si preturi</strong>, uita-te intai la certificare, apoi la restul.</p>
+    </section>
+
+    <section id="section-5">
+      <h2>Greseli comune cu Mierea de Manuka si cum sa o folosesti corect</h2>
+      <p>Am vazut o gramada de oameni care cumpara <strong>miere de Manuka</strong> si, din pacate, nu o folosesc cum trebuie, ori au asteptari nerealiste. Ca un prieten care a trecut prin asta, vreau sa-ti zic cateva greseli pe care sa le eviti si niste tips-uri de insider, ca sa te bucuri la maximum de <strong>mierea de Manuka beneficii si preturi</strong>.
+<strong>1. Greseala: O incalzesti sau o pui in lichide fierbinti.</strong><br>Asta e pacatul capital! Caldura distruge compusii activi, in special MGO.</p>
+        <p>Daca pui mierea de Manuka intr-un ceai fierbinte, ai aruncat banii pe geam, sincer. Nu mai are aceleasi proprietati terapeutice. E pacat, la ce <strong>preturi miere de Manuka</strong> sunt.</p>
+        <ul><li><strong>Tips:</strong> Consum-o ca atare, o lingurita dimineata pe stomacul gol. Daca vrei sa o pui in ceai, asteapta sa se raceasca pana la o temperatura la care poti sa bagi degetul fara sa te arzi (sub 40 de grade Celsius). Sau in iaurt, smoothie-uri, dar niciodata la temperaturi inalte.</li></ul>
+        <p><strong>2. Greseala: Astepti un "miracol" peste noapte.</strong><br>Mierea de Manuka e un produs natural cu proprietati superioare, dar nu e un medicament magic care vindeca totul instant. E un adjuvant, o sustinere pentru corp, nu un leac universal. E foarte buna, dar nu face minuni peste noapte. Am avut un prieten care credea ca o sa-i vindece orice afectiune digestiva in doua zile. Eh, nu functioneaza asa.</p>
+        <ul><li><strong>Tips:</strong> Fii realist. Foloseste-o constant, pe o perioada mai lunga (cateva saptamani, luni), pentru a vedea rezultate. Si, evident, nu renunta la tratamentele medicale prescrise de doctor.</li></ul>
+        <p><strong>3. Greseala: Nu esti atent la dozaj.</strong><br>Mai ales la concentratiile mari (UMF 15+, 20+), nu e nevoie sa mananci jumatate de borcan. E puternica. Si scumpa, sa nu uitam.</p>
+        <ul><li><strong>Tips:</strong> Pentru intretinere sau imunitate, o lingurita (5-10g) pe zi e suficienta. Pentru afectiuni mai specifice, poti merge pana la 2-3 lingurite pe zi, impartite in doze, dar consulta un specialist sau citeste recomandarile producatorului. Nu exagera, nu e nevoie.</li></ul>
+        <p><strong>4. Greseala: O cumperi de oriunde, fara sa verifici autenticitatea.</strong><br>Asta e probabil cea mai mare greseala. Cum am zis si mai sus, piata e plina de falsuri. O oferta "prea buna" e, de obicei, o teapa.</p>
+        <ul><li><strong>Tips:</strong> Cumpara doar de la magazine de incredere, farmacii sau importatori directi care au parteneriate cu producatorii din Noua Zeelanda. Verifica intotdeauna certificarea UMF/MGO si tara de origine. Daca nu e pe eticheta sau e vag, las-o acolo.</li></ul>
+        <p><strong>5. Greseala: O folosesti doar intern, ignorand beneficiile topice.</strong><br>Multi uita ca <strong>mierea de Manuka</strong> e excelenta si pentru uz extern. Am avut odata o arsura minora si, recunosc, am fost sceptic. Dar am aplicat un strat subtire de miere UMF 15+ si am acoperit cu un pansament. S-a vindecat mult mai repede si fara cicatrice. Pe bune.</p>
+        <ul><li><strong>Tips:</strong> Pentru rani minore, arsuri, taieturi, acnee sau chiar probleme gingivale (aplicata direct), e super eficienta. Asigura-te ca rana e curata inainte de aplicare.</li></ul>
+        <p>Uite, astea sunt cateva chestii pe care le-am invatat eu in timp. Sper sa te ajute sa folosesti <strong>mierea de Manuka</strong> la potentialul ei maxim si sa-ti aduca toate <strong>beneficiile</strong> pe care le cauti, fara sa arunci banii aiurea. E un produs valoros, dar cere respect si informare.</p>
+    </section>
+
+    <section id="section-6">
+      <h2>Verdict pe Buget: Miere de Manuka pentru Orice Buzunar</h2>
+      <p>Hai sa fim realisti, <strong>mierea de Manuka</strong> nu e ieftina. Dar asta nu inseamna ca nu poti sa te bucuri de <strong>beneficiile</strong> ei, indiferent de cat de mult esti dispus sa cheltui. Ideea e sa stii ce sa cauti in functie de buget si de nevoile tale.</p>
+        <p>Am sa-ti dau niste recomandari clare, ca sa stii ce sa alegi atunci cand te uiti la <strong>miere de Manuka beneficii si preturi</strong>.
+<strong>1. Buget Mic (pana in 150 RON pentru 250g)</strong><br>Aici te incadrezi daca vrei sa incerci mierea de Manuka pentru intretinere generala, ca un indulcitor mai sanatos sau pentru un boost usor de imunitate. Nu te astepta la minuni terapeutice pentru afectiuni serioase, dar e un start bun.</p>
+        <ul><li><strong>Ce cauti:</strong> <strong>Miere de Manuka</strong> cu UMF 5+ sau MGO 80+ pana la MGO 150+.</li><li><strong>La ce sa te astepti:</strong> Un produs autentic, dar cu o concentratie mai mica de compusi activi. E perfecta pentru consum zilnic, in ceaiuri (calde, nu fierbinti!), iaurturi sau pe paine prajita. Gustul va fi mai bland decat la concentratiile mari.</li><li><strong>Recomandare:</strong> Cauta branduri precum Biosun sau variantele entry-level de la Manuka Health sau Comvita, daca le gasesti la promotie. Un borcan de 250g va fi in jur de 90-140 de lei. E o optiune decenta sa te familiarizezi cu produsul.</li></ul>
+        <p><strong>2. Buget Mediu (150 - 300 RON pentru 250g)</strong><br>Aici deja intram in zona in care poti sa te astepti la efecte terapeutice mai evidente. Daca ai probleme digestive usoare spre moderate, vrei sa iti sustii serios imunitatea in sezonul rece sau sa o folosesti ca adjuvant pentru anumite inflamatii, asta e categoria ta.</p>
+        <ul><li><strong>Ce cauti:</strong> <strong>Miere de Manuka</strong> cu UMF 10+ sau MGO 250+ pana la MGO 400+.</li><li><strong>La ce sa te astepti:</strong> O miere cu o putere antibacteriana si antiinflamatorie semnificativa. Se simte diferenta. O poti folosi atat intern, cat si extern pentru rani minore sau iritatii ale pielii. Gustul va fi deja mai intens, mai "medicinal".</li><li><strong>Recomandare:</strong> Branduri ca Comvita UMF 10+, Manuka Health UMF 10+ sau Kiva MGO 400+. Pretul va fi undeva intre 180 si 280 de lei pentru 250g. Asta e, in general, "sweet spot-ul" pentru majoritatea oamenilor care cauta <strong>miere de Manuka beneficii</strong> concrete. Eu as zice ca asta e cea mai buna alegere raport calitate-pret.</li></ul>
+        <p><strong>3. Buget Mare (peste 300 RON pentru 250g)</strong><br>Aici e liga grea. Daca ai probleme de sanatate mai serioase, infectii persistente (sub supraveghere medicala, desigur!), rani care se vindeca greu sau pur si simplu vrei cea mai puternica sustinere posibila pentru organism, atunci merita sa investesti in aceasta categorie.</p>
+        <ul><li><strong>Ce cauti:</strong> <strong>Miere de Manuka</strong> cu UMF 15+ sau MGO 500+ si chiar UMF 20+ sau MGO 800+.</li><li><strong>La ce sa te astepti:</strong> Cea mai mare concentratie de compusi activi, efecte terapeutice puternice. E ideala pentru uz topic pe rani serioase, arsuri, sau pentru un boost masiv al sistemului imunitar in momente critice. Gustul e foarte intens, aproape picant.</li><li><strong>Recomandare:</strong> Manuka Health UMF 15+ sau UMF 20+, Comvita UMF 15+ sau MGO 550+. Preturile incep de la 300 de lei si pot ajunge la peste 500-600 de lei pentru un borcan de 250g de UMF 20+. E un produs premium, pentru nevoi premium. Nu as recomanda sa-l folosesti doar ca indulcitor, e prea scump pentru asta.</li></ul>
+        <p>Indiferent de buget, cel mai important e sa te asiguri ca produsul e autentic si are certificarea corecta. Nu te lasa pacalit de preturi mici la concentratii mari, e aproape sigur o teapa. Alege intelept, iar <strong>mierea de Manuka</strong> iti va aduce <strong>beneficiile</strong> pe care le cauti.</p>
+    </section>
+
+      <section class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">IV</div>
+        <div class="author-info">
+          <h4>Ioana Verdes</h4>
+          <p class="author-role">Nutritionist Certificat</p>
+          <p class="author-bio">Ioana are peste 8 ani de experienta in nutritie si alimentatie sanatoasa. Pasionata de superalimente si diete echilibrate, ofera sfaturi practice pentru o viata mai sanatoasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="miere-de-manuka-beneficii-si-preturi"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+</script>
