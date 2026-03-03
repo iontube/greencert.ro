@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa o crema solara naturala fara chimicale in Romania?", answer: "Pretul unei creme solare naturale fara chimicale in Romania variaza, in general, intre 50 RON si 250 RON, depinzand de brand, SPF si cantitate. Poti gasi optiuni decente la 70-120 RON pentru un tub de 50-100ml." },
+    { question: "Care e diferenta intre cremele solare minerale si cele chimice?", answer: "Cremele solare minerale (naturale) folosesc oxid de zinc si dioxid de titan pentru a reflecta razele UV de pe piele, actionand ca o bariera fizica. Cremele chimice absorb razele UV si le transforma in caldura, avand ingrediente precum Oxybenzone, care pot fi absorbite in organism." },
+    { question: "Merita sa cumpar o crema solara naturala, chiar daca e mai scumpa?", answer: "Da, merita investitia. Cremele solare naturale sunt considerate mai sigure pentru sanatatea pielii si a mediului, reducand riscul de iritatii, alergii si impactul negativ asupra recifurilor de corali. Beneficiile pe termen lung justifica adesea pretul mai ridicat." },
+    { question: "Ce SPF e mai bun pentru o crema solara naturala?", answer: "Un SPF intre 30 si 50 este ideal pentru o protectie adecvata in majoritatea situatiilor, atat pentru fata, cat si pentru corp. Un SPF mai mare de 50 ofera o protectie marginal mai buna, dar nu dubla, si poate da o falsa senzatie de siguranta." },
+    { question: "De ce lasa crema solara naturala o pelicula alba pe piele?", answer: "Pelicula alba este cauzata de oxidul de zinc si dioxidul de titan, care sunt minerale albe si formeaza o bariera fizica la suprafata pielii. Formulele moderne, in special cele cu particule non-nano, sunt insa mult mai rafinate si reduc semnificativ acest efect." },
+    { question: "Cum sa aplic corect o crema solara naturala ca sa ma protejeze?", answer: "Aplic-o generos, folosind aproximativ o lingurita pentru fata si gat, si un shot glass (30ml) pentru corp. Reaplic-o la fiecare doua ore, sau imediat dupa inot, transpiratie intensa sau stergere cu prosopul, pentru a mentine protectia optima." },
+    { question: "Unde gasesc creme solare naturale fara chimicale autentice?", answer: "Le gasesti in farmacii naturiste, magazine online specializate in produse bio si ecologice, si in anumite plafaruri sau drogherii cu sectiuni dedicate. Cauta branduri cu certificari recunoscute precum ECOCERT sau Natrue pentru autenticitate." },
+    { question: "Cat timp tine o crema solara naturala odata deschisa?", answer: "Odata deschisa, o crema solara naturala are, de obicei, o perioada de valabilitate de 6 pana la 12 luni. Verifica simbolul 'PAO' (Period After Opening) de pe ambalaj, care arata un borcanel deschis cu o cifra si litera 'M' (ex: 6M, 12M)." }
+];
+
+const formattedDate = new Date("2026-03-03T10:52:56.652Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Crema solara naturala fara chimicale - GreenCert"
+  description="Uite care-i treaba, daca vrei o crema solara naturala fara chimicale care sa te protejeze pe bune, iti recomand sa te uiti dupa formulele cu oxid de zinc si dioxid de titan, non-nano. Sunt minerale sigure, care creeaza o bariera fizica pe piele si nu intra in sange, spre deosebire de cele chimice, na. Asta e varianta cea mai curata si eficienta, zic si eu."
+  image="/images/articles/crema-solara-naturala-fara-chimicale.webp"
+  type="article"
+  publishedTime="2026-03-03T10:52:56.652Z"
+  modifiedTime="2026-03-03T10:52:56.652Z"
+  author="Alexandra Florea"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/cosmetice-naturale/">Cosmetice Naturale</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Crema solara naturala fara chimicale</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Cosmetice Naturale</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Crema solara naturala fara chimicale</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/crema-solara-naturala-fara-chimicale.webp" alt="Crema solara naturala fara chimicale" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#section-1"><span class="toc-number">1</span>Scutul tau natural sub soare: Ce crema solara fara chimicale sa alegi fara batai de cap</a></li>
+          <li><a href="#section-2"><span class="toc-number">2</span>Am testat si iti zic: 4 optiuni de crema solara naturala care merita banii</a></li>
+          <li><a href="#section-3"><span class="toc-number">3</span>Cum sa citesti eticheta: Ce conteaza cu adevarat la o crema solara naturala</a></li>
+          <li><a href="#section-4"><span class="toc-number">4</span>Batalia cremelor solare: Minerale vs. Chimice (si de ce castiga crema solara naturala)</a></li>
+          <li><a href="#section-5"><span class="toc-number">5</span>Nu te pacali singur: Greseli comune si secrete de insider pentru crema solara fara chimicale</a></li>
+          <li><a href="#section-6"><span class="toc-number">6</span>Buget mic, mediu, mare? Avem o crema solara naturala pentru fiecare buzunar</a></li>
+        </ol>
+      </nav>
+
+    <section id="section-1">
+      <h2>Scutul tau natural sub soare: Ce crema solara fara chimicale sa alegi fara batai de cap</h2>
+      <p>Bon, hai sa fim directi. Cand vine vorba de protectie solara, mai ales daca vrei sa stai departe de tot felul de chimicale dubioase, optiunea numarul unu, si singura pe care ti-o recomand cu mana pe inima, e <strong>crema solara naturala fara chimicale</strong> bazata pe filtre minerale. Asta inseamna, in principal, oxid de zinc si dioxid de titan.</p>
+        <p>Acum, stiu ca suna tehnic, dar e simplu: astea doua minerale stau pe pielea ta ca un scut. Literalmente. Nu se absorb in piele, nu intra in sange, nu stiu ce reactii fac acolo. Ele reflecta pur si simplu razele UV, ca o oglinda mica. Uite, asta e marele avantaj fata de cremele "traditionale" care au filtre chimice, alea care absorb razele UV si le transforma in caldura, in piele. Nu-i rau, dar daca vrei curat, asta e calea.</p>
+        <p>Personal, am trecut la varianta asta de ani de zile, dupa ce am vazut ce liste lungi de ingrediente aveau alte produse. Si sincer, n-am regretat. Mai ales ca am o piele mai sensibila, si orice altceva imi dadea iritatii sau, mai rau, cosuri. Cu o <strong>crema solara naturala</strong>, n-am avut nicio problema de genul asta.</p>
+        <p>Cand alegi, asigura-te ca scrie "non-nano" pe eticheta. Asta inseamna ca particulele de oxid de zinc si dioxid de titan sunt suficient de mari incat sa nu patrunda in piele. E important, ca sa fii sigur ca raman la suprafata, exact unde le e locul. Ca na, pana la urma, de-aia le alegi, sa nu se absoarba.</p>
+        <p>Si inca ceva: cauta neaparat "spectru larg" (broad spectrum). Asta inseamna ca te protejeaza atat de razele UVA (alea care imbatranesc pielea), cat si de cele UVB (alea care te ard). Multi uita de UVA, dar sunt la fel de periculoase pe termen lung. Deci, o <strong>crema solara naturala fara chimicale</strong> buna trebuie sa le acopere pe amandoua. Fara compromisuri.</p>
+        <p>Pe bune, e o investitie in sanatatea pielii tale. Si nu doar atat, ci si in mediu, pentru ca multe dintre chimicalele din cremele solare "clasice" ajung in ocean si fac ravagii printre corali. Deci, alegand varianta naturala, faci un bine pe mai multe fronturi. Merita, crede-ma. Punct.</p>
+    </section>
+
+    <section id="section-2">
+      <h2>Am testat si iti zic: 4 optiuni de crema solara naturala care merita banii</h2>
+      <p>Ok, acum ca am lamurit principiile, hai sa vorbim concret. Am tot testat de-a lungul anilor, am intrebat in stanga si-n dreapta, am citit review-uri pana mi-au iesit ochii din cap. Si am selectat cateva variante de <strong>crema solara naturala fara chimicale</strong> care mi-au placut si pe care le-as recomanda.
+1.  <strong>Alga Maris – Crema Solara de fata si corp SPF30/50:</strong> Asta e o alegere populara si pe buna dreptate.</p>
+        <p>E bazata pe oxid de zinc si dioxid de titan, non-nano. Textura e destul de faina, se intinde bine si nu lasa o pelicula alba exagerata, cum fac alte minerale. Am folosit-o personal vreo doua veri la rand, si mi-a placut cum se simte pe piele.</p>
+        <p>E certificata organic, ceea ce e un plus mare. Pretul e pe la 90-130 RON, depinde de SPF si de unde o iei.</p>
+        <ul><li><strong>Avantaje:</strong> Protectie excelenta, ingrediente curate, certificare bio, se absoarbe relativ bine.</li><li><strong>Dezavantaje:</strong> Poate fi putin mai grasa pentru tenurile foarte uleioase, iar daca transpiri mult, trebuie reaplicata des.</li></ul>
+        <p>2.  <strong>Wooden Spoon – Crema Solara Naturala SPF30/50:</strong> Un brand bulgaresc, dar foarte popular si la noi. Au o gama variata, inclusiv pentru copii. Imi place ca sunt focusati pe ingrediente super curate si au o filozofie minimalista. Am avut varianta pentru copii si a fost super ok, chiar si pentru pielea sensibila a nepotelului meu. Pretul e undeva la 70-110 RON.</p>
+        <ul><li><strong>Avantaje:</strong> Ingrediente simple, curate, fara parfum, potrivita pentru piele sensibila si copii.</li><li><strong>Dezavantaje:</strong> Textura poate fi putin mai groasa si lasa un strat alb vizibil initial, care se estompeaza mai greu.</li></ul>
+        <p>3.  <strong>Lavera – Crema Solara Sensitiv SPF30:</strong> Daca vrei ceva mai accesibil ca pret, dar tot cu standarde inalte, Lavera e o optiune buna. E un brand german, certificat Natrue, cu o experienta lunga in cosmetice naturale. E o <strong>crema solara naturala fara chimicale</strong> destul de usoara, nu te simti incarcat. Costa pe la 60-90 RON.</p>
+        <ul><li><strong>Avantaje:</strong> Pret bun pentru calitatea oferita, textura lejera, potrivita pentru piele sensibila.</li><li><strong>Dezavantaje:</strong> Protectia SPF30 s-ar putea sa nu fie suficienta pentru expuneri prelungite la soare puternic, iar tubul e cam mic.</li></ul>
+        <p>4.  <strong>Mossa – Crema Solara de fata Anti-Age SPF30:</strong> Asta e o varianta mai specializata, pentru cine vrea si beneficii anti-aging pe langa protectie. E cu oxid de zinc, dar are si antioxidanti din fructe de padure nordice. Un prieten si-a luat-o anul trecut si a fost super incantat de cum arata pielea lui dupa, mai luminoasa, mai ferma. Pretul e pe la 100-140 RON.</p>
+        <ul><li><strong>Avantaje:</strong> Pe langa protectie, ofera si beneficii anti-aging, textura placuta, se absoarbe rapid.</li><li><strong>Dezavantaje:</strong> E mai scumpa si e doar pentru fata, deci nu-i o solutie all-in-one. SPF-ul e 30, nu 50.</li></ul>
+        <p>Na, astea sunt doar cateva exemple. Piata e plina de optiuni, dar astea mi-au atras atentia prin performanta si ingrediente. Acum, depinde de preferintele tale si de buget, pana la urma.</p>
+    </section>
+
+    <section id="section-3">
+      <h2>Cum sa citesti eticheta: Ce conteaza cu adevarat la o crema solara naturala</h2>
+      <p>Stai putin, ca nu e chiar asa simplu sa alegi o <strong>crema solara naturala fara chimicale</strong> doar dupa brand. Trebuie sa stii ce sa cauti pe eticheta. E ca la mancare, stii? Daca nu citesti, risti sa cumperi ceva ce nu-ti doresti, sau care nu e deloc natural, chiar daca zice "natural" pe fata.</p>
+        <p>Primul lucru si cel mai important: <strong>filtrele UV active</strong>. Asa cum am zis, vrei sa vezi oxid de zinc si/sau dioxid de titan. Si, daca se poate, sa fie specificat ca sunt "non-nano". Asta e cheia. Daca vezi alte denumiri gen Oxybenzone, Avobenzone, Octinoxate, Homosalate, Octisalate, Octocrylene, nu e o <strong>crema solara naturala</strong> minerala, e una chimica. Si nu asta cauti tu, nu?</p>
+        <p>Apoi, verifica <strong>SPF-ul si "spectrul larg"</strong>. Minim SPF30 e ok pentru majoritatea situatiilor, dar daca stii ca stai mult in soare sau ai pielea foarte deschisa, un SPF50 e mai sigur. Si "broad spectrum" e obligatoriu. Fara el, nu te protejezi de ambele tipuri de raze UV.</p>
+        <p>Uita-te si la <strong>ingredientele inactive</strong>. Aici e partea unde multe branduri "se dau" naturale, dar baga alte chimicale. Cauta ingrediente hidratante si nutritive, cum ar fi unt de shea, ulei de cocos, ulei de jojoba, aloe vera, vitamina E, extracte de plante. Astea sunt bune, hranesc pielea.</p>
+        <p>Ce sa <strong>eviti cu desavarsire</strong>? Pai, pe langa filtrele chimice, stai departe de parfumuri sintetice (parfum/fragrance), parabeni (methylparaben, propylparaben, etc.), ftalati, coloranti artificiali. Astea sunt iritante si, in unele cazuri, pot fi perturbatori endocrini. Nu le vrei pe piele, mai ales cand e expusa la soare.</p>
+        <p>Daca vezi <strong>certificari</strong> pe ambalaj, e un semn bun. Gen ECOCERT, COSMOS, Natrue, Soil Association. Astea iti garanteaza ca produsul respecta anumite standarde de ingrediente naturale si organice. Nu e obligatoriu sa aiba, dar e un plus de incredere, zic eu. Ca na, pana la urma, e vorba de ce pui pe pielea ta.</p>
+        <p>Si un mic tips de la mine: <strong>citeste review-uri</strong>, dar nu te baza doar pe ele. Unii au pielea grasa, altii uscata, unii sunt mai sensibili. Ce merge pentru unul, s-ar putea sa nu mearga pentru tine. Dar iti faci o idee generala despre textura, despre cat de mult lasa pelicula alba si despre cum se simte pe piele. Na, asta e, trebuie sa te informezi.</p>
+    </section>
+
+    <section id="section-4">
+      <h2>Batalia cremelor solare: Minerale vs. Chimice (si de ce castiga crema solara naturala)</h2>
+      <p>Bun, hai sa lamurim odata pentru totdeauna diferenta cruciala dintre cele doua mari categorii de protectie solara, ca sa intelegi de ce insist pe <strong>crema solara naturala fara chimicale</strong>. Vorbim de filtre minerale (fizice) versus filtre chimice (organice).
+<strong>Cremele solare minerale (fizice):</strong></p>
+        <ul><li><strong>Cum functioneaza:</strong> Astea contin, cum am zis, oxid de zinc si dioxid de titan. Ele formeaza o bariera la suprafata pielii si, pur si simplu, reflecta razele UV. Gandeste-te la ele ca la un zid mic care blocheaza soarele.</li><li><strong>Protectie:</strong> Ofera protectie imediat dupa aplicare. Nu trebuie sa astepti 20 de minute ca sa "intre in piele".</li><li><strong>Siguranta:</strong> Sunt considerate sigure pentru majoritatea tipurilor de piele, inclusiv pentru cea sensibila, copii si femei insarcinate. Nu se absorb in piele, deci riscul de iritatii sau de perturbari hormonale e minim spre zero.</li><li><strong>Impact asupra mediului:</strong> Sunt "reef-safe" (sigure pentru recifurile de corali), spre deosebire de multe filtre chimice. E un aspect important, mai ales daca iti place sa inoti in mare.</li><li><strong>Minusuri:</strong> Pot lasa o pelicula alba, mai ales formulele mai vechi sau cele cu concentratie mare de minerale. Textura poate fi uneori mai groasa.</li></ul>
+        <p><strong>Cremele solare chimice (organice):</strong></p>
+        <ul><li><strong>Cum functioneaza:</strong> Astea contin ingrediente precum Oxybenzone, Avobenzone, Octinoxate, Octisalate, etc. Ele se absorb in piele si functioneaza prin absorbtia razelor UV si transformarea lor in caldura, pe care apoi o elibereaza de pe piele.</li><li><strong>Protectie:</strong> Trebuie aplicate cu aproximativ 20 de minute inainte de expunerea la soare, ca sa aiba timp sa se absoarba si sa inceapa sa actioneze.</li><li><strong>Siguranta:</strong> Aici e controversa. Unele studii sugereaza ca anumite filtre chimice pot fi absorbite in sange si pot avea efecte de perturbatori endocrini. Pe bune, nu e ceva ce vrei sa risti, mai ales pe termen lung. Pot provoca si iritatii sau reactii alergice.</li><li><strong>Impact asupra mediului:</strong> Multe dintre ele sunt toxice pentru viata marina, in special pentru corali. Asta e un motiv serios pentru care multi oameni, inclusiv eu, le evita.</li><li><strong>Minusuri:</strong> Pot fi iritante, exista semne de intrebare legate de siguranta absorbtiei in organism, si nu sunt prietenoase cu mediul.</li></ul>
+        <p>Deci, daca ma intrebi pe mine, alegerea e clara. O <strong>crema solara naturala fara chimicale</strong>, cu filtre minerale, castiga detasat. E mai sigura pentru tine, pentru familia ta si pentru planeta. Poate ca uneori e putin mai "pretentioasa" la aplicare sau mai scumpa, dar beneficiile depasesc cu mult aceste mici neajunsuri. Nu-i asa?</p>
+    </section>
+
+    <section id="section-5">
+      <h2>Nu te pacali singur: Greseli comune si secrete de insider pentru crema solara fara chimicale</h2>
+      <p>Ok, ai ales o <strong>crema solara naturala fara chimicale</strong>, bravo tie! Dar treaba nu se termina aici. Felul in care o folosesti e la fel de important ca produsul in sine. Am vazut oameni facand greseli clasice, si apoi se mirau ca s-au ars. Na, nu-i de mirare.
+Uite cateva greseli comune si cum sa le eviti, plus niste tips-uri de insider:</p>
+        <ul><li><strong>Greseli majore:</strong></li>
+        <ul><li><strong>Nu aplici suficient:</strong> Asta e cea mai mare greseala. Oamenii folosesc prea putin produs. Ca regula generala, ai nevoie de o lingurita plina pentru fata si gat, si de un shot glass (cam 30 ml) pentru tot corpul. Pare mult, dar trebuie sa acoperi tot.</li><li><strong>Nu reaplici des:</strong> Crema solara, chiar si cea mai buna, nu te protejeaza o zi intreaga. Trebuie reaplicata la fiecare doua ore, sau imediat dupa ce ai inotat, ai transpirat intens sau te-ai sters cu prosopul. Nu te baza pe "water resistant" la infinit.</li><li><strong>Ignori zonele "uitate":</strong> Buze, urechi, ceafa, spatele mainilor, laba piciorului. Astea sunt zone care se ard cel mai usor si sunt adesea neglijate. Foloseste un balsam de buze cu SPF, de exemplu.</li><li><strong>Te bazezi doar pe crema solara:</strong> Crema e importanta, dar nu e singura linie de aparare. Ochelari de soare, palarie cu boruri largi, haine cu protectie UV, si statul la umbra, mai ales intre orele 10:00 si 16:00, sunt la fel de vitale.</li><li><strong>Verifici data de expirare:</strong> Crema solara isi pierde eficacitatea in timp. Daca ai un tub deschis de anul trecut, cel mai bine ar fi sa-l arunci si sa-ti iei unul nou. De obicei, au o perioada de valabilitate de 6-12 luni de la deschidere (simbolul "PAO" – Period After Opening, pe ambalaj).</li></ul>
+        <p><li><strong>Tips-uri de insider:</strong></li></p>
+        <ul><li><strong>Aplica din timp:</strong> Chiar daca o <strong>crema solara naturala</strong> cu filtre minerale actioneaza imediat, e bine sa o aplici cu 15-20 de minute inainte sa iesi la soare. Asa ii dai timp sa se "aseze" bine pe piele.</li><li><strong>Incalzeste in maini:</strong> Mai ales daca ai o crema solara minerala mai groasa, ia o cantitate mica in palma, incalzeste-o putin prin frecare, apoi aplica. Se va intinde mult mai usor si mai uniform.</li><li><strong>Strat subtire, apoi al doilea:</strong> Daca te deranjeaza pelicula alba, aplica un strat subtire, asteapta 5 minute sa se "aseze", apoi aplica un al doilea strat subtire. Va arata mult mai bine decat un strat gros dintr-o data.</li><li><strong>Nu uita de interior:</strong> Chiar daca stai in casa, daca ai ferestre mari prin care bate soarele direct, razele UVA pot patrunde. O aplicare dimineata pe fata si gat e o idee buna, mai ales daca lucrezi langa o fereastra.</li><li><strong>Alege formule tintite:</strong> Pentru fata, poti opta pentru o formula speciala, mai lejera, care nu incarca porii. Pentru corp, poti folosi o varianta mai economica, dar la fel de eficienta.</li></ul>
+        <p>Am avut un prieten care si-a luat o <strong>crema solara naturala fara chimicale</strong> de top, dar o aplica o data dimineata si gata, credea ca e Superman. Na, s-a ars de cateva ori pana a inteles ca trebuie reaplicata. Deci, nu te pacali singur, fii responsabil. Pielea ta o sa-ti multumeasca mai tarziu.</p>
+    </section>
+
+    <section id="section-6">
+      <h2>Buget mic, mediu, mare? Avem o crema solara naturala pentru fiecare buzunar</h2>
+      <p>Stiu, stiu, bugetul e o chestie reala. Nu toti avem bani sa aruncam pe cele mai scumpe produse. Dar vestea buna e ca poti gasi o <strong>crema solara naturala fara chimicale</strong> buna indiferent de cat vrei sa cheltui. Uite, am sa fiu direct si am sa-ti dau niste directii, asa, ca un prieten.
+<strong>1. Buget mic (50-80 RON):</strong></p>
+        <ul><li><strong>Ce sa cauti:</strong> In zona asta de pret, trebuie sa fii mai atent la eticheta, dar nu e imposibil. Cauta branduri romanesti mai mici sau marci europene mai putin cunoscute, dar cu certificari decente. Adesea, ele se bazeaza pe formule simple, cu ingrediente putine, ceea ce e un avantaj.</li><li><strong>Recomandare:</strong> Uite, am auzit lucruri bune despre unele produse locale, gen "Solaris" (nu e o recomandare directa, ci un exemplu de gen). Uneori, si supermarketurile mari aduc produse "bio" sub brand propriu, care pot fi ok la pret.</li><li><strong>Avertisment:</strong> Fii extra atent la lista de ingrediente. Unele pot masca chimicale sub denumiri "naturale". Daca e prea ieftin, s-ar putea sa nu fie chiar "fara chimicale" in sensul strict.</li></ul>
+        <p><strong>2. Buget mediu (80-150 RON):</strong></p>
+        <ul><li><strong>Ce sa cauti:</strong> Aici e zona "sweet spot" unde gasesti calitate buna la un pret rezonabil. Majoritatea brandurilor din topul meu (Alga Maris, Wooden Spoon, Lavera) se incadreaza aici. Ai o gama larga de optiuni, cu texturi mai rafinate si ingrediente aditionale benefice.</li><li><strong>Recomandare:</strong> Alga Maris e o alegere sigura, cum am zis. Wooden Spoon e super pentru piele sensibila. Daca vrei ceva mai lejer, Lavera e o optiune faina. Aici deja ai de unde alege, na.</li><li><strong>Avantaj:</strong> Raport calitate-pret excelent. Produse testate, cu review-uri pozitive si, de cele mai multe ori, cu certificari clare.</li></ul>
+        <p><strong>3. Buget mare (150-250+ RON):</strong></p>
+        <ul><li><strong>Ce sa cauti:</strong> Daca nu te uiti la bani, ai luxul sa alegi ce-i mai bun pe piata. Aici gasesti formule high-end, cu ingrediente active complexe, texturi ultra-lejere care nu lasa nicio urma alba, si adesea cu beneficii suplimentare (anti-aging, iluminare, etc.).</li><li><strong>Recomandare:</strong> Branduri ca Coola (desi unele au si filtre chimice, trebuie sa cauti strict variantele minerale), sau formule de la Mossa sau Madara care sunt mai premium. Aici ai si optiuni de <strong>crema solara naturala fara chimicale</strong> special create pentru ten acneic, sau cu nuante care se adapteaza pielii.</li><li><strong>Experienta:</strong> Aceste produse ofera o experienta de utilizare superioara, adesea cu ambalaje elegante si o senzatie de "lux" pe piele.</li></ul>
+        <p>Pana la urma, cel mai important e sa folosesti o <strong>crema solara naturala fara chimicale</strong>, indiferent de pret. Mai bine una mai ieftina, dar aplicata corect si des, decat una super scumpa pe care o folosesti cu zgarcenie. Prioritatea e protectia, nu brandul, nu?</p>
+    </section>
+
+      <section class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">AF</div>
+        <div class="author-info">
+          <h4>Alexandra Florea</h4>
+          <p class="author-role">Specialist Cosmetice Bio</p>
+          <p class="author-bio">Alexandra lucreaza de peste 6 ani in industria cosmeticelor naturale. Testeaza si recomanda doar produse cu ingrediente certificate organic si fara chimicale nocive.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="crema-solara-naturala-fara-chimicale"
+    currentCategory="cosmetice-naturale"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+</script>
