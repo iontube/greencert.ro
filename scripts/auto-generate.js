@@ -61,7 +61,7 @@ function runCommand(command, args, cwd) {
   });
 }
 
-// Check if enough time has passed since last article (minimum 2 days)
+// Check if enough time has passed since last article (minimum 12 hours)
 function shouldRunToday(keywordsPath) {
   try {
     const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
@@ -81,9 +81,8 @@ function shouldRunToday(keywordsPath) {
     if (!lastDate) return true;
 
     const daysSinceLast = (Date.now() - lastDate.getTime()) / (1000 * 60 * 60 * 24);
-    // Randomize: skip if today, 50% chance if 1 day ago, always run if 2+ days
-    if (daysSinceLast < 1) return false;
-    // Post every day, skip only if already posted today
+    // Skip only if already posted today (use 0.5 days to avoid timing issues with daily cron)
+    if (daysSinceLast < 0.5) return false;
     return true;
   } catch (e) {
     return true; // If can't read, run anyway
@@ -116,9 +115,9 @@ async function main() {
   log('AUTO-GENERATE STARTED - greencert.ro');
   log('='.repeat(60));
 
-  // Check if we should run today (minimum 2 days since last article)
+  // Check if we should run today (minimum 12 hours since last article)
   if (!shouldRunToday(path.join(process.cwd(), 'keywords.json'))) {
-    log('Last article was less than 2 days ago. Skipping.');
+    log('Last article was less than 12 hours ago. Skipping.');
     return;
   }
 
