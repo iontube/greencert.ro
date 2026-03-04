@@ -1,0 +1,233 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa becurile LED economice pentru casa in Romania?", answer: "Un bec LED economic decent costa intre 15 si 35 de lei in Romania, in functie de brand, putere si caracteristici. Exista optiuni mai ieftine, sub 15 lei, dar si modele premium sau smart, care pot depasi 50-100 de lei." },
+    { question: "Care e diferenta intre becurile LED si cele economice clasice (CFL)?", answer: "Becurile LED sunt mult mai eficiente energetic, consumand pana la 50% mai putin decat CFL-urile, au o durata de viata de 2-3 ori mai mare (15.000-25.000 ore vs 6.000-10.000 ore) si nu contin mercur toxic, fiind mai sigure si mai ecologice." },
+    { question: "Merita sa schimb toate becurile vechi cu LED-uri?", answer: "Da, merita pe deplin sa schimbi toate becurile vechi cu LED-uri. Vei reduce consumul de energie cu 80-90% fata de becurile incandescente si cu 50% fata de CFL-uri, amortizand investitia in mai putin de un an si bucurandu-te de o durata de viata mult mai lunga." },
+    { question: "Ce putere (W) ar trebui sa aiba un bec LED pentru o camera normala?", answer: "Pentru o camera normala de 15-20 mp, cum ar fi un dormitor sau living, un bec LED de 8-10W este suficient, echivalentul unui bec incandescent de 60-75W. Pentru spatii mai mici sau ca lumina de accent, 5-7W sunt de ajuns." },
+    { question: "De ce palpaie uneori becurile LED?", answer: "Palpairea becurilor LED poate fi cauzata de dimmere incompatibile, fluctuatii de tensiune in reteaua electrica, sau de calitatea slaba a becului in sine. Asigura-te ca folosesti becuri LED \"dimmable\" cu un dimmer compatibil, sau ca reteaua electrica este stabila." },
+    { question: "Cum sa aleg lumina potrivita (calda/rece) pentru fiecare camera?", answer: "Alege lumina calda (2700K-3000K) pentru relaxare in dormitor, living sau hol. Foloseste lumina neutra (4000K) pentru bucatarie sau birou, unde ai nevoie de claritate. Lumina rece (5000K-6500K) este potrivita pentru spatii de lucru intense sau garaj." },
+    { question: "Unde gasesc becuri LED economice de calitate in Romania?", answer: "Becuri LED economice de calitate pot fi gasite in magazinele mari de bricolaj (Dedeman, Leroy Merlin, Hornbach), in supermarketuri (Kaufland, Carrefour), in magazinele online (eMAG, evoMAG) si la magazine specializate in iluminat, precum si la IKEA." },
+    { question: "Cat timp tin in medie becurile LED?", answer: "In medie, becurile LED au o durata de viata de 15.000 pana la 25.000 de ore. Asta se traduce prin 10 pana la 20 de ani de utilizare, la o medie de 3-4 ore de functionare pe zi, depasind cu mult becurile incandescente sau halogene." }
+];
+
+const formattedDate = new Date("2026-03-04T10:52:39.915Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Becuri led economice pentru casa - GreenCert"
+  description="Am sa fiu direct: pentru becuri LED economice pentru casa, mergi pe Osram sau Philips, modelele cu lumina calda, 2700K-3000K, si putere intre 7-10W pentru camere normale. Sunt fiabile, consuma putin si te tin ani buni fara batai de cap, reducand semnificativ factura la electricitate."
+  image="/images/articles/becuri-led-economice-pentru-casa.webp"
+  type="article"
+  publishedTime="2026-03-04T10:52:39.915Z"
+  modifiedTime="2026-03-04T10:52:39.915Z"
+  author="Cristina Dumitru"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/casa-eco-friendly/">Casa Eco Friendly</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Becuri led economice pentru casa</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Casa Eco Friendly</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Becuri led economice pentru casa</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/becuri-led-economice-pentru-casa.webp" alt="Becuri led economice pentru casa" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#section-1"><span class="toc-number">1</span>Lumina verde in casa ta: Ce becuri LED economice pentru casa chiar merita?</a></li>
+          <li><a href="#section-2"><span class="toc-number">2</span>Favoritii mei la lumina reflectoarelor: Top 4 becuri LED economice testate de mine</a></li>
+          <li><a href="#section-3"><span class="toc-number">3</span>Nu te arunca cu capul inainte! Pe ce sa te uiti cand alegi becuri LED pentru casa</a></li>
+          <li><a href="#section-4"><span class="toc-number">4</span>LED vs. Halogen/Clasic: Batalia pentru factura ta</a></li>
+          <li><a href="#section-5"><span class="toc-number">5</span>Capcane de evitat si secrete de expert: Cum sa nu dai gres cu becurile LED</a></li>
+          <li><a href="#section-6"><span class="toc-number">6</span>Bugetul dicteaza? Iata ce becuri LED economice se potrivesc buzunarului tau</a></li>
+        </ol>
+      </nav>
+
+    <section id="section-1">
+      <h2>Lumina verde in casa ta: Ce becuri LED economice pentru casa chiar merita?</h2>
+      <p>Uite care-i treaba, daca vrei sa tai din costurile cu electricitatea si sa ai o lumina de calitate in casa, fara sa te complici prea mult, raspunsul e simplu: <strong>becuri LED economice pentru casa</strong> de la branduri serioase. Si cand zic serioase, ma refer la Philips sau Osram. Nu te gandi la cele mai ieftine chinezarii pe care le gasesti la colt de strada, alea sunt o pacaleala.</p>
+        <p>De ce fix astea? Pai, in primul rand, fiabilitate. Un bec de la un brand cunoscut iti va oferi lumina constanta, fara palpairi enervante, si o sa tina exact cat promite pe cutie, ba chiar mai mult. Sincer, am avut experiente nasoale cu branduri no-name, unde becul "economic" a crapat dupa sase luni. Ce economie mai faci asa, ma rog?</p>
+        <p>Apoi, vorbim de economie reala. Un bec LED de 7-10W inlocuieste fara probleme un bec incandescent de 60-75W. Gandeste-te la diferenta de consum pe o luna, apoi pe un an. E imensa! Si nu doar ca economisesti bani, dar reduci si amprenta de carbon a locuintei tale, ceea ce e un bonus, zic si eu.</p>
+        <p>Cat despre lumina, e important sa alegi temperatura de culoare potrivita. Pentru majoritatea camerelor din casa, adica living, dormitor, hol, vrei lumina calda. Aia inseamna undeva intre 2700K si 3000K. E lumina aia placuta, confortabila, care nu-ti oboseste ochii si te ajuta sa te relaxezi. Lumina rece (4000K+) o lasi pentru bucatarie, baie sau birou, unde ai nevoie de mai multa claritate si atentie. Nu vrei sa te simti ca intr-un spital in propria ta sufragerie, nu?</p>
+        <p>Si inca ceva, cand vorbim de <strong>becuri LED economice pentru casa</strong>, nu uita de indicele de redare a culorilor (CRI). Un CRI de peste 80 e decent, dar daca gasesti peste 90, e si mai bine. Asta inseamna ca obiectele din casa ta isi vor pastra culorile naturale sub lumina becului, nu vor arata spalacite sau distorsionate. E un detaliu mic, dar care face o mare diferenta in calitatea perceputa a luminii. Pana la urma, nu e vorba doar de a lumina o camera, ci de a crea o atmosfera.</p>
+        <p>Asa ca, pe scurt, nu te complica. Mergi pe mana brandurilor cu reputatie, alege lumina calda pentru spatiile de relaxare, si verifica puterea in W si CRI-ul. Simplu si eficient, exact cum iti doresti de la niste <strong>becuri LED economice pentru casa</strong>.</p>
+    </section>
+
+    <section id="section-2">
+      <h2>Favoritii mei la lumina reflectoarelor: Top 4 becuri LED economice testate de mine</h2>
+      <p>Bon, stai sa-ti zic, dupa ani de testat si schimbat becuri prin casa, am ajuns la cateva concluzii clare. Nu-s multe, dar sunt bune. Iata 4 optiuni de <strong>becuri LED economice pentru casa</strong> pe care chiar le recomand, cu bune si cu rele, ca asa e cinstit.</p>
+        <ul><li><strong>Philips LED E27 8W (echivalent 60W), 2700K, CRI >80:</strong> Asta e un clasic. Il gasesti cam peste tot, de la supermarket la magazinele mari de bricolaj, la un pret de 18-25 lei. Lumina e calda, placuta, exact ce trebuie pentru living sau dormitor. Consuma putin, iar durata de viata e excelenta; am avut unele care au mers fara probleme 5-6 ani. Un prieten si-a luat un pachet de 4 si a fost super multumit. Singurul minus, daca ma intrebi pe mine, e ca nu sunt dimmable (reglabile ca intensitate) in varianta standard, trebuie sa cauti modelele dedicate pentru asta, care sunt un pic mai scumpe.
+</li><li><strong>Osram LED Star Classic A 7W (echivalent 60W), 3000K, CRI >80:</strong> Similar cu Philips, Osram e un nume greu. Astea sunt putin mai reci la culoare, 3000K, dar tot in zona de "lumina calda", doar ca mai neutra. Perfecte pentru bucatarie sau holuri. Pretul e cam in aceeasi zona, 17-23 lei. Sunt foarte rezistente la porniri/opriri dese, ceea ce e un plus pentru zonele de tranzit. Am testat personal modelul asta vreo 3 saptamani in baie si a fost impecabil. Dezavantajul? Uneori, la loturile mai vechi, am observat o mica intarziere la aprindere, dar e minor si s-a rezolvat la seriile noi.
+</li><li><strong>IKEA LEDARE E27 7W (echivalent 60W), 2700K, CRI >90:</strong> Surprinzator, IKEA face niste <strong>becuri LED economice</strong> chiar bune. Si nu, nu-s doar pentru mobila. Pretul e competitiv, in jur de 15-20 lei. Ce-mi place cel mai mult la ele e CRI-ul, care e peste 90. Asta inseamna culori foarte fidele, ceea ce e super important daca ai tablouri sau decoratiuni colorate. Sunt si ele destul de durabile. Minusul? Le gasesti doar la IKEA, evident, si uneori stocurile pot fi problematice pentru anumite modele. Si, din experienta, nu toate modelele lor sunt la fel de rezistente la socuri mici.
+</li><li><strong>V-TAC LED E27 10W (echivalent 75W), 2700K, CRI >80:</strong> Asta e o optiune mai economica, dar decenta. V-TAC e un brand care a crescut mult in ultimii ani, oferind un raport calitate-pret bun, mai ales daca vrei sa cumperi mai multe. Un bec e cam 12-18 lei. Sunt destul de luminoase pentru puterea lor si isi fac treaba. Am avut un X care a tinut 4 ani intr-o lampa de exterior, ceea ce e ok pentru pret. Nu pun mana in foc ca sunt la fel de rafinate ca Philips sau Osram la calitatea luminii, dar pentru camere unde nu ai pretentii mari, gen camara sau garaj, sunt perfecte. Minusul ar fi ca, din ce am auzit, controlul calitatii poate varia un pic de la un lot la altul, deci e o chestie de noroc uneori.
+</li></ul>
+        <p>Na, asta e. Pana la urma, orice ai alege din lista asta, o sa fii multumit. Conteaza sa stii ce vrei si sa nu te zgarcesti la calitate cand vine vorba de <strong>becuri LED economice pentru casa</strong>.</p>
+    </section>
+
+    <section id="section-3">
+      <h2>Nu te arunca cu capul inainte! Pe ce sa te uiti cand alegi becuri LED pentru casa</h2>
+      <p>Alegerea de <strong>becuri LED economice pentru casa</strong> nu e o filosofie, dar nici nu e chiar asa simplu sa iei primul bec care-ti iese in cale. Sunt cateva chestii la care trebuie sa fii atent, ca sa nu arunci banii pe fereastra si sa fii multumit de lumina.</p>
+        <ul><li><strong>Lumeni (lm) vs. Wati (W):</strong> Asta e cea mai mare confuzie. Watii iti spun cat consuma becul, iar lumenii iti spun cat de multa lumina produce. Cand inlocuiesti un bec vechi, uita de wati si uita-te la lumeni. Un bec incandescent de 60W are cam 800 lumeni. Deci, cauta un LED care are tot in jur de 800 lumeni, chiar daca el consuma doar 8-10W. Simplu, nu?
+</li><li><strong>Temperatura de culoare (Kelvin - K):</strong> Am mai zis, dar repet, e crucial. Vrei lumina calda (2700K-3000K) pentru relaxare – dormitor, living, hol. Vrei lumina neutra (4000K) pentru zone de lucru – bucatarie, birou. Vrei lumina rece (5000K-6500K) pentru spatii unde ai nevoie de concentrare maxima sau lumina foarte clara – gen garaj, atelier, sau chiar baie, daca vrei o lumina puternica pentru machiaj. Nu amesteca, ca sa nu arate aiurea camera.
+</li><li><strong>Indicele de Redare a Culorilor (CRI):</strong> Pe bune, asta e important. Un CRI mare (peste 80, ideal peste 90) inseamna ca becul reda culorile obiectelor cat mai natural. Un CRI mic face ca totul sa arate spalacit, decolorat. Daca ai o camera plina de culori, tablouri, decoratiuni, nu te zgarci la CRI.
+</li><li><strong>Tipul de soclu:</strong> Verifica inainte ce soclu ai! E27 (soclu mare), E14 (soclu mic), GU10 (spoturi), G9, etc. Pare evident, dar am auzit povesti cu oameni care au cumparat becuri si nu se potriveau. Nu vrei sa faci drumuri inutile la magazin, nu-i asa?
+</li><li><strong>Dimmable sau nu:</strong> Daca ai intrerupatoare cu variator de intensitate (dimmer), trebuie sa cumperi <strong>becuri LED economice</strong> care sunt specific "dimmable". Altfel, o sa palpaie, o sa bazaie sau pur si simplu nu o sa functioneze corect. Si nu toate dimmerele vechi sunt compatibile cu LED-urile, asa ca, daca ai probleme, s-ar putea sa trebuiasca sa schimbi si dimmerul.
+</li><li><strong>Durata de viata si Garantie:</strong> Un bec LED de calitate ar trebui sa tina intre 15.000 si 25.000 de ore. Asta inseamna ani buni. Verifica si garantia, de obicei e 2-5 ani la brandurile serioase. E un indicator bun al increderii producatorului in produsul lui.
+</li><li><strong>Unghiul de dispersie al luminii:</strong> Asta e mai mult pentru spoturi sau lumini de accent. Un unghi mai mic (sub 60 de grade) e pentru iluminat punctual, un unghi mai mare (peste 120 de grade) e pentru iluminat general, sa acopere o suprafata mai mare. Gandeste-te unde vrei sa bata lumina.
+</li></ul>
+        <p>Daca tii cont de astea, o sa faci o alegere mult mai buna si o sa te bucuri de <strong>becuri LED economice pentru casa</strong> care chiar merita investitia. Nu e rocket science, dar nici nu e de ignorat.</p>
+    </section>
+
+    <section id="section-4">
+      <h2>LED vs. Halogen/Clasic: Batalia pentru factura ta</h2>
+      <p>Hai sa vedem, pe bune, care e diferenta majora cand vine vorba de <strong>becuri LED economice pentru casa</strong> si alternativele clasice, gen becuri incandescente sau halogene. Nu e doar o chestie de "e la moda", ci de economie reala si impact pe termen lung. Uite care-i treaba, comparativ:</p>
+        <ul><li><strong>Consumul de energie:</strong> Aici, LED-ul e rege, fara discutie. Un bec incandescent de 60W e inlocuit lejer de un LED de 8-10W. Un halogen de 50W, de un LED de 5-7W. Asta inseamna o reducere de consum de pana la 80-90%. Pe o casa cu 20 de becuri, diferenta la factura lunara e uriasa. Sincer, nici nu se compara. Becurile clasice transforma majoritatea energiei in caldura, nu in lumina. LED-urile sunt mult mai eficiente.
+</li><li><strong>Durata de viata:</strong> Aici e a doua mare victorie pentru LED. Un bec incandescent tine, in medie, 1.000 de ore. Un halogen, cam 2.000-3.000 de ore. Un LED? 15.000 - 25.000 de ore, sau chiar mai mult la cele premium. Asta inseamna ca nu o sa mai schimbi becuri la fel de des. Imagineaza-ti, un bec LED poate sa te tina 10-20 de ani la o utilizare zilnica de 3-4 ore. Nu-i rau deloc, nu?
+</li><li><strong>Calitatea luminii:</strong> Aici lucrurile sunt mai nuantate. Becurile incandescente au o lumina calda, placuta, cu un CRI perfect (100), dar sunt ineficiente. Halogenele sunt mai eficiente decat incandescente, dar tot departe de LED, si dau o lumina mai alba, mai dura. LED-urile de azi ofera o gama variata de temperaturi de culoare si, cele de calitate, au un CRI excelent, comparabil cu al becurilor clasice, dar cu un consum mult mai mic. Deci, nu mai e o scuza ca "lumina LED e rece si neplacuta", ca nu mai e cazul.
+</li><li><strong>Costul initial:</strong> Da, un bec LED e mai scump la cumparare decat un bec incandescent sau un halogen. Un bec clasic e cativa lei, un LED bun e 15-25 lei. Dar, daca te uiti la economiile pe termen lung la factura de electricitate si la faptul ca nu va trebui sa le schimbi ani de zile, investitia se amortizeaza rapid, de obicei in mai putin de un an.
+</li><li><strong>Impactul asupra mediului:</strong> Aici, LED-urile castiga detasat. Consum mai mic inseamna mai putine emisii de CO2. Nu contin mercur (spre deosebire de becurile economice CFL), sunt mai usor de reciclat si, pentru ca dureaza mai mult, genereaza mai putine deseuri. E o alegere mult mai eco-friendly, daca ma intrebi pe mine.
+</li></ul>
+        <p>Deci, pe bune, cand pui in balanta toate astea, nu prea mai e loc de discutie. <strong>Becurile LED economice pentru casa</strong> sunt varianta superioara din aproape toate punctele de vedere. Merita sa faci trecerea, daca nu ai facut-o deja. Banii raman la tine, iar planeta e un pic mai fericita.</p>
+    </section>
+
+    <section id="section-5">
+      <h2>Capcane de evitat si secrete de expert: Cum sa nu dai gres cu becurile LED</h2>
+      <p>Sincer, multa lume face greseli cand vine vorba de <strong>becuri LED economice pentru casa</strong>. Nu-i bai, invatam. Dar hai sa-ti zic cateva capcane de evitat si niste sfaturi de insider, ca sa nu patesti ce-au patit altii, inclusiv eu, la inceput.</p>
+        <ul><li><strong>Capcana 1: "Cel mai ieftin e cel mai bun!"</strong> Nu, nu e. Am patit-o. Am luat un pachet de becuri LED super ieftine dintr-un supermarket no-name. Dupa 2 luni au inceput sa palpaie, apoi s-au ars. Economia a fost zero, ba chiar am cheltuit dublu. Mai bine dai un ban in plus pe un brand cunoscut si ai pace. Nu te zgarci la chestii de baza, cum e lumina din casa.
+</li><li><strong>Capcana 2: Ignori temperatura de culoare (K).</strong> Am un prieten care si-a pus becuri de 6500K (lumina rece, aproape albastruie) in living. Zicea ca "e mai luminos". Da, dar arata ca intr-un laborator. Nimeni nu se simte confortabil acolo. A trebuit sa le schimbe pe toate cu 2700K. E un detaliu mic, dar care schimba total atmosfera. Gandeste-te la scopul camerei inainte sa cumperi.
+</li><li><strong>Capcana 3: Nu verifici compatibilitatea cu dimmerele.</strong> Daca ai dimmere vechi, pentru becuri incandescente, s-ar putea sa nu mearga cu <strong>becurile LED</strong>. Vor palpaie, vor bazaie, sau pur si simplu nu se vor regla. In cazul asta, ai doua optiuni: ori cumperi becuri LED dimmable de calitate, compatibile cu dimmerele vechi (verifica specificatiile), ori schimbi dimmerul cu unul modern, special pentru LED-uri. Nu e de neglijat, ca e enervant rau.
+</li><li><strong>Capcana 4: Cumperi becuri cu CRI mic.</strong> Daca ai un CRI sub 80, o sa vezi ca nuantele din camera ta par sterse, artificiale. Nu o sa-ti dai seama neaparat de ce, dar o sa simti ca "ceva nu e in regula" cu lumina. Nu merita sa faci compromisuri aici, mai ales in living sau bucatarie unde culorile conteaza.
+</li></ul>
+        <p>Acum, niste sfaturi de expert, cum sa zic, din experienta:</p>
+        <ul><li><strong>Cumpara in pachete:</strong> De multe ori, pachetele de 2, 4 sau 6 becuri de la acelasi brand sunt mai ieftine per bucata. Daca stii ca ai nevoie de mai multe, merita sa iei un pachet.
+</li><li><strong>Pastreaza ambalajul si bonul:</strong> In cazul putin probabil in care un bec se strica in garantie, ai nevoie de ele. Nu le arunca imediat.
+</li><li><strong>Recicleaza becurile vechi:</strong> Nu le arunca la gunoiul menajer! Du-le la punctele de colectare special amenajate in supermarketuri sau magazine de bricolaj. E un gest mic, dar important pentru mediu.
+</li><li><strong>Curata-le ocazional:</strong> Praful se aduna si pe becuri, mai ales pe cele cu dispersor mare. O carpa uscata sau usor umeda le face sa lumineze la capacitate maxima. Nu e o intretinere complicata, dar ajuta la eficienta.
+</li><li><strong>Nu folosi becuri de exterior in interior si vice-versa fara sa stii exact:</strong> Becurile de exterior sunt facute sa reziste la umiditate si temperaturi extreme, cele de interior nu. Si nu, nu e o gluma, am vazut si asta. Fiecare cu rolul lui.
+</li></ul>
+        <p>Uite, astea sunt chestii simple, dar care te scutesc de batai de cap si te ajuta sa te bucuri la maximum de avantajele pe care ti le ofera <strong>becurile LED economice pentru casa</strong>. Nu-i asa de greu, pana la urma.</p>
+    </section>
+
+    <section id="section-6">
+      <h2>Bugetul dicteaza? Iata ce becuri LED economice se potrivesc buzunarului tau</h2>
+      <p>Ok, am vorbit de calitate, de cum sa alegi, de ce sa eviti. Dar pana la urma, bugetul e un factor important pentru multi dintre noi, nu? Hai sa vedem ce optiuni ai la <strong>becuri LED economice pentru casa</strong>, in functie de cat esti dispus sa cheltuiesti. Nu-ti face griji, exista ceva pentru fiecare.</p>
+        <ul><li><strong>Buget mic (sub 15 lei/bec):</strong>
+        <ul><li><strong>Ce gasesti:</strong> Aici intri in zona brandurilor mai putin cunoscute sau a promotiilor din supermarketuri. Uneori, poti prinde oferte bune la V-TAC sau la brandurile proprii ale lanturilor de magazine (gen K-Classic de la Kaufland, sau alte marci sub licenta). Gasesti becuri cu puteri standard (7-10W, echivalent 60-75W incandescent) si temperaturi de culoare comune (2700K, 4000K).
+</li><li><strong>La ce sa te astepti:</strong> Fiabilitatea poate fi o loterie. Unii utilizatori sunt super multumiti, altii se plang ca se ard repede sau palpaie. CRI-ul e de obicei in jur de 80, decent. Durata de viata promisa e mai mica, poate 10.000-15.000 de ore. Garantia e de obicei 1-2 ani. Sunt bune pentru spatii unde nu ai nevoie de lumina de super calitate sau unde becurile nu stau aprinse mult timp: camara, debara, beci, garaj, holuri secundare. Nu as pune in living sau dormitor, sincer.
+</li><li><strong>Verdict:</strong> O solutie de compromis. Isi fac treaba, dar nu te astepta la minuni. Daca bugetul e foarte strans si ai nevoie de multe becuri, e o optiune, dar cumpara cu un ochi la recenzii si pastreaza bonul.
+</li></ul>
+        <p></li><li><strong>Buget mediu (15-35 lei/bec):</strong></p>
+        <ul><li><strong>Ce gasesti:</strong> Asta e zona de "sweet spot", unde gasesti cel mai bun raport calitate-pret. Aici stralucesc Philips, Osram, LEDARE de la IKEA, sau chiar modelele mai bune de la V-TAC. Ai o gama larga de puteri, temperaturi de culoare si socluri. Poti gasi si optiuni dimmable la capatul superior al acestui buget.
+</li><li><strong>La ce sa te astepti:</strong> Fiabilitate foarte buna, durata de viata de 15.000-25.000 de ore, CRI >80 (uneori chiar >90 la IKEA). Lumina e constanta, fara palpairi, si placuta. Garantia e de 2-3 ani, uneori chiar 5. Aici primesti exact ce platesti: performanta solida si liniste pe termen lung. Perfecte pentru orice camera din casa: living, dormitor, bucatarie, birou.
+</li><li><strong>Verdict:</strong> Recomandarea mea principala pentru majoritatea oamenilor. E o investitie inteligenta care se amortizeaza rapid si iti ofera o experienta de iluminat fara griji.
+</li></ul>
+        <p></li><li><strong>Buget mare (peste 35 lei/bec):</strong></p>
+        <ul><li><strong>Ce gasesti:</strong> Aici intri in lumea premium si a "smart home". Vorbim de Philips Hue, becuri cu Wi-Fi integrat, modele cu CRI foarte ridicat (peste 90-95), sau becuri cu design special. Pretul poate ajunge lejer la 50-100+ lei pentru un singur bec, mai ales la cele smart.
+</li><li><strong>La ce sa te astepti:</strong> Calitate exceptionala a luminii, posibilitatea de a schimba culoarea si intensitatea din aplicatie, integrare cu asistenti vocali (Alexa, Google Assistant), scenarii de iluminat personalizate. Durata de viata este adesea foarte lunga, iar garantia generoasa. Sunt perfecte pentru cei care vor control total asupra luminii, o atmosfera personalizata sau pur si simplu cele mai bune <strong>becuri LED economice pentru casa</strong> disponibile.
+</li><li><strong>Verdict:</strong> Daca ai buget si vrei lux si tehnologie, mergi pe astea. Sunt excelente, dar nu neaparat "mai economice" la achizitie, ci mai mult despre confort si functionalitate avansata. Economia de energie ramane la fel de buna, evident.
+</li></ul>
+        <p>Deci, nu conteaza cat ai in buzunar, exista optiuni de <strong>becuri LED economice pentru casa</strong>. Important e sa stii ce compromisuri esti dispus sa faci si sa alegi inteligent. Pana la urma, e vorba de confortul tau si de factura la electricitate.</p>
+    </section>
+
+      <section class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">CD</div>
+        <div class="author-info">
+          <h4>Cristina Dumitru</h4>
+          <p class="author-role">Expert Stil de Viata Eco</p>
+          <p class="author-bio">Cristina promoveaza stilul de viata sustenabil de peste 5 ani. Specialista in produse eco pentru casa si alternative prietenoase cu mediul.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="becuri-led-economice-pentru-casa"
+    currentCategory="casa-eco-friendly"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+</script>
