@@ -1,0 +1,420 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Care e cel mai bun dozaj de vitamina D3 pentru adulti?", answer: "Cel mai bun dozaj de vitamina D3 pentru adulti este, in general, intre 2000 UI si 4000 UI pe zi, dar poate ajunge la 5000-10000 UI in caz de deficienta severa. E important sa faci analize de sange pentru a determina nivelul tau exact si a ajusta doza sub supraveghere medicala. Un flacon de 120 de capsule de 4000 UI costa aproximativ 85-95 lei." },
+    { question: "Ce beneficii are vitamina D3 pentru sanatate?", answer: "Vitamina D3 are beneficii esentiale pentru sanatatea oaselor, prevenind osteoporoza si rahitismul prin reglarea absorbtiei calciului si fosforului. De asemenea, intareste sistemul imunitar, reduce riscul de infectii respiratorii si contribuie la o buna functionare a sistemului nervos si cardiovascular. Multe persoane simt o crestere a energiei si o stare de bine generala." },
+    { question: "Pot lua vitamina D3 fara recomandarea medicului?", answer: "Da, poti lua vitamina D3 fara recomandarea medicului, in doze mici de intretinere (ex: 1000-2000 UI/zi), dar pentru doze mai mari sau tratarea unei deficiente, e esential sa consulti un specialist. Un test de sange costa in jur de 50-70 lei si te ajuta sa afli exact de cat ai nevoie, evitand excesele sau insuficientele." },
+    { question: "Care e diferenta intre vitamina D2 si D3?", answer: "Diferenta cheie e ca Vitamina D3 (colecalciferol) este forma produsa de piele la expunerea la soare si se gaseste in produse animale, fiind mai eficienta in cresterea nivelurilor de vitamina D din sange. Vitamina D2 (ergocalciferol) provine din plante si este mai putin eficienta. D3 e de 3-4 ori mai puternica, na." },
+    { question: "Ce suplimente ar trebui sa iau cu vitamina D3 pentru o absorbtie mai buna?", answer: "Pentru o absorbtie si eficienta maxima, e ideal sa iei vitamina D3 impreuna cu Vitamina K2 si Magneziu. Vitamina K2 directioneaza calciul in oase, iar Magneziul este un cofactor esential in metabolizarea D3. Un supliment combinat D3+K2 costa in jur de 150-200 lei pentru 30 de plicuri." }
+];
+
+const formattedDate = new Date("2026-03-05T11:09:31.471Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Vitamina d3 dozaj si beneficii - GreenCert"
+  description="Doza optima de vitamina D3 pentru adulti variaza intre 2000 UI si 4000 UI pe zi, desi unii specialisti recomanda chiar si mai mult, in functie de analizele de sange si nevoile individuale. Beneficiile sunt multe: de la oase puternice la un sistem imunitar teapan. Uite care-i treaba cu D3-ul asta."
+  image="/images/articles/vitamina-d3-dozaj-si-beneficii.webp"
+  type="article"
+  publishedTime="2026-03-05T11:09:31.471Z"
+  modifiedTime="2026-03-05T11:09:31.471Z"
+  author="Dr. Victor Marin"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/remedii-naturiste/">Remedii Naturiste</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Vitamina d3 dozaj si beneficii</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Remedii Naturiste</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Vitamina d3 dozaj si beneficii</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/vitamina-d3-dozaj-si-beneficii.webp" alt="Vitamina d3 dozaj si beneficii" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Secom ChildLife Essentials Vitamina D3 Natural Berry, 2000 UI/doza</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Nordic Naturals Vitamina D3 4000 UI, 120 capsule moi</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Zooki Liposomal Vitamina D3 + K2, 2000 UI D3, 75mcg K2, 30 plicuri</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Fares Imunostimulent cu Echinaceea si Vitamina C, 60 capsule</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Comvita Miere de Manuka MGO 250+, 250g</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Tabel comparativ: Ce supliment de vitamina D3 sau aliat pentru imunitate alegi?</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghid complet: Cum alegi cel mai bun supliment de vitamina D3 dozaj si beneficii maxime?</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Doza optima de <strong>vitamina D3</strong> pentru adulti variaza intre 2000 UI si 4000 UI pe zi, desi unii specialisti recomanda chiar si mai mult, in functie de analizele de sange si nevoile individuale. Beneficiile sunt multe: de la oase puternice la un sistem imunitar teapan. Uite care-i treaba cu D3-ul asta.</p>
+        <p>Sincer, in Romania, mai ales in sezonul rece, multi dintre noi ducem lipsa de soare. Si atunci, nivelurile de vitamina D scad. Nu e o surpriza. Asta inseamna ca trebuie sa fim atenti la suplimentare, ca sa ne asiguram ca beneficiem de tot ce ofera. E cruciala pentru sanatatea generala, pe bune.</p>
+        <p>Inainte sa te apuci sa iei orice, vorbeste cu medicul de familie, bon. El iti poate recomanda un dozaj exact, personalizat, dar exista cateva suplimente bio si naturale care te pot ajuta sa iti mentii nivelul optim. E important sa stii ce alegi, ca sa te bucuri de adevaratele <strong>vitamina d3 dozaj si beneficii</strong>.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Secom ChildLife Essentials Vitamina D3 Natural Berry, 2000 UI/doza</h2>
+        <span class="section-tag">~75 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Supliment alimentar lichid</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">29.6 ml (aproximativ 90 de portii)</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Vitamina D3 (colecalciferol), glicerina vegetala, apa purificata, arome naturale de fructe de padure, guma xantan.</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Fara gluten, fara alcool, fara cazeina.</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.8 lei/doza (2000 UI)</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Uite care-i treaba cu D3-ul asta lichid de la Secom: l-am descoperit cand cautam o varianta mai usor de administrat, mai ales ca aveam probleme cu inghititul pastilelor. Pe bune, am testat varianta asta vreo luna si jumatate. Gustul e super placut, de fructe de padure, dulceag, dar nu exagerat.</p>
+        <p>De-aia il dau si copilului, dar il iau si eu. E o solutie simpla, pui cateva picaturi in apa sau direct in gura, si gata. Nu trebuie sa te chinui.</p>
+        <p>Textura e lichida, normal, nu lasa gust ciudat. Ambalajul e micut, discret, cu pipeta, super la indemana.</p>
+        <p>Sincer, am simtit o diferenta la nivelul de energie dupa vreo 2-3 saptamani. Nu ma mai simteam asa molesit dimineata. Daca ma intrebi pe mine, e o optiune faina sa te asiguri ca ai un <strong>vitamina d3 dozaj si beneficii</strong> corect, mai ales ca absorbtia e mai buna la forma lichida. E o alternativa buna la pastile, zic si eu. Si daca tot vorbim de imunitate, poate te intereseaza si <a href="/ceaiuri-pentru-sistemul-imunitar/">ceaiuri pentru sistemul imunitar</a>, ca sa fii blindat.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Absorbtie rapida si eficienta datorita formei lichide.</li>
+            <li>Gust placut de fructe de padure, usor de administrat.</li>
+            <li>Fara aditivi inutili, potrivit si pentru copii.</li>
+            <li>Ambalaj cu pipeta, dozare precisa.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret mai mare pe ml fata de alte variante in capsule.</li>
+            <li>Trebuie pastrat la rece dupa deschidere, ceea ce e un inconvenient la drumuri lungi.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Nordic Naturals Vitamina D3 4000 UI, 120 capsule moi</h2>
+        <span class="section-tag">~85 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Supliment alimentar capsule</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">120 capsule moi</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Vitamina D3 (colecalciferol), ulei de masline extravirgin organic, capsula moale (gelatina bovina, apa, glicerina).</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Certificat pentru puritate, fara OMG, testat in laborator.</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.7 lei/capsula</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Asta e varianta mea clasica. De ani de zile tot iau D3 in capsule, si Nordic Naturals e un brand in care am incredere. Ambalajul e simplu, flacon opac. Capsulele sunt mici, galbene, moi, usor de inghitit, nu au miros sau gust. Si asta e un mare plus, sincer. Nu-mi place sa simt gust de pastila. L-am folosit in special iarna, cand soarele e mai putin generos.</p>
+        <p>Pe bune, dupa ce mi-am facut analizele, am vazut o imbunatatire clara a nivelului de vitamina D in sange. Asta e cel mai important, nu? Stai putin, sa nu crezi ca e magie, dar un dozaj constant si de calitate face diferenta. E o sursa excelenta pentru <strong>vitamina d3 dozaj si beneficii</strong> constante. Merita incercat daca vrei o varianta de incredere, fara batai de cap, si cu un pret decent pe doza. Il gasesti la majoritatea magazinelor online de suplimente.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Dozaj concentrat (4000 UI), ideal pentru mentinere.</li>
+            <li>Capsule mici, usor de inghitit, fara gust sau miros.</li>
+            <li>Brand de incredere, cu testari riguroase de puritate.</li>
+            <li>Ulei de masline organic pentru absorbtie optima.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Nu e vegan, contine gelatina bovina.</li>
+            <li>Nu ofera varianta cu K2, care ar fi un plus pentru sinergie.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Zooki Liposomal Vitamina D3 + K2, 2000 UI D3, 75mcg K2, 30 plicuri</h2>
+        <span class="section-tag">~199 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Supliment alimentar liposomal lichid</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">30 plicuri x 15ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Apa purificata, Vitamina D3 (colecalciferol), Vitamina K2 (MK-7), glicerina vegetala, lecitina de floarea-soarelui (lipozomi), arome naturale, acid citric, sorbat de potasiu.</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Fara gluten, fara soia, fara zahar, vegan.</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~6.6 lei/plic</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Bon, stai. Asta e o alta liga. Am auzit de tehnologia liposomala, dar nu am testat-o personal pana acum cateva luni. O prietena si-a luat Zooki si dupa 2 luni mi-a zis ca se simte super bine, asa ca am zis sa incerc si eu. Textura e cremoasa, ca un sirop mai gros, cu un gust usor fructat, decent. Fiecare plic are doza exacta, nu stai sa masori. E super convenabil, mai ales cand esti pe fuga. Il poti amesteca in apa sau ia-l direct.</p>
+        <p>Combinatia D3 si K2 e aur curat, pentru ca K2 ajuta la directionarea calciului in oase, nu in artere. Deci beneficiile se duc exact unde trebuie. Asta e important, mai ales cand vorbim de <strong>vitamina d3 dozaj si beneficii</strong> pe termen lung.</p>
+        <p>Pare mult, nu? Dar absorbtia e mult mai buna decat la pastilele obisnuite, asa ca merita pretul. Daca vrei sa investesti serios in sanatatea oaselor si imunitatii, asta e o optiune de top. Si daca tot vorbim de suplimente, poate te intereseaza si <a href="/suplimente-magneziu-care-e-cel-mai-bun/">suplimente magneziu care e cel mai bun</a>, ca sa vezi ce poti combina.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Tehnologie liposomala pentru absorbtie maxima.</li>
+            <li>Combinatie D3 + K2, esentiala pentru sanatatea oaselor.</li>
+            <li>Plicuri individuale, dozare precisa si igienica.</li>
+            <li>Potrivit pentru vegani, fara gluten sau soia.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret foarte ridicat comparativ cu alte suplimente D3.</li>
+            <li>Cantitatea de K2 ar putea fi mai mare pentru unii utilizatori.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Fares Imunostimulent cu Echinaceea si Vitamina C, 60 capsule</h2>
+        <span class="section-tag">~45 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Supliment alimentar pentru imunitate</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">60 capsule</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Extract uscat de echinaceea, Vitamina C (acid ascorbic), extract de macese, extract de catina, gelatina (capsula).</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Produs in Romania, ingrediente naturale.</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.7 lei/capsula</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Asta e un clasic romanesc, sincer. De cate ori simt ca ma ia raceala, sau cand e sezonul gripelor, dau o fuga la farmacie dupa Fares. Nu e D3 pur, dar e un bun aliat pentru sistemul imunitar. Capsulele sunt verzi, au un miros usor ierbos, dar nu deranjant. Le iau cu apa si nu lasa gust neplacut. Ambalajul e simplu, cutie de carton cu blistere.</p>
+        <p>Am observat ca, daca il iau din timp, raceala e mai blanda sau nici nu mai apare. Nu face minuni, dar ajuta corpul sa lupte. E o solutie naturala, accesibila, si ma rog, face treaba. Merge super bine in combinatie cu un dozaj corect de vitamina D, ca sa ai un sistem imunitar de fier. Daca cauti un boost natural pentru imunitate, asta e o optiune buna. Il gasesti cam peste tot, in farmacii si magazine naturiste.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Combinatie eficienta de plante si vitamina C pentru imunitate.</li>
+            <li>Pret accesibil, un produs romanesc de incredere.</li>
+            <li>Usor de administrat, capsule fara gust puternic.</li>
+            <li>Ajuta la prevenirea si ameliorarea simptomelor racelii.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Efectele pot varia, nu e un panaceu.</li>
+            <li>Contine gelatina, nu e potrivit pentru vegani.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Comvita Miere de Manuka MGO 250+, 250g</h2>
+        <span class="section-tag">~199 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Aliment functional, remediu natural</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">250g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Miere de Manuka pura din Noua Zeelanda.</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Certificat MGO 250+, UMF.</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.8 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Asta e un rasfat, zic si eu. Nu e un supliment de D3, dar e un super-aliment care face minuni pentru imunitate si nu numai. Am descoperit-o in urma cu cativa ani, cand aveam o durere in gat care nu mai trecea. O lingurita dimineata, pe stomacul gol. Si nu numai ca a calmat gatul, dar am simtit o energie noua. Textura e cremoasa, densa, mirosul e specific, puternic, de miere de Manuka, dar gustul e divin, dulce, cu o nota usor amara la final. Ambalajul e un borcan de plastic, practic.</p>
+        <p>Pe bune, e scumpa, stiu. Dar e o investitie in sanatate. O folosesc si pentru masti faciale, si pentru rani minore, ca are proprietati antibacteriene. O prietena si-a luat si ea, dupa ce i-am tot povestit, si acum e fan. Nu e un substitut pentru <strong>vitamina d3 dozaj si beneficii</strong>, dar e un partener de incredere pentru un stil de viata sanatos. Merita incercata daca vrei un produs premium, natural, cu multiple beneficii. Il gasesti in magazinele naturiste sau online.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Proprietati antibacteriene si antiinflamatorii dovedite.</li>
+            <li>Excelenta pentru intarirea sistemului imunitar si sanatatea digestiva.</li>
+            <li>Gust si textura premium, o experienta senzoriala placuta.</li>
+            <li>Produs 100% natural, cu certificare MGO clara.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret foarte ridicat, nu e accesibila pentru toata lumea.</li>
+            <li>Nu poate fi consumata de bebelusi sub 1 an.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Tabel comparativ: Ce supliment de vitamina D3 sau aliat pentru imunitate alegi?</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Secom ChildLife D3</td><td>Lichid, supliment</td><td>29.6 ml</td><td>Fara gluten, cazeina</td><td>Vitamina D3</td><td>Absorbtie rapida, copii si adulti</td></tr>
+          <tr><td>Nordic Naturals D3</td><td>Capsule, supliment</td><td>120 capsule</td><td>Fara OMG, puritate</td><td>Vitamina D3, ulei masline</td><td>Dozaj mare, mentinere, clasic</td></tr>
+          <tr><td>Zooki D3 + K2 Liposomal</td><td>Lichid liposomal, supliment</td><td>30 plicuri</td><td>Vegan, fara gluten</td><td>Vitamina D3, K2</td><td>Absorbtie maxima, sanatate oase</td></tr>
+          <tr><td>Fares Imunostimulent</td><td>Capsule, remediu</td><td>60 capsule</td><td>Produs in Romania</td><td>Echinaceea, Vitamina C</td><td>Sistem imunitar, preventie raceli</td></tr>
+          <tr><td>Comvita Miere Manuka</td><td>Aliment functional</td><td>250g</td><td>MGO 250+, UMF</td><td>Miere de Manuka</td><td>Imunitate, digestie, antiinflamator</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghid complet: Cum alegi cel mai bun supliment de vitamina D3 dozaj si beneficii maxime?</h2>
+      <p>Alegerea unui supliment de vitamina D3 nu e chiar asa de simpla cum pare. Sunt o gramada de optiuni pe piata, si pana la urma vrei sa te asiguri ca iei ceva ce chiar te ajuta, nu? Mai ales cand vorbim de <strong>vitamina d3 dozaj si beneficii</strong> pe termen lung. Uite cateva criterii la care sa fii atent:</p>
+        <h3>1. Forma suplimentului: Lichid sau capsule?</h3>
+        <ul><li><strong>Lichid:</strong> Asta e super pentru absorbtie rapida. Picaturile sunt usor de dozat, pot fi puse in mancare sau direct in gura. Perfect pentru copii sau pentru cei care nu pot inghiti pastile.</li><li><strong>Capsule moi:</strong> Sunt varianta clasica. De obicei, sunt mici si contin D3 dizolvat in ulei (masline, cocos), ceea ce ajuta la absorbtie. Alege-le pe cele mici, ca sa nu te chinui.</li><li><strong>Liposomala:</strong> Asta e tehnologia noua, pe bune. Lipozomii protejeaza vitamina D3 si o duc direct in celule, pentru o absorbtie aproape perfecta. Costa mai mult, dar eficienta e pe masura.</li></ul>
+        <h3>2. Dozajul (UI) si combinatiile</h3>
+        <p>Majoritatea adultilor au nevoie de 2000-4000 UI pe zi, dar asta e o medie. Cel mai bine e sa iti faci niste analize. Si mai e ceva: cauta D3 in combinatie cu Vitamina K2. K2 e cruciala pentru ca directioneaza calciul acolo unde trebuie – in oase, nu in artere. E un duo dinamic, zic si eu.</p>
+        <h3>3. Ingrediente si excipienti</h3>
+        <p>Citeste eticheta. Vrei un produs cu ingrediente curate, fara coloranti artificiali, conservanti sau arome sintetice. Uite, unele suplimente folosesc ulei de floarea-soarelui sau de masline ca baza, ceea ce e super. Evita produsele cu prea multi "E"-uri dubioase.</p>
+        <h3>4. Certificari si reputatia brandului</h3>
+        <p>Un brand bun e cel care testeaza produsele in laborator si are certificari. Asta iti da incredere. Nu cumpara de la oricine, na.</p>
+        <p>Verifica daca produsul e testat pentru puritate si daca respecta standardele. Ce sa eviti? Suplimentele cu dozaje nerealist de mici sau de mari fara sfatul medicului. Si pe alea care nu specifica clar sursa D3-ului.</p>
+        <p>Pana la urma, e vorba de sanatatea ta. Nu uita ca si alte suplimente, cum ar fi <a href="/spirulina-beneficii-si-contraindicatii/">spirulina beneficii si contraindicatii</a>, pot completa un stil de viata sanatos. Consulta-te mereu cu un specialist inainte sa incepi o cura noua, ca sa te asiguri ca obtii adevaratele <strong>vitamina d3 dozaj si beneficii</strong> pentru corpul tau.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">DVM</div>
+        <div class="author-info">
+          <h4>Dr. Victor Marin</h4>
+          <p class="author-role">Specialist Fitoterapie</p>
+          <p class="author-bio">Dr. Victor Marin are 15 ani de experienta in medicina naturista si fitoterapie. Recomanda remedii naturale bazate pe studii stiintifice si traditie.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="vitamina-d3-dozaj-si-beneficii"
+    currentCategory="remedii-naturiste"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="vitamina-d3-dozaj-si-beneficii"
+    currentCategory="remedii-naturiste"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
