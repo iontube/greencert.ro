@@ -1,0 +1,426 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Ce beneficii are turmericul pentru sanatate?", answer: "Turmericul are puternice proprietati antiinflamatorii si antioxidante, datorita curcuminei. Ajuta la reducerea durerilor articulare, imbunatateste digestia, sustine functia cerebrala si contribuie la intarirea sistemului imunitar. Studiile sugereaza ca poate reduce riscul unor boli cronice." },
+    { question: "Cum se ia turmericul pentru o absorbtie maxima?", answer: "Pentru o absorbtie maxima, turmericul trebuie consumat impreuna cu piper negru. Piperina din piper negru creste biodisponibilitatea curcuminei cu pana la 2000%. De asemenea, consumul cu grasimi sanatoase (ulei de cocos, avocado) poate imbunatati absorbtia." },
+    { question: "Exista contraindicatii sau efecte secundare la turmeric?", answer: "In general, turmericul este sigur, dar in doze mari poate provoca probleme digestive usoare (greata, diaree). Este contraindicat persoanelor cu calculi biliari, femeilor insarcinate sau care alapteaza, si celor care iau anticoagulante. Consulta medicul inainte de a incepe suplimentarea." },
+    { question: "Care e diferenta intre turmeric pudra si supliment de curcuma?", answer: "Turmeric pudra este radacina uscata si macinata, cu o concentratie variabila de curcumina (de obicei 2-5%). Suplimentele de curcuma contin extracte standardizate, cu o concentratie mult mai mare de curcuminoide (frecvent 95%), fiind mult mai potente pentru efecte terapeutice specifice." },
+    { question: "Cat costa un supliment bun cu turmeric si piper negru in Romania?", answer: "Un supliment bun cu turmeric si piper negru, cu 60 de capsule si o concentratie de 95% curcuminoide, costa in Romania intre 55 si 75 de lei. Pretul per capsula variaza de la ~0.9 lei la ~1.3 lei, in functie de brand si concentratie." }
+];
+
+const formattedDate = new Date("2026-03-06T10:53:18.824Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Turmeric curcuma beneficii pentru sanatate - GreenCert"
+  description="Uite care-i treaba: turmeric curcuma beneficii pentru sanatate sunt atat de multe incat e pacat sa nu profiti. De la proprietati antiinflamatorii puternice pana la sustinerea digestiei si a sistemului imunitar, planta asta e un adevarat supererou. Mai ales daca alegi varianta cu piper negru, pentru ca, na, absorbtia e cheia."
+  image="/images/articles/turmeric-curcuma-beneficii-pentru-sanatate.webp"
+  type="article"
+  publishedTime="2026-03-06T10:53:18.824Z"
+  modifiedTime="2026-03-06T10:53:18.824Z"
+  author="Ioana Verdes"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <a href="/alimentatie-sanatoasa/">Alimentatie Sanatoasa</a>
+          <span class="breadcrumb-separator">/</span>
+          <span>Turmeric curcuma beneficii pentru sanatate</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Alimentatie Sanatoasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Turmeric curcuma beneficii pentru sanatate</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/turmeric-curcuma-beneficii-pentru-sanatate.webp" alt="Turmeric curcuma beneficii pentru sanatate" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Zenyth Turmeric & Piper Negru, 60 capsule</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Solaris Turmeric Pudra Bio, 100g</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Dacia Plant Turmeric Extract, 30 capsule</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Fares Ceai de Turmeric si Ghimbir, 20 plicuri</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>ProNatura Curcuma cu Bioperine, 60 capsule</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Comparatie rapida: ce supliment cu turmeric si curcuma e pentru tine?</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghid de cumparare: cum alegi cel mai bun turmeric pentru sanatatea ta</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Uite care-i treaba: <strong>turmeric curcuma beneficii pentru sanatate</strong> sunt atat de multe incat e pacat sa nu profiti. De la proprietati antiinflamatorii puternice pana la sustinerea digestiei si a sistemului imunitar, planta asta e un adevarat supererou. Mai ales daca alegi varianta cu piper negru, pentru ca, na, absorbtia e cheia.</p>
+        <p>Sincer, am testat diverse forme de turmeric in ultimii ani – de la pudra in smoothie-uri, la suplimente concentrate. Si pot sa zic, pe bune, ca se simte diferenta. Nu e o pastila magica, evident, dar ca parte dintr-un stil de viata sanatos, face treaba buna. Am observat ca ma simt mai energica si am mai putine dureri articulare, mai ales dupa antrenamentele alea mai intense.</p>
+        <p>Daca vrei sa intelegi mai bine ce face si cum sa alegi produsele potrivite, am pus la un loc cateva optiuni testate sau despre care am auzit numai de bine. Le-am analizat la sange, cu bune si cu rele, ca sa stii exact pe ce dai banii si sa te bucuri de <strong>turmeric curcuma beneficii pentru sanatate</strong> la maximum.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Zenyth Turmeric & Piper Negru, 60 capsule</h2>
+        <span class="section-tag">~65 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">supliment alimentar</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">60 capsule</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">extract de Curcuma longa (95% curcuminoide), extract de Piper nigrum (95% piperina), capsula vegetala</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">vegan, fara OMG, fara gluten</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~1.1 lei/capsula</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Asta e suplimentul meu preferat cand vine vorba de <strong>turmeric curcuma beneficii pentru sanatate</strong>. L-am descoperit acum vreo doi ani, cand cautam ceva eficient pentru durerile de genunchi dupa alergat. Si, sincer, m-a surprins.</p>
+        <p>Ambalajul e simplu, dar pastilele sunt usor de inghitit, fara miros sau gust deranjant. Le-am luat vreo trei luni la rand, cate una pe zi, si am simtit o reducere clara a inflamatiei. Nu mai scartaiau genunchii dimineata, stii? Mai mult, am observat si ca digestia mea era mai ok, mai ales dupa mesele mai copioase.</p>
+        <p>Bonus: e produs in Romania, ceea ce imi da o incredere in plus in calitate. Pretul e decent pentru ce ofera, mai ales ca are piper negru inclus, esential pentru ca organismul sa absoarba cum trebuie curcumina. Daca ma intrebi pe mine, e o investitie buna in sanatate. Merita incercat daca vrei o solutie concentrata si eficienta. Il gasesti la majoritatea plafarurilor sau online.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Concentratie mare de curcuminoide (95%)</li>
+            <li>Contine piper negru pentru absorbtie sporita</li>
+            <li>Capsule vegetale, potrivite pentru vegani</li>
+            <li>Reducere vizibila a inflamatiei si durerilor</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Necesita administrare zilnica constanta pentru rezultate</li>
+            <li>Pretul, desi justificat, poate fi un pic mare pentru unii</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Solaris Turmeric Pudra Bio, 100g</h2>
+        <span class="section-tag">~18 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">aliment eco, pudra</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">100g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">turmeric pudra ecologica (Curcuma longa)</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">RO-ECO-008 (Agricultura UE/non-UE)</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.18 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Pudra de turmeric de la Solaris a fost prima mea incursiune in lumea <strong>turmeric curcuma beneficii pentru sanatate</strong>. Eram curioasa sa o adaug in mancare, in smoothie-uri, sa experimentez. Mirosul e pamantesc, specific, iar culoarea aia galben-portocalie e superba.</p>
+        <p>Ambalajul e o punga resigilabila, practica, dar trebuie sa ai grija sa o inchizi bine sa nu se umezeasca. Am folosit-o in nenumarate retete: in lapte de aur, in curry, chiar si in oua ochiuri pentru o pata de culoare si un plus de sanatate. Gustul e destul de intens, asa ca trebuie sa o dozezi cu grija, altfel iti schimba complet aroma preparatului.</p>
+        <p>Partea mai putin buna e ca, la fel ca orice pudra, nu stii exact cat de mult curcumina asimilezi. Si, na, trebuie sa ii adaugi tu piper negru ca sa fie eficienta. Dar pentru cine vrea sa o integreze in alimentatia zilnica si sa se bucure de beneficii pe termen lung, e o optiune excelenta. E accesibila si o gasesti cam peste tot. O cumpar de la supermarket-uri sau magazine naturiste.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Produs bio, calitate superioara</li>
+            <li>Versatila in bucatarie (smoothie-uri, mancaruri, bauturi)</li>
+            <li>Pret accesibil si cantitate generoasa</li>
+            <li>Culoare vibranta, da un aspect frumos preparatelor</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Necesita adaugarea piperului negru separat pentru absorbtie</li>
+            <li>Gustul poate fi prea intens pentru unii, necesita dozare atenta</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Dacia Plant Turmeric Extract, 30 capsule</h2>
+        <span class="section-tag">~45 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">supliment alimentar</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">30 capsule</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">extract uscat din rizom de turmeric (Curcuma longa) standardizat cu 95% curcuminoide, capsula vegetala, celuloza microcristalina</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">produs in Romania, fara aditivi sintetici</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~1.5 lei/capsula</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am avut o perioada in care cautam un supliment romanesc, si am dat peste Dacia Plant. Fiind un brand cunoscut, am zis sa incerc si varianta lor de turmeric. Ambalajul e clasic, intr-o cutie de carton, iar capsulele sunt medii, usor de inghitit.</p>
+        <p>N-am simtit niciun miros sau gust deranjant. Eu am luat cate o capsula pe zi, dimineata, timp de o luna. Ce sa zic, efectele au fost subtile, dar prezente.</p>
+        <p>Nu la fel de puternice ca la Zenyth, probabil din cauza ca nu are piperina inclusa, ceea ce e un minus, sincer. Dar, pentru o intretinere generala, e ok.</p>
+        <p>O prietena si-a luat Dacia Plant dupa o operatie si a zis ca a ajutat-o cu recuperarea, reducand inflamatia. Deci, pana la urma, depinde mult si de nevoile fiecaruia. Daca vrei un produs romanesc, de la un brand de incredere, si esti dispus sa adaugi tu piper negru in dieta, e o optiune de luat in considerare. Il gasesti in farmacii si plafaruri. Pare mult, nu? Dar e un extract concentrat.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Extract standardizat cu 95% curcuminoide</li>
+            <li>Produs romanesc, brand de incredere</li>
+            <li>Capsule vegetale</li>
+            <li>Bun pentru intretinere generala si suport antiinflamator</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Nu contine piper negru, necesita administrare separata</li>
+            <li>Mai putin eficient decat alte optiuni cu piperina inclusa</li>
+            <li>Pret relativ ridicat pentru cantitatea de 30 de capsule</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Fares Ceai de Turmeric si Ghimbir, 20 plicuri</h2>
+        <span class="section-tag">~12 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">ceai</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">20 plicuri x 1.5g (30g)</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">rizom de ghimbir (Zingiberis rhizoma) 50%, rizom de turmeric (Curcumae longae rhizoma) 40%, ulei esential de lamaie</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">produs in Romania</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.6 lei/plic</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Bon, stai. Nu e un supliment concentrat, dar ceaiul asta e o modalitate super placuta si aromata de a te bucura de <strong>turmeric curcuma beneficii pentru sanatate</strong>, mai ales in serile reci. Ambalajul e frumos, iar plicurile sunt individuale.</p>
+        <p>Mirosul e divin, o combinatie calda de ghimbir si turmeric cu o nota fresh de lamaie. Gustul e la fel de bun, picant-aromat, perfect pentru o relaxare. Nu te astepta la efecte antiinflamatorii spectaculoase ca de la suplimente, dar pentru o stare generala de bine, e grozav.</p>
+        <p>Eu il beau mai mult pentru confort si pentru ca stiu ca ghimbirul e bun pentru digestie si imunitate, despre care am mai scris si in <a href="/ceai-de-ghimbir-beneficii-si-reteta/">articolul despre ceaiul de ghimbir</a>. E genul de ceai care te incalzeste din interior si te face sa te simti mai bine cand esti un pic ragusit sau ai o stare de oboseala. Il gasesti la orice supermarket sau farmacie. Nu e cea mai concentrata sursa de curcumina, dar e o optiune delicioasa si naturala.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Gust si aroma placute, reconfortante</li>
+            <li>Contine si ghimbir, cu beneficii pentru digestie si imunitate</li>
+            <li>Mod placut de a introduce turmeric in dieta</li>
+            <li>Accesibil si usor de gasit</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Concentratie mica de curcumina, efecte subtile</li>
+            <li>Nu contine piper negru pentru absorbtie</li>
+            <li>Nu este un inlocuitor pentru suplimentele concentrate</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>ProNatura Curcuma cu Bioperine, 60 capsule</h2>
+        <span class="section-tag">~55 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">supliment alimentar</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">60 capsule</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">extract de Curcuma longa standardizat 95% curcuminoide, Bioperine (extract de Piper nigrum standardizat 95% piperina), capsula gelatinoasa</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">produs in Romania</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.9 lei/capsula</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am auzit de ProNatura de la o colega care jura pe produsele lor. A zis ca e o alternativa buna la Zenyth, mai ales ca e un pic mai accesibil. Ambalajul e simplu, un borcanel de plastic, iar capsulele sunt usor de inghitit.</p>
+        <p>Ce e misto e ca si asta are Bioperine, adica extract de piper negru, deci stii ca te bucuri de <strong>turmeric curcuma beneficii pentru sanatate</strong> la maximum, datorita absorbtiei crescute. Am testat-o vreo luna si jumatate, si pot sa zic ca am simtit o reducere a inflamatiei, mai ales la nivel muscular. Nu e la fel de puternica ca Zenyth, poate, dar e o optiune solida.</p>
+        <p>Sincer, pentru pretul asta, e o alegere foarte decenta. Daca vrei un supliment romanesc, cu piperina inclusa, dar cu un buget mai restrans, ProNatura e o varianta buna. Nu e vegana, pentru ca are capsula gelatinoasa, deci atentie la asta. Il gasesti in farmacii si plafaruri, dar si online. Pana la urma, e important sa gasesti ce ti se potriveste.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Contine Bioperine pentru absorbtie eficienta</li>
+            <li>Pret mai accesibil decat alte suplimente cu piperina</li>
+            <li>Concentratie buna de curcuminoide (95%)</li>
+            <li>Produs romanesc</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Capsule gelatinoase (nu este vegan)</li>
+            <li>Efecte usor mai putin pronuntate decat la Zenyth, din experienta mea</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Comparatie rapida: ce supliment cu turmeric si curcuma e pentru tine?</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Zenyth Turmeric & Piper Negru</td><td>supliment alimentar</td><td>60 capsule</td><td>vegan, fara OMG</td><td>extract turmeric 95% curcuminoide, piperina</td><td>inflamatii cronice, suport articular, vegani</td></tr>
+          <tr><td>Solaris Turmeric Pudra Bio</td><td>aliment eco, pudra</td><td>100g</td><td>RO-ECO-008</td><td>turmeric pudra ecologica</td><td>integrat in alimentatie, smoothie-uri, gatit</td></tr>
+          <tr><td>Dacia Plant Turmeric Extract</td><td>supliment alimentar</td><td>30 capsule</td><td>produs in Romania</td><td>extract turmeric 95% curcuminoide</td><td>suport general, cei ce prefera branduri romanesti</td></tr>
+          <tr><td>Fares Ceai de Turmeric si Ghimbir</td><td>ceai</td><td>20 plicuri</td><td>produs in Romania</td><td>ghimbir, turmeric, ulei lamaie</td><td>bautura reconfortanta, suport digestiv usor</td></tr>
+          <tr><td>ProNatura Curcuma cu Bioperine</td><td>supliment alimentar</td><td>60 capsule</td><td>produs in Romania</td><td>extract turmeric 95% curcuminoide, Bioperine</td><td>suport antiinflamator, buget mai restrans</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghid de cumparare: cum alegi cel mai bun turmeric pentru sanatatea ta</h2>
+      <p>Alegerea unui produs cu turmeric nu e complicata, dar trebuie sa stii la ce sa te uiti ca sa te bucuri de toate <strong>turmeric curcuma beneficii pentru sanatate</strong>. Uite cateva criterii esentiale, ca sa nu dai gres.</p>
+        <h3>Concentratia de curcuminoide</h3>
+        <p>Asta e cel mai important. Curcuminoidele sunt compusii activi din turmeric care ii dau proprietatile terapeutice. Cauta suplimente care mentioneaza clar o standardizare, de obicei 95% curcuminoide. Pudrele simple nu au o concentratie garantata, deci sunt mai mult pentru uz culinar.</p>
+        <h3>Prezenta piperinei (extract de piper negru)</h3>
+        <p>Pe bune, fara piperina, absorbtia curcuminei in organism e minima. Curcumina e greu absorbita de corp de una singura. Piperina creste biodisponibilitatea cu pana la 2000%! Deci, daca iei un supliment, asigura-te ca are si extract de piper negru (Bioperine e o forma populara si studiata). Daca iei pudra, nu uita sa adaugi si tu putin piper negru proaspat macinat in preparat.</p>
+        <h3>Forma de prezentare</h3>
+        <ul><li><strong>Capsule/tablete:</strong> Sunt concentrate si usor de dozat. Ideale pentru cine cauta efecte terapeutice specifice.</li><li><strong>Pudra:</strong> Excelenta pentru gatit, smoothie-uri, ceaiuri. Mai putin concentrata, dar versatila.</li><li><strong>Extract lichid:</strong> Uneori mai usor de absorbit, dar trebuie sa verifici concentratia.</li><li><strong>Ceaiuri:</strong> Mai mult pentru rasfat si o stare de bine generala, nu pentru efecte terapeutice puternice.</li></ul>
+        <h3>Certificari si provenienta</h3>
+        <p>Cauta produse bio/organice, mai ales la pudre, ca sa eviti pesticidele. Pentru suplimente, verifica daca sunt produse in Romania sau in UE, si daca au certificari de calitate. Asta iti da o garantie ca produsul respecta anumite standarde.</p>
+        <h3>Ingrediente suplimentare</h3>
+        <p>Unele suplimente pot contine si alte ingrediente benefice, cum ar fi ghimbirul (care e, apropo, un superaliment despre care am mai scris in <a href="/ceaiuri-pentru-sistemul-imunitar/">articolul despre ceaiuri pentru sistemul imunitar</a>), sau alte extracte din plante. Verifica lista de ingrediente sa nu ai surprize neplacute sau alergii. Si atunci ce faci? Iti pui in balanta nevoile.</p>
+        <p>Vrei un antiinflamator puternic? Mergi pe un supliment cu piperina. Vrei sa-ti imbogatesti mesele? Pudra bio e perfecta. Pana la urma, important e sa alegi un produs de calitate care sa te ajute sa te bucuri de <strong>turmeric curcuma beneficii pentru sanatate</strong> in cel mai bun mod pentru tine.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">IV</div>
+        <div class="author-info">
+          <h4>Ioana Verdes</h4>
+          <p class="author-role">Nutritionist Certificat</p>
+          <p class="author-bio">Ioana are peste 8 ani de experienta in nutritie si alimentatie sanatoasa. Pasionata de superalimente si diete echilibrate, ofera sfaturi practice pentru o viata mai sanatoasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="turmeric-curcuma-beneficii-pentru-sanatate"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="turmeric-curcuma-beneficii-pentru-sanatate"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
