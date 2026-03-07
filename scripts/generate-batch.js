@@ -722,7 +722,7 @@ ${bodyRows}
 
   const authorInitials = author.name.split(' ').map(n => n[0]).join('');
 
-  const template = `---
+  let template = `---
 import Layout from '../layouts/Layout.astro';
 import SimilarArticles from '../components/SimilarArticles.astro';
 import PrevNextNav from '../components/PrevNextNav.astro';
