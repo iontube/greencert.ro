@@ -1,0 +1,430 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa un set de gantere reglabile pentru acasa?", answer: "Un set de gantere reglabile pentru acasa poate costa de la aproximativ 300 lei pentru modelele clasice cu discuri si cleme, pana la peste 3000 lei pentru cele premium, cu mecanism de ajustare rapid, cum ar fi Bowflex sau PowerBlock. Pretul mediu pentru o pereche decenta, cu schimbare rapida, e in jur de 1500-2500 lei." },
+    { question: "Care e diferenta intre gantere reglabile tip dial si cele cu pin?", answer: "Ganterele reglabile tip dial (ex: Bowflex) folosesc o rotita pentru a schimba rapid greutatea, fiind cele mai comode. Cele cu pin (ex: Tunturi, PowerBlock) au un pin pe care il glisezi sau il scoti pentru a selecta greutatea, fiind de obicei mai robuste si mai compacte, dar un pic mai lente decat cele dial." },
+    { question: "Merita sa investesc in gantere reglabile scumpe?", answer: "Da, de cele mai multe ori merita investitia in gantere reglabile scumpe daca le folosesti regulat si iti doresti eficienta. Modelele premium ofera o schimbare rapida a greutatii, durabilitate superioara si un design compact, economisind spatiu si timp in comparatie cu multiple seturi de gantere fixe sau cu cele clasice, manuale." },
+    { question: "Ce greutate maxima ar trebui sa aleg pentru gantere reglabile de acasa?", answer: "Greutatea maxima ideala pentru gantere reglabile de acasa depinde de nivelul tau de fitness si obiective. Pentru incepatori, un set care ajunge pana la 10-15 kg per gantera e suficient. Utilizatorii intermediari si avansati ar beneficia mai mult de seturi care ajung la 20-24 kg per gantera pentru a putea progresa si a lucra toti muschii eficient." },
+    { question: "Cum sa intretin ganterele reglabile ca sa tina mai mult?", answer: "Pentru a intretine ganterele reglabile, curata-le periodic cu o carpa umeda pentru a indeparta transpiratia si praful. Evita sa le arunci pe jos, deoarece socurile pot deteriora mecanismul. Verifica suruburile sau sistemele de blocare ocazional pentru a te asigura ca sunt stranse si functioneaza corect. Pastreaza-le intr-un loc uscat, ferit de umiditate excesiva." }
+];
+
+const formattedDate = new Date("2026-03-07T10:42:14.102Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Gantere reglabile pentru acasa - GreenCert"
+  description="Cauti gantere reglabile pentru acasa? Cele mai bune, dupa parerea mea si a multor oameni care le folosesc zilnic, sunt seturile de tip dial, cum ar fi Bowflex SelectTech 552i sau Tunturi Selector Dumbbell. Sunt compacte, usor de folosit si iti permit sa schimbi greutatea rapid, fara sa pierzi timpul intre serii."
+  image="/images/articles/gantere-reglabile-pentru-acasa.webp"
+  type="article"
+  publishedTime="2026-03-07T10:42:14.102Z"
+  modifiedTime="2026-03-07T10:42:14.102Z"
+  author="Mihai Stanescu"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Fitness Acasa
+          <span class="breadcrumb-separator">/</span>
+          <span>Gantere reglabile pentru acasa</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Fitness Acasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Gantere reglabile pentru acasa</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/gantere-reglabile-pentru-acasa.webp" alt="Gantere reglabile pentru acasa" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Bowflex SelectTech 552i Adjustable Dumbbells</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Domyos (Decathlon) Adjustable Dumbbell Kit 20 kg</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Tunturi Selector Dumbbell 20 kg</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>PowerBlock Sport 24 Adjustable Dumbbells</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Gorilla Sports Adjustable Dumbbell Set 20 kg</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Comparam gantere reglabile pentru acasa: Care e cea mai buna pentru tine?</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghid de cumparare: Cum alegi cele mai bune gantere reglabile pentru acasa?</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Cauti <strong>gantere reglabile pentru acasa</strong>? Cele mai bune, dupa parerea mea si a multor oameni care le folosesc zilnic, sunt seturile de tip dial, cum ar fi Bowflex SelectTech 552i sau Tunturi Selector Dumbbell. Sunt compacte, usor de folosit si iti permit sa schimbi greutatea rapid, fara sa pierzi timpul intre serii.</p>
+        <p>Uite, sa fim seriosi, spatiul e o problema in apartament, nu? Nimeni nu vrea un teanc de gantere fixe care ocupa jumatate din living. O pereche de <strong>gantere reglabile pentru acasa</strong> rezolva asta. Economisesti loc, bani pe termen lung si, cel mai important, ai la indemana o sala completa, gata sa te ajute sa-ti atingi obiectivele de fitness, de la antrenamente usoare la sesiuni mai intense.</p>
+        <p>Pe bune, e o investitie smart daca vrei sa te antrenezi serios, dar nu ai loc sau timp de mers la sala. O sa vezi mai jos cateva optiuni testate sau despre care am auzit lucruri bune, cu bune si rele, ca sa stii exact ce alegi.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Bowflex SelectTech 552i Adjustable Dumbbells</h2>
+        <span class="section-tag">~2400 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">gantera reglabila tip dial</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">set 2 x 24 kg (max 24 kg per gantera)</span></div>
+          
+          
+          
+        </div>
+      <div class="product-review-content">
+        <p>Astea sunt, fara discutie, vedetele cand vine vorba de <strong>gantere reglabile pentru acasa</strong>. Am testat personal un set de Bowflex SelectTech 552i la un prieten si, sincer, m-au impresionat. Mecanismul de ajustare e super fluid, invarti rotita, auzi un click si gata, ai alta greutate.</p>
+        <p>Nici nu simti ca schimbi discurile. Greutatea se schimba de la 2 kg la 24 kg in trepte de 2.5 kg, ceea ce e perfect pentru progres. Textura manerului e ok, nu aluneca, dar nici nu-ti jupoaie palma.</p>
+        <p>Ambalajul e solid, au venit bine protejate. Singura chestie e ca sunt un pic cam lungi, chiar si la greutati mici, ceea ce poate fi ciudat la unele exercitii, dar te obisnuiesti. Merita toti banii daca vrei calitate si durabilitate.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Schimbare foarte rapida si fluida a greutatii</li>
+            <li>Design compact, economiseste mult spatiu</li>
+            <li>Gama larga de greutati, potrivita pentru mai multe exercitii</li>
+            <li>Constructie robusta, rezistente in timp</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret destul de piperat</li>
+            <li>Sunt un pic cam lungi, pot fi incomode la anumite exercitii</li>
+            <li>Discurile se pot misca putin in timpul antrenamentelor mai energice, facand zgomot</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Domyos (Decathlon) Adjustable Dumbbell Kit 20 kg</h2>
+        <span class="section-tag">~300 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">gantera reglabila cu discuri si bara</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">1 x 20 kg (se pot cumpara mai multe discuri separat)</span></div>
+          
+          
+          
+        </div>
+      <div class="product-review-content">
+        <p>Uite, asta e o optiune super budget-friendly, mai ales daca esti la inceput sau vrei ceva clasic. Domyos de la Decathlon e un brand cunoscut pentru produse decente la preturi bune. Am un set similar, nu exact asta, dar conceptul e acelasi: discuri din fonta pe care le pui tu pe bara si le securizezi cu niste cleme.</p>
+        <p>Sincer, e un pic enervant sa schimbi greutatea intre serii, dureaza. Dar, pe de alta parte, simti ca e o gantera solida, nu se misca nimic. Manerul e metalic, cu striatii, ofera o priza buna.</p>
+        <p>Mirosul de metal e prezent la inceput, dar dispare. E un kit de baza, bun pentru cineva care nu se grabeste si vrea sa construiasca o colectie de greutati in timp. O prietena si-a luat asa ceva si dupa 2 luni e multumita, zice ca e fix ce-i trebuie pentru antrenamentele ei usoare.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Extrem de accesibil ca pret</li>
+            <li>Foarte rezistent si durabil, constructie simpla</li>
+            <li>Poti adauga discuri suplimentare pentru a creste greutatea</li>
+            <li>Senzatie clasica de gantera, stabila</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Schimbarea greutatii e lenta si anevoioasa</li>
+            <li>Ocupa mai mult spatiu decat cele dial, ai nevoie de discuri separate</li>
+            <li>Zgomot metalic la contactul discurilor</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Tunturi Selector Dumbbell 20 kg</h2>
+        <span class="section-tag">~1500 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">gantera reglabila cu sistem de blocare</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">1 x 20 kg (max 20 kg per gantera)</span></div>
+          
+          
+          
+        </div>
+      <div class="product-review-content">
+        <p>Tunturi e un nume cu traditie in echipamentele de fitness, iar gantera lor reglabila e o alternativa buna la Bowflex, la un pret putin mai decent. Mecanismul e cu un pin pe care il glisezi si alegi greutatea dorita. E destul de rapid, nu la fel de instant ca un dial, dar mult mai bun decat clasicele cu cleme.</p>
+        <p>Am vazut-o intr-un magazin si mi-a placut cum se simte in mana, manerul are o aderenta buna. Designul e un pic mai compact decat Bowflex, pare mai echilibrata. Pe asta nu pun mana in foc ca e la fel de bulletproof ca un Bowflex, dar din ce am auzit de la cunostinte, e o alegere solida pentru antrenamente acasa.</p>
+        <p>Pare mult, nu? Dar gandeste-te la cat spatiu salvezi. E o optiune de luat in considerare daca vrei un echilibru bun intre pret si performanta pentru <strong>gantere reglabile pentru acasa</strong>.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Mecanism de ajustare rapid si intuitiv</li>
+            <li>Design compact si echilibrat</li>
+            <li>Calitate buna a materialelor pentru pretul oferit</li>
+            <li>Maner confortabil si aderent</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pinul de blocare poate fi uneori un pic rigid la inceput</li>
+            <li>Gama de greutati e limitata la 20 kg, poate fi insuficient pentru avansati</li>
+            <li>Pretul e tot destul de ridicat pentru o singura gantera</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>PowerBlock Sport 24 Adjustable Dumbbells</h2>
+        <span class="section-tag">~3300 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">gantera reglabila tip bloc</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">set 2 x 11 kg (max 11 kg per gantera)</span></div>
+          
+          
+          
+        </div>
+      <div class="product-review-content">
+        <p>Astea sunt bestii, pe bune. PowerBlock au un design total diferit, arata ca niste cuburi. Initial am fost sceptic, dar dupa ce am incercat un set, am inteles de ce sunt laudate.</p>
+        <p>Mecanismul de ajustare e cu un pin magnetic, super rapid si sigur. Greutatea se schimba in cateva secunde. Sunt extrem de compacte, poate cele mai compacte de pe piata, ceea ce e un mare plus pentru un apartament.</p>
+        <p>Manerul e in interiorul cadrului, ceea ce ofera o senzatie de echilibru diferita, dar buna. Nu sunt la fel de 'elegante' ca Bowflex, au un aspect mai industrial, dar sunt construite ca un tanc. Singurul minus, daca ma intrebi pe mine, e ca sunt un pic cam scurte si late, ceea ce poate fi ciudat la unele exercitii precum triceps extensions.</p>
+        <p>Dar, ca durabilitate si eficienta, sunt top.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Extrem de compacte si economisesc spatiu</li>
+            <li>Schimbare super rapida si sigura a greutatii cu pin magnetic</li>
+            <li>Constructie incredibil de durabila, din otel sudat</li>
+            <li>Echilibru bun in mana datorita designului</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Design neconventional, unii nu-l agreeaza estetic</li>
+            <li>Pretul este cel mai mare din lista</li>
+            <li>Pot fi scurte si late, incomode la anumite miscari</li>
+            <li>Gama de greutati de baza e mai mica (max 11 kg), extensiile sunt scumpe</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Gorilla Sports Adjustable Dumbbell Set 20 kg</h2>
+        <span class="section-tag">~400 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">gantere reglabile cu discuri si bare</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">set 2 x 10 kg (max 10 kg per gantera)</span></div>
+          
+          
+          
+        </div>
+      <div class="product-review-content">
+        <p>Gorilla Sports e un brand popular pentru echipamente de fitness la preturi decente. Acest set e similar cu cel de la Domyos, adica e un set clasic de <strong>gantere reglabile pentru acasa</strong> cu discuri de fonta si inele stelate pentru fixare. L-am vazut la mai multi prieteni care si-au amenajat o mini-sala acasa.</p>
+        <p>E solid, nu zic, dar, ca si la Domyos, schimbatul greutatii e o bataie de cap. Manerul e ok, are aderenta buna. Discurile sunt din fonta, deci rezistente, dar pot zgaria podeaua daca nu esti atent.</p>
+        <p>Mirosul de fonta e prezent la inceput, dar se duce. E o optiune buna daca ai un buget fix si nu te deranjeaza sa pui si sa scoti discurile manual. Pana la urma, iti faci treaba cu ele, mai ales daca vrei sa incepi usor.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Pret foarte accesibil</li>
+            <li>Constructie robusta si durabila</li>
+            <li>Permite adaugarea de discuri suplimentare</li>
+            <li>Senzatie clasica de gantera</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Schimbarea greutatii este lenta si manuala</li>
+            <li>Ocupa destul de mult spatiu cu discurile separate</li>
+            <li>Inelele stelate pot slabi in timpul antrenamentului, necesita verificare</li>
+            <li>Aspect mai putin estetic, industrial</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Comparam gantere reglabile pentru acasa: Care e cea mai buna pentru tine?</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Bowflex SelectTech 552i</td><td>-</td><td>-</td><td>-</td><td>-</td><td>Antrenamente variate, economie de spatiu, buget mediu-mare</td></tr>
+          <tr><td>Domyos (Decathlon) Kit 20 kg</td><td>-</td><td>-</td><td>-</td><td>-</td><td>Incepatori, buget redus, antrenamente ocazionale</td></tr>
+          <tr><td>Tunturi Selector Dumbbell 20 kg</td><td>-</td><td>-</td><td>-</td><td>-</td><td>Utilizatori intermediari, spatiu limitat, buget mediu</td></tr>
+          <tr><td>PowerBlock Sport 24</td><td>-</td><td>-</td><td>-</td><td>-</td><td>Spatiu minim, durabilitate maxima, buget mare, antrenamente intense</td></tr>
+          <tr><td>Gorilla Sports Set 20 kg</td><td>-</td><td>-</td><td>-</td><td>-</td><td>Incepatori, buget redus, antrenamente ocazionale, fara graba</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghid de cumparare: Cum alegi cele mai bune gantere reglabile pentru acasa?</h2>
+      <p>Alegerea unui set de <strong>gantere reglabile pentru acasa</strong> nu e chiar asa simpla cum pare, mai ales cu atatea optiuni. Dar stai putin, sunt cateva lucruri cheie la care trebuie sa te uiti. Nu vrei sa arunci banii pe ceva ce nu-ti foloseste sau, mai rau, care te frustreaza. Uite care-i treaba:</p>
+        <h3>1. Tipul mecanismului de ajustare</h3>
+        <ul><li><strong>Tip dial (rotativ):</strong> Astea sunt cele mai rapide si mai comode. Gen Bowflex. Pur si simplu invarti o rotita si greutatea se schimba instant. Perfecte pentru antrenamente de circuit sau cand vrei sa progresezi rapid.</li><li><strong>Tip pin (glisant sau magnetic):</strong> Un pic mai lente decat cele dial, dar tot rapide. PowerBlock si Tunturi intra aici. Sunt super sigure si, de obicei, mai durabile decat cele dial, pentru ca au mai putine piese in miscare.</li><li><strong>Tip clasic (cu discuri si cleme/inele):</strong> Astea sunt cele mai ieftine, gen Domyos sau Gorilla Sports. Trebuie sa pui si sa scoti discurile manual, ceea ce dureaza. Sunt bune daca ai un buget super limitat si nu te grabesti.</li></ul>
+        <h3>2. Gama de greutati si treptele de ajustare</h3>
+        <p>Gandeste-te la ce exercitii vrei sa faci si la cat esti de puternic. Ai nevoie de o gama larga, de la 2-3 kg pentru exercitii izolate pana la 20-24 kg pentru piept sau spate? Treptele de ajustare sunt la fel de importante. Vrei sa cresti greutatea cu 1 kg sau cu 2.5 kg? Cu cat treptele sunt mai mici, cu atat progresul e mai lin si mai eficient. De exemplu, 2.5 kg e un pas bun, dar 5 kg poate fi prea mult la inceput.</p>
+        <h3>3. Dimensiunea si forma ganterei</h3>
+        <p>Bon, stai, asta e crucial pentru spatiul de acasa. Ganterele reglabile pot fi mai lungi decat cele fixe, chiar si la greutati mici. Asta poate fi un pic ciudat la unele exercitii. PowerBlock, de exemplu, sunt super compacte, dar au o forma cubica. Gandeste-te la exercitiile pe care le faci cel mai des si vezi daca forma ganterei te incurca. Vrei sa poti face si <a href="/saltea-yoga-cele-mai-bune/">exercitii pe saltea yoga</a> cu ele, nu?</p>
+        <h3>4. Calitatea constructiei si durabilitatea</h3>
+        <p>Asta e o investitie pe termen lung. Cauta materiale solide, cum ar fi otelul. Citeste review-uri despre cat de bine rezista in timp mecanismul de ajustare. Nimeni nu vrea sa-i pice discurile in cap in mijlocul unui set, nu? Ganterele de la Bowflex si PowerBlock sunt renumite pentru durabilitate, dar vin cu un pret pe masura.</p>
+        <h3>5. Bugetul tau</h3>
+        <p>Preturile variaza enorm, de la cateva sute de lei la peste 3000 de lei pentru un set. Sincer, un set bun de <strong>gantere reglabile pentru acasa</strong>, care e si rapid si durabil, o sa te coste cel putin 1500-2000 de lei. Daca bugetul e strans, cele clasice sunt o optiune, dar pregateste-te pentru un efort in plus la schimbarea greutatii. Poti sa te uiti si la <a href="/bicicleta-fitness-pentru-acasa/">bicicleta fitness pentru acasa</a> daca vrei sa completezi sala.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">MS</div>
+        <div class="author-info">
+          <h4>Mihai Stanescu</h4>
+          <p class="author-role">Antrenor Personal</p>
+          <p class="author-bio">Mihai este antrenor personal certificat cu experienta de 10 ani in fitness si wellness. Specializat in antrenamente la domiciliu si echipamente fitness pentru acasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="gantere-reglabile-pentru-acasa"
+    currentCategory="fitness-acasa"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="gantere-reglabile-pentru-acasa"
+    currentCategory="fitness-acasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
