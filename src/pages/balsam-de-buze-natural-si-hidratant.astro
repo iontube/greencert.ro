@@ -1,0 +1,432 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa un balsam de buze natural si hidratant bun?", answer: "Un balsam de buze natural si hidratant de calitate costa, in general, intre 10 si 30 de lei. Preturile variaza in functie de brand, certificari bio si ingrediente. De exemplu, poti gasi optiuni eficiente la 10-15 lei, dar si produse premium la 25-30 de lei." },
+    { question: "Care e diferenta intre un balsam de buze natural si unul obisnuit?", answer: "Diferenta majora consta in ingrediente. Un balsam natural foloseste unturi si uleiuri vegetale, miere si ceara de albine pentru hidratare si reparare. Cel obisnuit contine adesea parafina, petrolatum, silicon, parfumuri sintetice si parabeni, care pot crea o dependenta si nu hranesc in profunzime." },
+    { question: "Merita sa cumpar un balsam de buze cu certificare bio?", answer: "Da, merita sa cumperi un balsam cu certificare bio. Aceste certificari (precum ECOCERT, NATRUE) garanteaza ca produsul contine ingrediente naturale sau organice si ca respecta standarde stricte de productie, fara chimicale daunatoare. Iti ofera incredere in calitatea si puritatea produsului." },
+    { question: "Cat de des ar trebui sa aplic un balsam de buze natural?", answer: "Aplica un balsam de buze natural ori de cate ori simti nevoia, mai ales cand buzele sunt uscate sau expuse la vant si frig. In general, 3-5 aplicari pe zi sunt suficiente. Pentru buze foarte crapate, poti aplica un strat mai gros seara, inainte de culcare." },
+    { question: "Ce ingrediente naturale sunt cele mai bune pentru buze crapate?", answer: "Pentru buze crapate, cele mai bune ingrediente naturale sunt untul de shea, mierea, propolisul, uleiul de ricin si uleiul de jojoba. Acestea au proprietati reparatoare, cicatrizante si hidratante intense, ajutand la refacerea barierei pielii si calmarea iritatiilor." }
+];
+
+const formattedDate = new Date("2026-03-08T10:48:33.438Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Balsam de buze natural si hidratant - GreenCert"
+  description="Daca esti in cautarea unui balsam de buze natural si hidratant care sa-ti repare buzele crapate si sa le mentina catifelate, ai nimerit bine. Am testat o gramada de optiuni in ultimii ani, de la branduri cunoscute la mici producatori romani, si am adunat aici ce e mai bun, pe bune."
+  image="/images/articles/balsam-de-buze-natural-si-hidratant.webp"
+  type="article"
+  publishedTime="2026-03-08T10:48:33.438Z"
+  modifiedTime="2026-03-08T10:48:33.438Z"
+  author="Alexandra Florea"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Cosmetice Naturale
+          <span class="breadcrumb-separator">/</span>
+          <span>Balsam de buze natural si hidratant</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Cosmetice Naturale</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Balsam de buze natural si hidratant</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/balsam-de-buze-natural-si-hidratant.webp" alt="Balsam de buze natural si hidratant" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Gerovital H3 Derma+ Balsam de buze reparator cu unt de shea si miere</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Lavera Balsam de buze Repair & Care (Bio)</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Weleda Everon Balsam de buze</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Apiterra Balsam de buze cu propolis si miere</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Melvita Nectar de 3 Mieri Balsam de buze</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Balsam de buze natural si hidratant: o comparatie rapida</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Cum alegi cel mai bun balsam de buze natural si hidratant?</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Daca esti in cautarea unui <strong>balsam de buze natural si hidratant</strong> care sa-ti repare buzele crapate si sa le mentina catifelate, ai nimerit bine. Am testat o gramada de optiuni in ultimii ani, de la branduri cunoscute la mici producatori romani, si am adunat aici ce e mai bun, pe bune.</p>
+        <p>Stii cum e, mai ales iarna sau cand bate vantul, buzele se usuca rapid. Si atunci ce faci? Nu vrei sa te dai cu orice, nu? Multe produse din comert sunt pline de chimicale si parabeni, iar pe termen lung pot face mai mult rau decat bine. Un produs natural, insa, hraneste in profunzime si protejeaza, fara ingrediente dubioase.</p>
+        <p>Uite care-i treaba: un <strong>balsam de buze natural si hidratant</strong> bun nu doar ca te scapa de disconfort, dar le si repara, lasandu-le moi si pline. Aici gasesti cateva recomandari testate, cu bune si rele, ca sa stii exact ce alegi.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Gerovital H3 Derma+ Balsam de buze reparator cu unt de shea si miere</h2>
+        <span class="section-tag">~10 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">balsam de buze reparator</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">4.5g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">unt de shea, miere, ulei de ricin, vitamina E</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">dermatocosmetic</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~2.2 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am descoperit Gerovital pe cand eram studenta si cautam ceva accesibil, dar eficient. Sincer, ma indoiam ca un produs romanesc, la pretul asta, poate face minuni. Dar m-am inselat.</p>
+        <p>Textura e cremoasa, se intinde usor si nu lasa acea senzatie lipicioasa, na. Mirosul e discret, dulceag, de miere, deloc deranjant. Dupa vreo doua zile de utilizare, buzele mele, care erau cojite si iritate de la frig, au inceput sa se simta mult mai bine.</p>
+        <p>E un balsam de buze de incredere pentru zilele reci. Ambalajul e clasic, stick, rezistent. Il tin mereu in geanta.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Reparator rapid</li>
+            <li>Pret accesibil</li>
+            <li>Textura placuta</li>
+            <li>Miros discret</li>
+            <li>Ingrediente naturale cheie</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Nu are certificari bio specifice</li>
+            <li>Efectul de lunga durata e ok, dar nu spectaculos</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Lavera Balsam de buze Repair & Care (Bio)</h2>
+        <span class="section-tag">~20 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">balsam de buze bio</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">4.5g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">ulei de ricin bio, unt de shea bio, ulei de masline bio, extract de calendula bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">NATRUE, Vegan</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~4.4 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Pe Lavera l-am incercat la recomandarea unei prietene care e obsedata de produsele bio. Initial, am zis "eh, inca un balsam scump". Dar mi-a placut ca e certificat NATRUE si vegan, asta e un plus.</p>
+        <p>Textura e mai ferma decat la Gerovital, dar se topeste frumos la contactul cu buzele. Mirosul e subtil, floral, foarte placut. L-am folosit in vacanta la munte, unde vantul e destul de agresiv, si buzele mele au ramas hidratate.</p>
+        <p>E un <strong>balsam de buze natural si hidratant</strong> care chiar isi face treaba. Ambalajul e simplu, verde, arata bine.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Certificat bio si vegan</li>
+            <li>Hidrateaza intens</li>
+            <li>Protejeaza bine in conditii extreme</li>
+            <li>Ingrediente de calitate superioara</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pretul e cam mare</li>
+            <li>Consistenta mai tare, necesita mai multe aplicari pentru buze foarte uscate</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Weleda Everon Balsam de buze</h2>
+        <span class="section-tag">~25 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">balsam de buze protector</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">4.8g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">unt de shea bio, ceara de albine, ulei de jojoba bio, extract de trandafir</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">NATRUE, UEBT</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~5.2 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Weleda e un brand pe care-l apreciez mult, mai ales pentru produsele lor pentru bebelusi. Cand am vazut balsamul de buze, am zis ca trebuie sa-l incerc. Consistenta e un pic mai cerata, dar asta il face super rezistent pe buze.</p>
+        <p>Nu e genul care sa se "evapore" repede. Mirosul e subtil, o combinatie de vanilie si trandafir, foarte natural si relaxant. Il folosesc mai ales seara, inainte de culcare, si dimineata buzele sunt moi si reparate.</p>
+        <p>Sincer, e un balsam excelent pentru protectie pe termen lung. Ambalajul e clasic, baton, usor de folosit.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Protectie de lunga durata</li>
+            <li>Ideal pentru seara</li>
+            <li>Ingrediente bio</li>
+            <li>Miros placut si subtil</li>
+            <li>Rezistenta buna la transfer</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pretul e destul de ridicat</li>
+            <li>Consistenta cerata nu e pe placul tuturor</li>
+            <li>Nu e vegan (contine ceara de albine)</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Apiterra Balsam de buze cu propolis si miere</h2>
+        <span class="section-tag">~18 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">balsam de buze reparator romanesc</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">10g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">miere, propolis, ulei de masline, ceara de albine, unt de shea</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">produs artizanal romanesc</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~1.8 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am dat de Apiterra la un targ de produse romanesti, si am fost curioasa sa testez un produs local. Bon, stai, e un borcanel mic, nu stick, asa ca trebuie sa-l aplici cu degetul, ceea ce nu e mereu practic. Dar ingredientele sunt simple si curate.</p>
+        <p>Miroase puternic a miere si propolis, o aroma autentica, de stup. Consistenta e densa, aproape ca o pasta, si se simte ca o pelicula protectoare pe buze. E super reparator, mai ales daca ai buzele crapate rau.</p>
+        <p>Dupa o saptamana de utilizare, buzele mele aratau mult mai bine. E un balsam care te surprinde placut prin eficacitate.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Reparator intens datorita propolisului</li>
+            <li>Ingrediente 100% naturale romanesti</li>
+            <li>Cantitate generoasa</li>
+            <li>Pret foarte bun</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Ambalaj tip borcanel, nu foarte igienic sau practic</li>
+            <li>Miros puternic de propolis care nu place tuturor</li>
+            <li>Nu are certificari bio recunoscute</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Melvita Nectar de 3 Mieri Balsam de buze</h2>
+        <span class="section-tag">~30 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">balsam de buze bio</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">3.5g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">miere de cimbru, miere de acacia, miere de portocal, unt de shea bio, ulei de jojoba bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">ECOCERT, COSMOS ORGANIC</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~8.5 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Melvita e un brand pe care il urmaresc de ceva timp, mai ales pentru produsele lor cu miere. Acest balsam m-a atras prin combinatia de trei tipuri de miere. Textura e fina, se intinde usor si lasa o senzatie de confort imediat.</p>
+        <p>Nu e lipicios deloc. Mirosul e delicat, dulceag, dar nu exagerat, o placere sa-l aplici. Ambalajul e elegant, baton.</p>
+        <p>L-am folosit intensiv in perioada rece si am observat ca buzele raman hidratate pentru ore bune, fara sa fie nevoie sa reaplic constant. E, na, un rasfat pentru buze.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Certificat ECOCERT si COSMOS ORGANIC</li>
+            <li>Hidratare de lunga durata</li>
+            <li>Textura fina si non-lipicioasa</li>
+            <li>Miros delicat</li>
+            <li>Ingrediente premium</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pretul e cel mai mare din lista</li>
+            <li>Cantitate mica</li>
+            <li>Nu e vegan (contine miere)</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Balsam de buze natural si hidratant: o comparatie rapida</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Gerovital H3 Derma+</td><td>reparator</td><td>4.5g</td><td>dermatocosmetic</td><td>unt de shea, miere</td><td>buze uscate, crapate</td></tr>
+          <tr><td>Lavera Repair & Care</td><td>bio</td><td>4.5g</td><td>NATRUE, Vegan</td><td>unt de shea bio, calendula bio</td><td>toate tipurile de buze, vegani</td></tr>
+          <tr><td>Weleda Everon</td><td>protector</td><td>4.8g</td><td>NATRUE, UEBT</td><td>unt de shea bio, ceara de albine</td><td>protectie de lunga durata</td></tr>
+          <tr><td>Apiterra Propolis si Miere</td><td>reparator romanesc</td><td>10g</td><td>artizanal romanesc</td><td>miere, propolis, ulei de masline</td><td>buze foarte crapate, sensibile</td></tr>
+          <tr><td>Melvita Nectar de 3 Mieri</td><td>bio premium</td><td>3.5g</td><td>ECOCERT, COSMOS ORGANIC</td><td>3 tipuri de miere, unt de shea bio</td><td>hidratare premium, buze delicate</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Cum alegi cel mai bun balsam de buze natural si hidratant?</h2>
+      <p>Pana la urma, cum alegi un <strong>balsam de buze natural si hidratant</strong> care sa ti se potriveasca perfect? Pare simplu, dar sunt cateva aspecte la care trebuie sa fii atent. Na, nu toate sunt la fel, zic si eu.</p>
+        <h3>De ce sa alegi un balsam de buze natural?</h3>
+        <p>Sincer, asta e o intrebare buna. Multe balsamuri din comert contin parafina, petrolatum sau silicon, care iti dau o senzatie de hidratare imediata, dar de fapt creeaza o bariera superficiala. Buzele nu respira cum trebuie, iar pe termen lung pot deveni chiar mai uscate si dependente de produs. Un balsam natural, in schimb, hraneste in profunzime cu uleiuri si unturi vegetale, vitamine si antioxidanti. E o diferenta pe bune.</p>
+        <h3>Ce ingrediente cauti intr-un balsam de buze natural si hidratant?</h3>
+        <p>Uite, cand citesti eticheta, sunt cateva vedete pe care vrei sa le vezi. Astea fac minuni:</p>
+        <ul><li><strong>Unt de shea sau cacao:</strong> Sunt super emoliente si formeaza o bariera protectoare.</li><li><strong>Uleiuri vegetale:</strong> Jojoba, migdale dulci, ricin, masline, cocos. Fiecare are proprietatile lui, dar toate hidrateaza si regenereaza. Apropo, daca vrei sa afli mai multe despre <a href="/ulei-de-cocos-beneficii-si-utilizari/">ulei de cocos, beneficii si utilizari</a>, avem un articol dedicat.</li><li><strong>Ceara de albine (daca nu esti vegan):</strong> Ofera consistenta si ajuta la sigilarea hidratarii.</li><li><strong>Miere si propolis:</strong> Antibacteriene, cicatrizante, reparatoare. Perfecte pentru buze crapate.</li><li><strong>Vitamina E:</strong> Un antioxidant puternic, ajuta la regenerarea pielii.</li></ul>
+        <h3>Ce ar trebui sa eviti?</h3>
+        <p>Pe bune, aici e important sa stii ce sa NU iei:</p>
+        <ul><li><strong>Parafina, petrolatum, uleiuri minerale:</strong> Produse derivate din petrol, creeaza o pelicula ocluziva care blocheaza porii.</li><li><strong>Parabeni:</strong> Conservanti controversati.</li><li><strong>Parfumuri sintetice si coloranti artificiali:</strong> Pot irita buzele sensibile.</li><li><strong>Alcool:</strong> Deshidratant.</li></ul>
+        <h3>Certificari: sunt importante?</h3>
+        <p>Da, sunt. Daca vezi etichete precum ECOCERT, NATRUE, COSMOS ORGANIC, Vegan, inseamna ca produsul a trecut prin niste controale stricte. Iti garanteaza ca ingredientele sunt de origine naturala sau organica si ca procesul de productie respecta anumite standarde. E ca un fel de stampila de calitate, stii?</p>
+        <h3>Consistenta si aplicare</h3>
+        <p>Un <strong>balsam de buze natural si hidratant</strong> poate fi sub forma de stick, borcanel sau tub. Stick-ul e cel mai igienic si practic, mai ales cand esti pe fuga. Borcanelul e fain daca esti acasa si ai mainile curate, dar nu prea merge cand esti in oras. Pe asta nu pun mana in foc, dar stiu ca multi prefera stick-ul. Consistenta variaza de la cremos la mai cerat; alege ce-ti place tie. Un balsam mai cerat rezista mai mult, dar poate fi mai greu de intins.</p>
+        <h3>Pretul conteaza?</h3>
+        <p>Pare mult sa dai 20-30 de lei pe un balsam de buze, nu? Dar gandeste-te la ce pui pe buze si cat de des. Un produs de calitate, cu ingrediente bune, poate face o diferenta enorma. Si, pana la urma, o tubulita iti ajunge pentru o perioada destul de lunga. Uneori e mai bine sa investesti putin mai mult intr-o <a href="/creme-naturale-pentru-ten-uscat/">creme naturale pentru ten uscat</a> sau intr-un balsam de buze, decat sa cumperi produse ieftine care nu fac nimic.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">AF</div>
+        <div class="author-info">
+          <h4>Alexandra Florea</h4>
+          <p class="author-role">Specialist Cosmetice Bio</p>
+          <p class="author-bio">Alexandra lucreaza de peste 6 ani in industria cosmeticelor naturale. Testeaza si recomanda doar produse cu ingrediente certificate organic si fara chimicale nocive.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="balsam-de-buze-natural-si-hidratant"
+    currentCategory="cosmetice-naturale"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="balsam-de-buze-natural-si-hidratant"
+    currentCategory="cosmetice-naturale"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
