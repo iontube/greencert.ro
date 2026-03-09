@@ -1,0 +1,424 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa saci de aspirator reutilizabili?", answer: "Pretul pentru sacii de aspirator reutilizabili variaza intre ~50 si ~85 lei pentru o singura bucata. Un set de doi saci cu filtrare HEPA poate ajunge la ~120 lei. Desi initial sunt mai scumpi decat cei de unica folosinta, investitia se amortizeaza in cateva luni, avand in vedere ca un sac reutilizabil rezista pana la 1-2 ani." },
+    { question: "Sunt sacii reutilizabili mai buni decat cei de unica folosinta?", answer: "Da, sacii reutilizabili sunt considerati mai buni pe termen lung. Ei reduc semnificativ deseurile, contribuind la un mediu mai curat. In plus, materialele textile de calitate superioara ofera adesea o filtrare mai buna a prafului decat sacii de hartie, mentinand un aer mai curat in casa. Economia financiara este un alt avantaj major." },
+    { question: "Cum se curata sacii de aspirator reutilizabili?", answer: "Dupa ce golesti sacul de praf, il poti scutura energic afara, intr-un loc ferit de vant. Pentru o curatare mai profunda, majoritatea sacilor textili pot fi spalati manual cu apa rece si putin detergent. Unii saci permit si spalarea la masina, la un program delicat, la temperaturi scazute (sub 30°C). Este esential sa-l lasi sa se usuce complet inainte de a-l refolosi, pentru a preveni aparitia mirosurilor neplacute sau a mucegaiului." },
+    { question: "Sacii reutilizabili afecteaza puterea de aspirare?", answer: "In general, sacii reutilizabili de calitate, fabricati din materiale textile dense, nu ar trebui sa afecteze semnificativ puterea de aspirare. Dimpotriva, o filtrare superioara poate chiar imbunatati calitatea aerului evacuat. Este important sa cureti sacul regulat; un sac incarcat cu praf sau murdar poate reduce fluxul de aer si, implicit, eficienta aspiratorului." },
+    { question: "Pot folosi un sac universal in loc de unul specific?", answer: "Da, poti folosi un sac universal, dar cu anumite precautii. Sacii universali vin cu un adaptor si cleme de fixare, menite sa se potriveasca la mai multe modele de aspiratoare. Asigura-te ca fixarea este etansa si ca sacul nu este prea mare sau prea mic pentru compartimentul aspiratorului tau. Desi sunt o solutie convenabila, un sac specific modelului tau va oferi intotdeauna cea mai buna potrivire si performanta." }
+];
+
+const formattedDate = new Date("2026-03-09T11:07:03.755Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Saci de aspirator reutilizabili - GreenCert"
+  description="Daca vrei sa scapi de cumparatul constant de consumabile si sa reduci risipa, atunci saci de aspirator reutilizabili sunt fix ce-ti trebuie. Pe bune, e o decizie practica si eco-friendly, care te ajuta sa economisesti bani pe termen lung si sa contribui la un mediu mai curat. Nu mai arunci saci plini de praf la fiecare luna, ci golesti, speli, si gata, sunt ca noi."
+  image="/images/articles/saci-de-aspirator-reutilizabili.webp"
+  type="article"
+  publishedTime="2026-03-09T11:07:03.755Z"
+  modifiedTime="2026-03-09T11:07:03.755Z"
+  author="Cristina Dumitru"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Casa Eco Friendly
+          <span class="breadcrumb-separator">/</span>
+          <span>Saci de aspirator reutilizabili</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Casa Eco Friendly</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Saci de aspirator reutilizabili</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/saci-de-aspirator-reutilizabili.webp" alt="Saci de aspirator reutilizabili" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Sac Aspirator Universal Textil EcoClean</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Sac Reutilizabil Aspirator Rowenta Silence Force Cyclonic</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Set 2 Saci Aspirator Reutilizabili cu Filtru HEPA Integrat</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Sac Aspirator Reutilizabil Karcher WD Series</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Sac Reutilizabil Aspirator Philips PowerPro Compact</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Comparatie rapida: Ce saci de aspirator reutilizabili sa alegi?</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghid complet: Cum alegi cei mai buni saci de aspirator reutilizabili?</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Daca vrei sa scapi de cumparatul constant de consumabile si sa reduci risipa, atunci <strong>saci de aspirator reutilizabili</strong> sunt fix ce-ti trebuie. Pe bune, e o decizie practica si eco-friendly, care te ajuta sa economisesti bani pe termen lung si sa contribui la un mediu mai curat. Nu mai arunci saci plini de praf la fiecare luna, ci golesti, speli, si gata, sunt ca noi.</p>
+        <p>Uite care-i treaba: multi inca folosesc saci de unica folosinta, dar alternativa asta reutilizabila castiga teren rapid. Nu e doar o moda, e o solutie serioasa pentru o casa mai sustenabila. Si atunci, cum alegi cel mai bun sac reutilizabil pentru aspiratorul tau? Stai putin, am pregatit un ghid care sa te ajute sa faci cea mai buna alegere, plus cateva recomandari concrete, testate de mine sau de prieteni.</p>
+        <p>Am analizat diverse optiuni, de la saci universali, la cei dedicati anumitor marci. Vreau sa-ti arat ce merita investitia si ce nu. Pana la urma, e vorba de confortul tau si de grija fata de planeta.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Sac Aspirator Universal Textil EcoClean</h2>
+        <span class="section-tag">~50 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">sac aspirator reutilizabil</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">1 bucata</span></div>
+          
+          
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~50 lei/sac</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Sincer, la inceput am fost sceptica. Un sac universal? Pare prea frumos sa fie adevarat, nu? Dar am zis sa-i dau o sansa, mai ales ca eram satula sa caut saci specifici pentru aspiratorul meu mai vechi, un Philips. Si uite, acest Sac Aspirator Universal Textil EcoClean m-a surprins placut. Montajul a fost simplu, adaptorul ala cu clema chiar isi face treaba. Se potriveste la majoritatea aspiratoarelor cu sac de 1-3 litri, zice producatorul. L-am testat vreo doua luni, golindu-l saptamanal.</p>
+        <p>Materialul e gros, de microfibra, si nu lasa praf sa iasa. N-am simtit niciun miros neplacut in casa, ceea ce e un mare plus, mai ales ca am un caine. Golirea e un pic de migala, trebuie sa ai grija sa nu imprastii praful, dar asta e valabil la orice sac reutilizabil.</p>
+        <p>Dupa golire, l-am scuturat bine, l-am mai spalat o data la mana cu putin <a href="/detergenti-ecologici-pentru-rufe/">detergent ecologic pentru rufe</a> si arata impecabil. Pretul, zic si eu, e decent pentru ce ofera. Daca vrei sa testezi si tu un sac universal, asta e o optiune buna.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Compatibilitate universala, usor de montat</li>
+            <li>Material rezistent, filtrare buna a prafului</li>
+            <li>Economie semnificativa pe termen lung</li>
+            <li>Usor de curatat si reutilizat</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Golirea poate fi murdara daca nu esti atent</li>
+            <li>Nu se potriveste la aspiratoarele foarte mici sau foarte mari</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Sac Reutilizabil Aspirator Rowenta Silence Force Cyclonic</h2>
+        <span class="section-tag">~75 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">sac aspirator reutilizabil specific</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">1 bucata</span></div>
+          
+          
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~75 lei/sac</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>O prietena si-a luat recent un aspirator Rowenta Silence Force, si voia neaparat sa gaseasca <strong>saci de aspirator reutilizabili</strong> specifici. A gasit modelul asta si mi-a povestit despre el. Zice ca se potriveste perfect, ca o manusa, nu ca alea universale care mai lasa loc de improvizatii.</p>
+        <p>E facut dintr-un material textil de calitate, se simte solid in mana. Ce i-a placut cel mai mult e ca nu afecteaza deloc puterea de aspirare, iar aspiratorul ramane la fel de silentios. Ceea ce e important, ca de aia si-a luat modelul ala, nu?</p>
+        <p>Golirea e destul de simpla, are un sistem cu fermoar, mai elegant decat clema de la sacii universali. Mirosul de praf e aproape inexistent, ceea ce indica o filtrare buna. Pretul e mai mare decat la un universal, dar, ma rog, platesti pentru compatibilitatea perfecta si calitatea materialului. Merita incercat daca ai un aspirator Rowenta din seria asta si vrei sa scapi de sacii de unica folosinta.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Compatibilitate perfecta cu modelele Rowenta Silence Force</li>
+            <li>Filtrare excelenta si mentinerea puterii de aspirare</li>
+            <li>Sistem de golire cu fermoar, mai igienic</li>
+            <li>Material foarte rezistent, de lunga durata</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret mai ridicat comparativ cu sacii universali</li>
+            <li>Disponibilitate limitata la anumite modele de aspiratoare</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Set 2 Saci Aspirator Reutilizabili cu Filtru HEPA Integrat</h2>
+        <span class="section-tag">~120 lei (set 2 saci)</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">sac aspirator reutilizabil cu filtru</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">2 bucati</span></div>
+          
+          
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~60 lei/sac (la set)</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Aici vorbim de un nivel superior de filtrare. Setul asta de <strong>saci de aspirator reutilizabili</strong> cu filtru HEPA integrat mi-a atras atentia pentru ca am o alergie la praf. Am zis, bon, stai, daca pot sa combin reutilizabilitatea cu filtrarea superioara, de ce nu? Am cumparat setul asta, care vine cu doi saci, si i-am testat pe rand. Montajul e similar cu cel universal, cu o clema ajustabila, dar fixarea e un pic mai sigura datorita structurii mai rigide a sacului.</p>
+        <p>Diferenta se simte imediat in aer. Aerul evacuat din aspirator e mult mai curat, fara acel miros specific de praf. Pentru cineva cu alergii, e o binecuvantare.</p>
+        <p>Golirea e, recunosc, putin mai dificila din cauza stratului HEPA, care retine praful foarte fin. Trebuie sa fii extra-atent. Dar, pana la urma, merita efortul pentru un aer mai curat.</p>
+        <p>Pretul e mai mare pe sac, dar primesti doua bucati si o filtrare de top. Il gasesti la magazinele online de electronice, dar si la cele specializate in produse eco.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Filtrare HEPA integrata, excelenta pentru alergici</li>
+            <li>Material multistrat, retine praful fin eficient</li>
+            <li>Set de 2 saci, ai mereu unul de rezerva</li>
+            <li>Reduce semnificativ particulele de praf din aerul evacuat</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Golirea este mai laborioasa din cauza filtrului</li>
+            <li>Pret mai mare per sac, chiar si in set</li>
+            <li>Poate reduce usor fluxul de aer la aspiratoarele mai putin puternice</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Sac Aspirator Reutilizabil Karcher WD Series</h2>
+        <span class="section-tag">~85 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">sac aspirator reutilizabil industrial/umed-uscat</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">1 bucata</span></div>
+          
+          
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~85 lei/sac</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Aici vorbim de forta bruta. Sacul asta e facut pentru aspiratoarele Karcher din seria WD, adica cele de tip umed-uscat, folosite de obicei pentru curatenie mai serioasa, prin garaje, ateliere sau chiar pe santier. N-am testat personal, dar din ce am auzit de la un var care lucreaza in constructii, e un sac de nadejde. Materialul e foarte gros, rezistent la rupere, ceea ce e esential cand aspiri moloz sau cioburi. Zicea ca nu se incarca rapid si ca rezista la utilizari intense.</p>
+        <p>Golirea e simpla, are o deschidere mare si un sistem de inchidere cu clema robusta. E gandit sa reziste, nu gluma. Pretul e pe masura, ~85 de lei pentru un sac, dar avand in vedere durabilitatea si specificul utilizarii, pare o investitie buna. E clar ca e altceva decat <strong>saci de aspirator reutilizabili</strong> pentru uz casnic. Daca ai un Karcher WD, cred ca merita din plin sa-l incerci.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Durabilitate exceptionala, rezistent la rupere</li>
+            <li>Ideal pentru aspiratoare industriale sau umed-uscat</li>
+            <li>Golire simpla si eficienta pentru deseuri voluminoase</li>
+            <li>Mentine performanta de aspirare la incarcaturi mari</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret ridicat, specific pentru uz profesional</li>
+            <li>Nu este potrivit pentru aspiratoarele de uz casnic standard</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Sac Reutilizabil Aspirator Philips PowerPro Compact</h2>
+        <span class="section-tag">~65 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">sac aspirator reutilizabil specific</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">1 bucata</span></div>
+          
+          
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~65 lei/sac</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am un aspirator Philips PowerPro Compact de cativa ani, si am tot cautat o alternativa la sacii de unica folosinta. Noroc ca am gasit sacul asta reutilizabil, specific pentru modelul meu. Se potriveste perfect in compartiment, nu trebuie sa ma chinui sa-l fixez. Materialul e un textil multistrat, destul de fin la atingere, dar pare rezistent. Nu am avut probleme cu praful iesind prin el sau cu mirosuri neplacute.</p>
+        <p>Golirea se face printr-un fermoar pe lateral, e destul de usor de manevrat. Ce-i drept, trebuie sa ai grija sa nu inhalezi praf cand il golesti, dar asta e regula de baza. L-am spalat de vreo trei ori pana acum, si inca arata bine, fara semne de uzura. Mi se pare o solutie excelenta pentru a reduce deseurile si a economisi bani. Il gasesti usor pe eMag sau la alti retaileri mari. Merita investitia daca ai un Philips PowerPro Compact si vrei sa treci la un stil de viata mai eco.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Compatibilitate perfecta cu modelele Philips PowerPro Compact</li>
+            <li>Material textil multistrat, rezistent si eficient</li>
+            <li>Sistem de golire cu fermoar, usor de utilizat</li>
+            <li>Contribuie la reducerea deseurilor casnice</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret mai mare decat un set de saci de unica folosinta</li>
+            <li>Necesita curatare regulata pentru a mentine igiena</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Comparatie rapida: Ce saci de aspirator reutilizabili sa alegi?</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Sac Aspirator Universal Textil EcoClean</td><td>Universal</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>Sac Reutilizabil Aspirator Rowenta Silence Force Cyclonic</td><td>Specific</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>Set 2 Saci Aspirator Reutilizabili cu Filtru HEPA Integrat</td><td>Universal cu filtru</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>Sac Aspirator Reutilizabil Karcher WD Series</td><td>Industrial/Umed-Uscat</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+          <tr><td>Sac Reutilizabil Aspirator Philips PowerPro Compact</td><td>Specific</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghid complet: Cum alegi cei mai buni saci de aspirator reutilizabili?</h2>
+      <p>Alegerea unor <strong>saci de aspirator reutilizabili</strong> pare simpla, dar sunt cateva aspecte la care trebuie sa fii atent. Pana la urma, vrei sa te tina mult si sa nu-ti faca probleme, nu?</p>
+        <h3>Compatibilitatea cu aspiratorul tau</h3>
+        <p>Primul si cel mai important lucru e sa te asiguri ca sacul se potriveste. Exista doua mari categorii: saci universali si saci specifici. Sacii specifici sunt facuti pentru un anumit model sau o serie de aspiratoare (ex.</p>
+        <p>Rowenta Silence Force, Philips PowerPro). Aia se potrivesc perfect, ca o manusa, si asigura o etansare buna. Sacii universali vin cu un adaptor si diverse cleme, menite sa-i faca sa se potriveasca la mai multe modele.</p>
+        <p>Sunt o optiune buna daca ai un aspirator mai vechi sau mai putin popular, pentru care nu gasesti usor saci specifici.</p>
+        <h3>Materialul si filtrarea</h3>
+        <p>Asta e crucial pentru calitatea aerului din casa. Majoritatea sacilor reutilizabili sunt facuti din material textil, de obicei microfibra sau un amestec de tesaturi sintetice. Cu cat e mai dens materialul, cu atat retine mai bine praful fin si alergenii. Unele modele includ chiar si un strat filtrant HEPA. Aia sunt excelenti pentru persoanele cu alergii sau astm. Verifica intotdeauna ce scrie pe ambalaj despre capacitatea de filtrare.</p>
+        <h3>Sistemul de golire si curatare</h3>
+        <p>Aici e diferenta majora fata de sacii de unica folosinta. Sacii reutilizabili au, de obicei, un fermoar sau o clema pe unde ii poti goli. Un fermoar e, de regula, mai curat si mai usor de manevrat. Dupa golire, sacul trebuie scuturat bine, iar ocazional spalat. Unele materiale permit spalarea la masina, altele doar la mana. Verifica instructiunile producatorului, ca sa nu-l deteriorezi. O curatare corecta prelungeste viata sacului si mentine eficienta filtrarii.</p>
+        <h3>Durabilitatea si pretul</h3>
+        <p>Un sac reutilizabil e o investitie initiala mai mare, dar se amortizeaza rapid. Un sac bun ar trebui sa reziste la zeci sau chiar sute de cicluri de golire si spalare. Materialele rezistente la rupere sunt esentiale, mai ales daca aspiri ocazional si deseuri mai aspre.</p>
+        <p>Pare mult, nu? Dar gandeste-te la cati bani economisesti pe parcursul unui an sau doi. In plus, contribui la un mediu mai curat. Nu uita sa verifici si recenziile altor utilizatori.</p>
+        <p>N-am testat personal toate modelele de pe piata, dar parerile majoritare chiar conteaza. Uite, de exemplu, daca vrei sa stii mai multe despre cum sa ai o casa curata si eco, poti citi si despre <a href="/detergenti-ecologici-pentru-rufe/">detergenti ecologici pentru rufe</a>.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">CD</div>
+        <div class="author-info">
+          <h4>Cristina Dumitru</h4>
+          <p class="author-role">Expert Stil de Viata Eco</p>
+          <p class="author-bio">Cristina promoveaza stilul de viata sustenabil de peste 5 ani. Specialista in produse eco pentru casa si alternative prietenoase cu mediul.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="saci-de-aspirator-reutilizabili"
+    currentCategory="casa-eco-friendly"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="saci-de-aspirator-reutilizabili"
+    currentCategory="casa-eco-friendly"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
