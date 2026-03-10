@@ -1,0 +1,435 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa o tinctura de propolis buna?", answer: "O tinctura de propolis de calitate, de 30ml, costa in general intre 15 si 25 de lei. Preturile variaza in functie de concentratie si brand, dar o varianta de 30% propolis, de la un producator recunoscut, se incadreaza in acest interval." },
+    { question: "Care e diferenta intre tinctura de propolis cu alcool si fara alcool?", answer: "Diferenta principala e solventul folosit. Cea cu alcool (hidroalcoolica) e mai eficienta in extragerea compusilor, dar nu e potrivita pentru copii sau cei care evita alcoolul. Varianta fara alcool (hidroglicerinica) foloseste glicerina vegetala, e mai blanda si potrivita pentru toate varstele, dar poate avea o absorbtie usor diferita." },
+    { question: "Merita sa iau tinctura de propolis zilnic pentru imunitate?", answer: "Da, multi oameni o iau zilnic, in special in sezonul rece, pentru a-si intari imunitatea. Este considerata un imunostimulator natural. Recomandarea generala e sa faci cure de 2-3 saptamani, urmate de o pauza, sau sa o iei preventiv in doze mici. Discuta cu un specialist daca ai afectiuni cronice." },
+    { question: "Cum se administreaza tinctura de propolis la copii?", answer: "Pentru copii, se recomanda exclusiv tinctura de propolis fara alcool. Doza uzuala este de 3-5 picaturi, de 2-3 ori pe zi, diluate intr-o lingurita de miere, apa sau ceai. E important sa consulti medicul pediatru inainte de a incepe orice tratament pentru copii, mai ales sub 3 ani." },
+    { question: "Tinctura de propolis are efecte secundare?", answer: "In general, tinctura de propolis este bine tolerata, dar poate provoca reactii alergice la persoanele sensibile la produsele apicole (miere, polen). Simptomele pot include eruptii cutanate, mancarimi sau dificultati respiratorii. Daca apar astfel de reactii, intrerupe imediat utilizarea si consulta un medic." }
+];
+
+const formattedDate = new Date("2026-03-10T10:59:23.827Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Tinctura de propolis utilizari si beneficii - GreenCert"
+  description="Daca te intrebi la ce e buna tinctura de propolis utilizari si beneficii, ei bine, pe scurt, e un super-erou natural pentru imunitate si nu numai. Multi o stiu de la bunici, ca leac universal, si sincer, nu erau departe de adevar."
+  image="/images/articles/tinctura-de-propolis-utilizari-si-beneficii.webp"
+  type="article"
+  publishedTime="2026-03-10T10:59:23.827Z"
+  modifiedTime="2026-03-10T10:59:23.827Z"
+  author="Dr. Victor Marin"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Remedii Naturiste
+          <span class="breadcrumb-separator">/</span>
+          <span>Tinctura de propolis utilizari si beneficii</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Remedii Naturiste</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Tinctura de propolis utilizari si beneficii</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/tinctura-de-propolis-utilizari-si-beneficii.webp" alt="Tinctura de propolis utilizari si beneficii" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Tinctura de Propolis 30% Apicola Pasteurizata</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Tinctura de Propolis fara alcool Dacia Plant</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Spray de Gat Propolis si Miere Fares</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Miere cu Propolis 2% Apiland</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Propolis C Comprimate Masticabile Fiterman Pharma</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Tinctura de Propolis si Alternativele Sale: Un Tabel Comparativ pentru Utilizari si Beneficii</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghid de Cumparare: Cum Alegi Cea Mai Buna Tinctura de Propolis pentru Tine</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Daca te intrebi la ce e buna <strong>tinctura de propolis utilizari si beneficii</strong>, ei bine, pe scurt, e un super-erou natural pentru imunitate si nu numai. Multi o stiu de la bunici, ca leac universal, si sincer, nu erau departe de adevar.</p>
+        <p>Uite, propolisul asta, produs de albine, e plin de rasini, balsamuri, uleiuri esentiale, polen si flavonoide. Toate astea il fac un antibiotic natural, un antiinflamator si un antiviral redutabil. Pe bune.</p>
+        <p>Recomandarea mea? Daca vrei sa ai mereu la indemana un scut protector, mai ales in sezonul rece, alege o tinctura concentrata, de la un producator de incredere. O sa vezi ca merita fiecare banut.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Tinctura de Propolis 30% Apicola Pasteurizata</h2>
+        <span class="section-tag">~18 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">tinctura hidroalcoolica</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">30ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">extract hidroalcoolic 30% propolis, alcool etilic 70%</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Calitate apicola, produs romanesc</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.6 lei/ml</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Prima data cand am incercat tinctura asta a fost prin facultate, cand raceam la fiecare schimbare de anotimp. O prietena, care jur ca stia toate leacurile babesti, mi-a zis sa o iau. Bon, am zis, hai sa vedem.</p>
+        <p>Am luat-o pe aia de la Apicola, ca era cea mai la indemana. E o sticluta mica, de 30ml, cu un lichid maroniu inchis, iar mirosul e puternic, de rasina, usor picant. Gustul? Amaruuuui, na, dar te obisnuiesti.</p>
+        <p>Dupa vreo saptamana de cate 10 picaturi de trei ori pe zi, diluate in putina apa sau pe o bucatica de paine, am simtit o diferenta. Raceala nu a mai fost asa agresiva, iar durerea in gat s-a dus mai repede. Uite, pe bune, <strong>tinctura de propolis utilizari si beneficii</strong> sunt multe, dar pentru imunitate si gat, asta e sfanta.</p>
+        <p>Ambalajul e simplu, sticla bruna, cu picurator.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Concentratie mare de propolis (30%)</li>
+            <li>Eficient impotriva racelilor si durerilor in gat</li>
+            <li>Produs clasic, de incredere, cu istorie</li>
+            <li>Pret accesibil pentru eficienta sa</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Gust amarui, puternic, poate fi neplacut pentru unii</li>
+            <li>Contine alcool etilic, nu e potrivit pentru copii sau cei care il evita</li>
+            <li>Necesita diluare inainte de consum</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Tinctura de Propolis fara alcool Dacia Plant</h2>
+        <span class="section-tag">~25 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">tinctura hidroglicerinica</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">50ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">extract hidroglicerinic din propolis, glicerina vegetala, apa purificata</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Standarde Dacia Plant</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.5 lei/ml</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Pe asta am descoperit-o cand cautam ceva pentru nepotelul meu, care, sincer, refuza orice e amarui sau cu alcool. Stii cum e cu copiii, nu? Am dat peste varianta fara alcool de la Dacia Plant. E tot o tinctura, dar are la baza glicerina vegetala in loc de alcool, ceea ce o face mult mai blanda.</p>
+        <p>Consistenta e putin mai vascoasa decat cea clasica, iar mirosul e mai dulceag, dar pastreaza totusi nota aia de propolis. Gustul e acceptabil, zic eu, chiar si pentru cei mici. L-am testat eu prima data, ca nu stiam ce sa ma astept.</p>
+        <p>E ok. Nepotelul a luat-o fara sa faca nazuri mari, diluata intr-o lingurita de miere. Ambalajul e similar, sticluta de 50ml, usor de dozat.</p>
+        <p>E o alternativa buna pentru copii sau pentru cei care evita alcoolul.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Nu contine alcool, ideal pentru copii si persoane sensibile</li>
+            <li>Gust mai bland, mai usor de acceptat</li>
+            <li>Consistenta usor vascoasa, adera bine pe mucoase</li>
+            <li>Recipient generos de 50ml</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Concentratia de propolis poate fi perceputa ca mai mica decat la variantele cu alcool (desi e eficace)</li>
+            <li>Pret usor mai ridicat pentru cantitate, comparativ cu variantele cu alcool</li>
+            <li>Poate fi greu de gasit in toate farmaciile, mai mult in plafaruri</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Spray de Gat Propolis si Miere Fares</h2>
+        <span class="section-tag">~24 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">spray oral</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">20ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">extract de propolis, miere, ulei esential de menta, eucalipt</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Standarde Fares</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~1.2 lei/ml</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Uite, asta e solutia mea de urgenta cand simt ca ma ia in gat. Spray-ul de gat cu propolis si miere de la Fares e un must-have in geanta mea, mai ales iarna. E o sticluta mica, de 20ml, super practica.</p>
+        <p>Textura e lichida, dar lasa o senzatie placuta, usor uleioasa, pe gat. Mirosul e fresh, de menta si eucalipt, mascand perfect aroma de propolis. Ador asta.</p>
+        <p>Cand incepe sa ma doara in gat, doua-trei pufuri si parca simt o ameliorare aproape instantanee. Nu e un tratament minune, dar calmeaza iritatia si disconfortul. Si, sincer, e mult mai usor de folosit decat sa stai sa diluezi tinctura.</p>
+        <p>Are si miere, deci e putin dulceag. Daca vrei o solutie rapida si usor de folosit pentru gat, asta e.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Actiune locala rapida si eficienta pentru gat</li>
+            <li>Convenient si usor de folosit oriunde, oricand</li>
+            <li>Gust placut, mascat de menta si eucalipt</li>
+            <li>Ambalaj mic si practic, ideal pentru calatorii</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Cantitate mica (20ml), se consuma relativ repede la utilizare frecventa</li>
+            <li>Nu e o solutie pentru imunitate generala, ci mai mult locala</li>
+            <li>Pretul per ml este mai mare decat la tincturi</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Miere cu Propolis 2% Apiland</h2>
+        <span class="section-tag">~30 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">aliment functional</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">300g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">miere poliflora, extract de propolis 2%</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Calitate apicola</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.1 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am o perioada cand tinctura clasica nu-mi mai cade bine, ma rog, ma saturasem de gust. Si atunci ce faci? Cauti alternative. Asa am dat peste mierea cu propolis de la Apiland.</p>
+        <p>E o miere poliflora normala, dar imbogatita cu extract de propolis, si asta o face super interesanta. Recipientul e un borcan de sticla de 300g, arata bine. Consistenta e cremoasa, ca o miere buna, iar culoarea e un maro deschis.</p>
+        <p>Gustul e predominant de miere, dulce, cu o nota subtila, usor amaruie, de propolis. Nu e deloc deranjant, ba chiar ii da o profunzime. Eu o iau dimineata, o lingurita, asa, simpla, sau o pun in ceai.</p>
+        <p>E o modalitate placuta de a beneficia de propolis, mai ales pentru cei care nu suporta tinctura. E o optiune delicioasa si eficienta, mai ales ca o iei preventiv.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Gust placut, usor de consumat, ideal pentru cei care evita tincturile</li>
+            <li>Combina beneficiile mierii cu cele ale propolisului</li>
+            <li>Excelenta pentru preventie si intarirea imunitatii</li>
+            <li>Produs 100% natural, fara aditivi</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Concentratia de propolis e mai mica decat la tincturi (2%)</li>
+            <li>Nu e la fel de eficienta in caz de afectiuni acute, severe</li>
+            <li>Pret mai ridicat decat mierea simpla</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Propolis C Comprimate Masticabile Fiterman Pharma</h2>
+        <span class="section-tag">~24 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">supliment alimentar</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">20 comprimate</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">extract de propolis, vitamina C, ulei esential de menta, indulcitori</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Standarde Fiterman</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~1.2 lei/comprimat</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Sincer, pastilele astea masticabile cu propolis de la Fiterman Pharma sunt un fel de "ultima solutie" pentru mine, cand sunt pe fuga sau in calatorie. Nu sunt fan pastile in general, dar astea sunt ok. Sunt 20 de comprimate intr-o cutie mica, usor de pus in buzunar.</p>
+        <p>Au o textura usor nisipoasa, se topesc destul de repede in gura. Mirosul e de menta, iar gustul e mentolat, dulceag, cu o urma discreta de propolis. Nu e amar.</p>
+        <p>Au si vitamina C, ceea ce e un plus pentru imunitate. Le-am folosit de cateva ori cand simteam ca ma ia o raceala si eram plecata de acasa. Au ajutat la calmarea gatului si la senzatia aia de 'ceva nu e in regula'.</p>
+        <p>Nu sunt la fel de puternice ca o tinctura concentrata, dar pentru un boost rapid sau pentru calatorii, sunt perfecte. Daca vrei o varianta discreta si usor de administrat, asta e.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Extrem de portabile si usor de administrat, fara apa</li>
+            <li>Gust placut, mentolat, fara amara propolisului pur</li>
+            <li>Contine si Vitamina C, un plus pentru imunitate</li>
+            <li>Ideal pentru calatorii sau la birou</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Nu sunt la fel de puternice ca o tinctura concentrata</li>
+            <li>Contine indulcitori si arome artificiale (pentru gust)</li>
+            <li>Pretul per doza e relativ ridicat</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Tinctura de Propolis si Alternativele Sale: Un Tabel Comparativ pentru Utilizari si Beneficii</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Tinctura de Propolis 30% Apicola</td><td>Tinctura clasica</td><td>30ml</td><td>Calitate apicola</td><td>Propolis 30%, alcool 70%</td><td>Adulti, imunitate, gat iritat</td></tr>
+          <tr><td>Tinctura de Propolis fara alcool Dacia Plant</td><td>Tinctura hidroglicerinica</td><td>50ml</td><td>Standarde Dacia Plant</td><td>Propolis, glicerina vegetala</td><td>Copii, adulti sensibili, fara alcool</td></tr>
+          <tr><td>Spray de Gat Propolis si Miere Fares</td><td>Spray oral</td><td>20ml</td><td>Standarde Fares</td><td>Propolis, miere, menta, eucalipt</td><td>Ameliorare locala gat, adulti si copii</td></tr>
+          <tr><td>Miere cu Propolis 2% Apiland</td><td>Aliment functional</td><td>300g</td><td>Calitate apicola</td><td>Miere poliflora, propolis 2%</td><td>Preventie, intarirea imunitatii, copii</td></tr>
+          <tr><td>Propolis C Comprimate Masticabile Fiterman</td><td>Supliment alimentar</td><td>20 comprimate</td><td>Standarde Fiterman</td><td>Propolis, Vitamina C, menta</td><td>Calatorii, boost rapid imunitate, adulti</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghid de Cumparare: Cum Alegi Cea Mai Buna Tinctura de Propolis pentru Tine</h2>
+      <p>Cand vine vorba de <strong>tinctura de propolis utilizari si beneficii</strong>, e clar ca vrei sa alegi un produs care sa-ti aduca maximul de rezultate. Dar cum te descurci prin atatea optiuni? Uite care-i treaba, sunt cateva criterii pe care e bine sa le ai in minte. Nu e rocket science, dar te ajuta sa nu arunci banii pe fereastra.</p>
+        <h3>Concentratia de Propolis</h3>
+        <p>Asta e, poate, cel mai important aspect. Concentratia se refera la cata rasina de propolis e in tinctura. Majoritatea variantelor clasice au 20% sau 30%. Daca vrei ceva puternic, pentru imunitate sau probleme acute, mergi pe 30%. Pentru preventie sau daca esti mai sensibil, un 20% e suficient. Stai putin, nu inseamna ca o concentratie mai mica e ineficienta, pur si simplu trebuie sa ajustezi doza.</p>
+        <h3>Tipul de Tinctura: Cu sau Fara Alcool?</h3>
+        <p>Aici e o discutie. Tinctura clasica, cea hidroalcoolica, e cea mai raspandita si, sincer, cea mai eficienta in extractia compusilor activi din propolis. Dar, na, are alcool. Daca esti adult si nu ai probleme, e ok. Daca ai copii, esti insarcinata, alaptezi, ai probleme hepatice sau pur si simplu eviti alcoolul, atunci clar ai nevoie de o varianta hidroglicerinica, fara alcool. Sunt la fel de bune, dar pot avea o actiune usor diferita. Aici, decizia e personala, in functie de nevoi.</p>
+        <h3>Sursa si Calitatea Propolisului</h3>
+        <p>Pe bune, vrei un propolis de calitate. Cauta producatori romani cu traditie, care lucreaza cu apicultori locali. Asta iti garanteaza o puritate mai mare si, implicit, mai multe <strong>tinctura de propolis utilizari si beneficii</strong>. Un propolis bun e obtinut din zone nepoluate, de la albine sanatoase. Verifici eticheta, vezi daca sunt mentiuni despre sursa sau certificari de calitate, chiar daca nu sunt bio neaparat.</p>
+        <h3>Forma de Prezentare si Usurinta in Utilizare</h3>
+        <ul><li><strong>Tinctura clasica:</strong> Se ia diluata in apa, ceai sau pe o bucatica de paine. E cea mai versatila.</li><li><strong>Spray-uri:</strong> Perfecte pentru gat, actioneaza local si sunt super comode.</li><li><strong>Comprimate masticabile:</strong> Ideale pentru calatorii sau cand nu ai la indemana apa.</li><li><strong>Miere cu propolis:</strong> O varianta gustoasa, mai mult pentru preventie si consum regulat.</li></ul>
+        <p>Pana la urma, alegi ce ti se potriveste cel mai bine stilului tau de viata. Daca te intereseaza si alte metode naturale de intarire a imunitatii, poti sa citesti si despre <a href="/ceaiuri-pentru-sistemul-imunitar/">cele mai bune ceaiuri pentru sistemul imunitar</a>.</p>
+        <h3>Dozaj si Administrare</h3>
+        <p>Uite, citeste prospectul! Fiecare produs are instructiuni clare. In general, pentru adulti, tinctura se ia de 2-3 ori pe zi, 10-30 de picaturi, diluate. Pentru copii, doza e mult mai mica si doar cu variante fara alcool. Nu depasi doza recomandata, nu e ca si cum "mai mult e mai bine".</p>
+        <h3>La ce sa fii atent?</h3>
+        <p>Sincer, la alergii. Propolisul poate provoca reactii alergice la persoanele sensibile la produsele apicole. Fa un test pe o portiune mica de piele inainte de a-l consuma intern. Daca apar iritatii, mancarimi sau alte simptome, opreste utilizarea. Asta e crucial. Pentru alte remedii naturale, poate te intereseaza si <a href="/ceai-de-ghimbir-beneficii-si-reteta/">beneficiile ceaiului de ghimbir</a>, care e la fel de versatil.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">DVM</div>
+        <div class="author-info">
+          <h4>Dr. Victor Marin</h4>
+          <p class="author-role">Specialist Fitoterapie</p>
+          <p class="author-bio">Dr. Victor Marin are 15 ani de experienta in medicina naturista si fitoterapie. Recomanda remedii naturale bazate pe studii stiintifice si traditie.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="tinctura-de-propolis-utilizari-si-beneficii"
+    currentCategory="remedii-naturiste"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="tinctura-de-propolis-utilizari-si-beneficii"
+    currentCategory="remedii-naturiste"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
