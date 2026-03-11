@@ -1,0 +1,428 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat fier contine lintea rosie si cat ar trebui sa mananc?", answer: "Lintea rosie contine aproximativ 3.3 mg de fier la 100g gatita. Pentru adulti, necesarul zilnic de fier variaza intre 8-18 mg, in functie de sex si varsta. O portie de 150g de linte gatita iti poate oferi pana la 5 mg de fier." },
+    { question: "Ce alimente vegetale au cel mai mult fier?", answer: "Printre cele mai bogate alimente vegetale in fier se numara spirulina (aprox. 28 mg/100g), semintele de dovleac (aprox. 8 mg/100g), lintea (aprox. 3.3 mg/100g gatita), fasolea neagra si spanacul. Absorbtia e imbunatatita cu vitamina C." },
+    { question: "Cum sa imbunatatesc absorbtia fierului din plante?", answer: "Pentru a imbunatati absorbtia fierului non-hemic din plante, combina-l intotdeauna cu vitamina C. Consuma alimente bogate in fier impreuna cu citrice, ardei gras, rosii sau patrunjel proaspat. Evita cafeaua si ceaiul negru in timpul meselor." },
+    { question: "Fierul din spanac e greu de absorbit?", answer: "Da, fierul din spanac este mai greu de absorbit din cauza continutului de oxalati, care se leaga de fier si impiedica absorbtia. Totusi, spanacul ramane o sursa valoroasa de fier, iar combinarea lui cu vitamina C si gatirea (care reduce oxalatii) pot imbunatati biodisponibilitatea." },
+    { question: "Merita sa cumpar alimente bio bogate in fier?", answer: "Da, merita sa cumperi alimente bio bogate in fier. Produsele organice sunt cultivate fara pesticide si fertilizatori chimici, ceea ce poate insemna un profil nutritional mai bun si mai putine toxine. Diferenta de pret este de obicei de 10-30% fata de produsele conventionale." }
+];
+
+const formattedDate = new Date("2026-03-11T11:11:51.345Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Alimente bogate in fier lista completa - GreenCert"
+  description="Ai nevoie de o alimente bogate in fier lista completa? Stai linistit, am pus cap la cap exact ce-ti trebuie ca sa-ti refaci stocul de energie si vitalitate. Fierul e un mineral crucial pentru corpul nostru, ajuta la transportul oxigenului si la prevenirea anemiei, o problema destul de comuna, mai ales la femei."
+  image="/images/articles/alimente-bogate-in-fier-lista-completa.webp"
+  type="article"
+  publishedTime="2026-03-11T11:11:51.345Z"
+  modifiedTime="2026-03-11T11:11:51.345Z"
+  author="Ioana Verdes"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Alimentatie Sanatoasa
+          <span class="breadcrumb-separator">/</span>
+          <span>Alimente bogate in fier lista completa</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Alimentatie Sanatoasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Alimente bogate in fier lista completa</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/alimente-bogate-in-fier-lista-completa.webp" alt="Alimente bogate in fier lista completa" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Linte rosie bio Solaris</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Spanac proaspat bio Grano</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Seminte de dovleac crude bio Pronat</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Quinoa alba bio Sanovita</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Spirulina pudra bio Obio</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Comparatie rapida: Ce alimente bogate in fier sa alegi?</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghidul tau pentru a alege cele mai bune alimente bogate in fier</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Ai nevoie de o <strong>alimente bogate in fier lista completa</strong>? Stai linistit, am pus cap la cap exact ce-ti trebuie ca sa-ti refaci stocul de energie si vitalitate. Fierul e un mineral crucial pentru corpul nostru, ajuta la transportul oxigenului si la prevenirea anemiei, o problema destul de comuna, mai ales la femei.</p>
+        <p>Nu e vorba doar de carne, pe bune. Exista o gramada de optiuni vegetale, bio si organice, care iti ofera fierul necesar, fara sa te complici. Uite care-i treaba: e important sa stii ce sa alegi si cum sa combini alimentele pentru o absorbtie maxima. Vitamina C, de exemplu, e prietena ta cea mai buna cand vine vorba de fierul non-hemic din plante.</p>
+        <p>Am testat si cercetat cateva produse bio, de la linte la superalimente, ca sa-ti dau niste recomandari concrete. Scopul e sa-ti faci o idee clara despre ce poti include in dieta ta zilnica pentru a te asigura ca ai suficient fier. Merita sa te uiti cu atentie la etichete si sa alegi variantele organice, sunt mai curate si, sincer, au un gust mai bun.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Linte rosie bio Solaris</h2>
+        <span class="section-tag">~10 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Leguminoase bio</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">500g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Linte rosie integrala bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Certificat Organic RO-ECO-008</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.02 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am descoperit lintea rosie bio Solaris acum vreo doi ani, cand incercam sa reduc consumul de carne. Sincer, eram sceptica, dar a devenit un ingredient de baza in bucataria mea. Are o culoare superba, rozalie, si o textura cremoasa dupa fierbere, nu se face terci ca alte tipuri de linte.</p>
+        <p>Mirosul e subtil, pamantesc, specific leguminoaselor. O folosesc la supe-crema, salate sau ca baza pentru chiftele vegetale. Absorbtia fierului din <strong>alimente bogate in fier lista completa</strong> ca lintea e ajutata mult de vitamina C, asa ca o combin mereu cu ardei gras sau patrunjel proaspat.</p>
+        <p>Ambalajul e simplu, o punga de plastic, nimic sofisticat, dar isi face treaba. Merita incercata daca vrei o sursa vegetala consistenta de fier.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Fierbe rapid (15-20 min), perfecta pentru mese rapide.</li>
+            <li>Gust neutru, usor de integrat in diverse retete.</li>
+            <li>Sursa excelenta de fier non-hemic si proteine vegetale.</li>
+            <li>Disponibilitate buna in magazinele bio.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Necesita combinare cu vitamina C pentru o absorbtie optima a fierului.</li>
+            <li>Ambalajul din plastic nu e cel mai eco-friendly.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Spanac proaspat bio Grano</h2>
+        <span class="section-tag">~10 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Legume proaspete bio</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">250g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Spanac proaspat bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Certificat Organic RO-ECO-007</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.04 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Spanacul proaspat bio de la Grano e un must-have in frigiderul meu. Il iau mai ales cand vreau sa fac o salata rapida sau sa-l adaug intr-un smoothie verde. Frunzele sunt de un verde intens, curate, si au o textura frageda, nu sunt lemnoase deloc.</p>
+        <p>Mirosul e proaspat, specific, fara note amare. L-am testat in diverse combinatii, de la omlete la paste, si se integreaza perfect. Cu mentiunea ca fierul din spanac e mai greu de absorbit din cauza oxalatilor, asa ca tot vitamina C e cheia.</p>
+        <p>De obicei, il combin cu suc de lamaie sau rosii. Ambalajul e o punga biodegradabila, ceea ce e un plus. Daca vrei sa-ti faci o salata verde plina de nutrienti, asta e o optiune super.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Frunze proaspete, curate si fragede.</li>
+            <li>Versatil, merge in salate, smoothie-uri, mancaruri gatite.</li>
+            <li>Sursa de fier, vitamine si antioxidanti.</li>
+            <li>Ambalaj biodegradabil.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Continutul de oxalati poate inhiba absorbtia fierului.</li>
+            <li>Perisabil, trebuie consumat rapid dupa cumparare.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Seminte de dovleac crude bio Pronat</h2>
+        <span class="section-tag">~14 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Seminte bio</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">200g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Seminte de dovleac crude decojite bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Certificat Organic RO-ECO-008</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.07 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Semintele de dovleac Pronat sunt un snack excelent si o sursa concentrata de fier. Recunosc, la inceput le foloseam doar in paine, dar apoi am inceput sa le rontai asa, simple. Au o textura crocanta si un gust usor nucos, foarte placut.</p>
+        <p>Nu sunt amare, ceea ce e un semn bun de prospetime. Le adaug in iaurt, in salate sau in boluri de smoothie. Pe bune, sunt super satioase si iti dau un boost de energie.</p>
+        <p>Sunt pe lista de <strong>alimente bogate in fier lista completa</strong> si sunt printre cele mai usor de integrat. Le tin intr-un recipient etans, la rece, ca sa nu rancezeasca. Ambalajul e o punga simpla, resigilabila, destul de practica.</p>
+        <p>Merita sa le ai mereu la indemana pentru o gustare sanatoasa.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Gust placut, nucos si textura crocanta.</li>
+            <li>Sursa concentrata de fier, zinc si magneziu.</li>
+            <li>Snack satios si versatil.</li>
+            <li>Ambalaj resigilabil, practic.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Calorii multe, trebuie consumate cu moderatie.</li>
+            <li>Pretul e un pic mai mare decat la semintele conventionale.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Quinoa alba bio Sanovita</h2>
+        <span class="section-tag">~16 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Pseudocereale bio</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">500g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Quinoa alba bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Certificat Organic RO-ECO-008</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.03 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Quinoa alba bio de la Sanovita a fost o revelatie acum cativa ani. Inainte, nu stiam ce sa fac cu ea, dar acum o folosesc in loc de orez sau cuscus. Are o textura interesanta, usor al dente, si bobitele se desprind frumos.</p>
+        <p>Gustul e neutru, cu o nota subtila de nuca, si nu e deloc amara daca o clatesti bine inainte. Am testat-o atat in preparate sarate – salate, garnituri – cat si in budinci dulci, cu lapte vegetal. E o alternativa excelenta, mai ales ca e si o proteina completa.</p>
+        <p>Ambalajul e o punga de plastic, ok, dar ar fi mers una de hartie. Daca vrei o garnitura sanatoasa si satioasa, o gasesti in magazinele bio.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Proteina completa, contine toti aminoacizii esentiali.</li>
+            <li>Fierbe relativ rapid si are o textura placuta.</li>
+            <li>Gust neutru, usor de combinat.</li>
+            <li>Sursa buna de fier, fibre si magneziu.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Necesita clatire inainte de fierbere pentru a elimina saponinele amare.</li>
+            <li>Pretul e mai ridicat decat al altor cereale.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Spirulina pudra bio Obio</h2>
+        <span class="section-tag">~45 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Superaliment bio</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">125g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Spirulina pudra bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Certificat Organic RO-ECO-007, Vegan Society</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.36 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Spirulina pudra bio Obio. Aici e o poveste. Prima data cand am incercat-o, am fost putin socata de mirosul ei intens, de alge, si de culoarea verde inchis.</p>
+        <p>Na, dar stiam ca e un superaliment, asa ca am perseverat. Am inceput s-o pun in smoothie-uri cu fructe puternice, gen ananas sau banane, ca sa maschez gustul. Textura e fina, se dizolva bine, desi lasa o nuanta verde in orice pui.</p>
+        <p>Dupa vreo doua saptamani de consum, am simtit o crestere a energiei, pe bune. E o sursa incredibila de fier, printre cele mai bune pe o <strong>alimente bogate in fier lista completa</strong>, si o recomand daca esti in cautare de un boost serios. Uite, daca vrei sa afli mai multe, am scris si un articol despre <a href="/spirulina-beneficii-si-contraindicatii/">spirulina beneficii si contraindicatii</a>.</p>
+        <p>Ambalajul e o punga stand-up, resigilabila, ceea ce e super important pentru prospetime. O gasesti in magazinele specializate.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Continut extrem de ridicat de fier si proteine.</li>
+            <li>Sursa completa de nutrienti, inclusiv vitamine B si antioxidanti.</li>
+            <li>Boost de energie si vitalitate.</li>
+            <li>Ambalaj practic, resigilabil.</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Gust si miros intens, de alge, care poate fi neplacut pentru unii.</li>
+            <li>Pret destul de ridicat pe gram.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Comparatie rapida: Ce alimente bogate in fier sa alegi?</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Linte rosie bio Solaris</td><td>Leguminoase bio</td><td>500g</td><td>Organic</td><td>Linte rosie</td><td>Mese rapide, supe, tocanite</td></tr>
+          <tr><td>Spanac proaspat bio Grano</td><td>Legume proaspete bio</td><td>250g</td><td>Organic</td><td>Spanac</td><td>Salate, smoothie-uri, omlete</td></tr>
+          <tr><td>Seminte de dovleac crude bio Pronat</td><td>Seminte bio</td><td>200g</td><td>Organic</td><td>Seminte de dovleac</td><td>Snack-uri, iaurt, salate</td></tr>
+          <tr><td>Quinoa alba bio Sanovita</td><td>Pseudocereale bio</td><td>500g</td><td>Organic</td><td>Quinoa</td><td>Garnituri, salate, budinci</td></tr>
+          <tr><td>Spirulina pudra bio Obio</td><td>Superaliment bio</td><td>125g</td><td>Organic, Vegan</td><td>Spirulina</td><td>Smoothie-uri, sucuri, detox</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghidul tau pentru a alege cele mai bune alimente bogate in fier</h2>
+      <p>Bon, stai. Acum ca am vazut cateva exemple concrete, e timpul sa te ajut sa alegi inteligent. Nu e de ajuns doar sa stii care sunt <strong>alimente bogate in fier lista completa</strong>, trebuie sa stii si cum sa le integrezi in dieta ta ca sa beneficiezi la maximum de ele.</p>
+        <h3>Criterii esentiale cand alegi alimente bogate in fier</h3>
+        <ul>
+<li><strong>Sursa si certificari</strong>: Mereu, dar mereu, alege produse bio sau organice. Certificarile ECOCERT, RO-ECO-007 sau Vegan Society iti garanteaza ca produsul a fost crescut sau procesat fara pesticide si chimicale. E o diferenta pe bune, si la gust, si la sanatate.</li>
+<li><strong>Tipul de fier</strong>: Stii, exista fier hemic (din carne) si fier non-hemic (din plante). Fierul non-hemic se absoarbe mai greu, dar asta nu inseamna ca e mai putin eficient. Doar ca trebuie sa-l ajuti putin.</li>
+<li><strong>Combinatii inteligente</strong>: Asta e crucial! Intotdeauna combina sursele vegetale de fier cu alimente bogate in vitamina C. Uite, niste suc de lamaie peste linte, ardei gras in salata de spanac, sau un smoothie cu spirulina si portocale. Asta face minuni pentru absorbtie.</li>
+<li><strong>Evita inhibitorii</strong>: Cafeaua, ceaiul negru si produsele lactate pot reduce absorbtia fierului daca le consumi imediat dupa o masa bogata in fier. Na, nu zic sa renunti la ele, dar incearca sa le separi de mesele principale.</li>
+<li><strong>Prospetime si ambalaj</strong>: La legume proaspete, e clar, vrei sa fie cat mai proaspete. La seminte sau cereale, uita-te la termenul de valabilitate si la ambalaj. Un ambalaj resigilabil e un plus, pastreaza produsele proaspete mai mult timp.</li>
+</ul>
+        <h3>Ce sa eviti cand cauti alimente bogate in fier</h3>
+        <p>Pare simplu, nu? Dar sunt si capcane. Pe bune, incearca sa eviti produsele ultra-procesate care "sunt imbogatite cu fier". De cele mai multe ori, fierul adaugat nu e in cea mai biodisponibila forma, si vine la pachet cu o gramada de alte ingrediente de care nu ai nevoie.</p>
+        <p>Concentreaza-te pe surse intregi, naturale. Si, stai putin, nu te baza doar pe un singur tip de aliment. Varietatea e cheia.</p>
+        <p>O prietena si-a luat doar suplimente de fier si a avut probleme cu digestia, mai bine te uiti la dieta intai. Daca ma intrebi pe mine, e mai bine sa investesti in alimente bio de calitate decat in suplimente ieftine. Multe dintre <strong>alimente bogate in fier lista completa</strong> iti aduc si alte beneficii – fibre, proteine, vitamine, minerale.</p>
+        <p>De exemplu, poti sa combini semintele de dovleac cu <a href="/cele-mai-bune-seminte-de-chia/">cele mai bune seminte de chia</a> pentru un mix de nutrienti. Si daca ai probleme cu energia, poate arunci un ochi si la <a href="/cele-mai-bune-superalimente-pentru-energie/">cele mai bune superalimente pentru energie</a>, unde fierul joaca un rol important. Pana la urma, sanatatea ta e cea mai importanta.</p>
+        <p>Alege inteligent, asculta-ti corpul si nu te teme sa experimentezi in bucatarie. E un drum, nu o destinatie. Si nu uita, un stil de viata sanatos include si o dieta variata, nu doar cateva alimente izolate.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">IV</div>
+        <div class="author-info">
+          <h4>Ioana Verdes</h4>
+          <p class="author-role">Nutritionist Certificat</p>
+          <p class="author-bio">Ioana are peste 8 ani de experienta in nutritie si alimentatie sanatoasa. Pasionata de superalimente si diete echilibrate, ofera sfaturi practice pentru o viata mai sanatoasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="alimente-bogate-in-fier-lista-completa"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="alimente-bogate-in-fier-lista-completa"
+    currentCategory="alimentatie-sanatoasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>

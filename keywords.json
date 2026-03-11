@@ -1,11 +1,6 @@
 {
   "pending": [
     {
-      "keyword": "alimente bogate in fier lista completa",
-      "category": "Alimentatie Sanatoasa",
-      "categorySlug": "alimentatie-sanatoasa"
-    },
-    {
       "keyword": "otet de mere beneficii si cum se foloseste",
       "category": "Alimentatie Sanatoasa",
       "categorySlug": "alimentatie-sanatoasa"
@@ -587,6 +582,13 @@
       "categorySlug": "remedii-naturiste",
       "excerpt": "Daca te intrebi la ce e buna tinctura de propolis utilizari si beneficii, ei bine, pe scurt, e un super-erou natural pentru imunitate si nu numai. Multi o stiu de la bunici, ca leac universal, si sincer, nu erau departe de adevar.",
       "date": "2026-03-10T10:59:23.827Z"
+    },
+    {
+      "keyword": "alimente bogate in fier lista completa",
+      "category": "Alimentatie Sanatoasa",
+      "categorySlug": "alimentatie-sanatoasa",
+      "excerpt": "Ai nevoie de o alimente bogate in fier lista completa? Stai linistit, am pus cap la cap exact ce-ti trebuie ca sa-ti refaci stocul de energie si vitalitate. Fierul e un mineral crucial pentru corpul nostru, ajuta la transportul oxigenului si la prevenirea anemiei, o problema destul de comuna, mai ales la femei.",
+      "date": "2026-03-11T11:11:51.345Z"
     }
   ],
   "authors": [
