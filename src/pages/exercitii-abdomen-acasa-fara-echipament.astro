@@ -1,0 +1,424 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cati ani trebuie sa am ca sa fac exercitii abdomen acasa?", answer: "Nu exista o varsta minima stricta, dar majoritatea programelor de exercitii abdomen acasa fara echipament sunt potrivite pentru adolescenti si adulti. Copiii pot face miscari de baza, dar fara a forta. Important este sa asculti corpul si sa adaptezi intensitatea." },
+    { question: "Cat de des ar trebui sa fac exercitii pentru abdomen?", answer: "Ideal ar fi sa faci exercitii abdomen acasa fara echipament de 3-4 ori pe saptamana, lasand o zi de pauza intre antrenamente pentru recuperare musculara. Muschii abdominali, la fel ca oricare alt grup muscular, au nevoie de timp sa se refaca si sa creasca." },
+    { question: "In cat timp se vad rezultate la exercitiile pentru abdomen?", answer: "Rezultatele pot varia, dar cu o dieta echilibrata si antrenament consistent de 3-4 ori pe saptamana, poti incepe sa vezi schimbari subtile in 4-6 saptamani. Pentru un abdomen vizibil tonifiat, e nevoie de 2-3 luni sau mai mult, depinzand de grasimea corporala initiala." },
+    { question: "Ce exercitii sunt cele mai bune pentru abdomenul inferior?", answer: "Pentru abdomenul inferior, ridicarile de picioare, foarfecele (leg raises) si reverse crunches sunt super eficiente. Aceste exercitii abdomen acasa fara echipament lucreaza specific partea de jos a rectului abdominal, ajutand la tonifiere si definire." },
+    { question: "Pot sa slabesc doar facand exercitii la abdomen?", answer: "Nu, nu poti slabi doar la abdomen (conceptul de \"slabire localizata\" e un mit). Exercitii abdomen acasa fara echipament tonifiaza muschii, dar pentru a reduce grasimea de pe abdomen e nevoie de un deficit caloric, adica sa mananci mai putin decat consumi, combinat cu exercitii cardio si o dieta sanatoasa. Un abdomen plat e 80% dieta si 20% exercitiu." }
+];
+
+const formattedDate = new Date("2026-03-12T11:00:29.240Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Exercitii abdomen acasa fara echipament - GreenCert"
+  description="Vrei un abdomen puternic si plat, fara sa calci in sala? Perfect, poti face exercitii abdomen acasa fara echipament si sa vezi rezultate. Uite, nu-i nevoie de abonamente scumpe sau aparate complicate ca sa-ti tonifiezi zona asta."
+  image="/images/articles/exercitii-abdomen-acasa-fara-echipament.webp"
+  type="article"
+  publishedTime="2026-03-12T11:00:29.240Z"
+  modifiedTime="2026-03-12T11:00:29.240Z"
+  author="Mihai Stanescu"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Fitness Acasa
+          <span class="breadcrumb-separator">/</span>
+          <span>Exercitii abdomen acasa fara echipament</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Fitness Acasa</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Exercitii abdomen acasa fara echipament</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/exercitii-abdomen-acasa-fara-echipament.webp" alt="Exercitii abdomen acasa fara echipament" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Pulbere Proteica Vegetala BIO (Canepa si Mazare) Nutrimax</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Magneziu Citrat Pulbere BIO Solaris</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Spirulina Tablete BIO Dragon Superfoods</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Seminte de Chia BIO SanoVita</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Ulei de Cocos Extra Virgin BIO Dragon Superfoods</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Suplimente si alimente bio pentru sustinerea antrenamentelor de abdomen acasa</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghid complet pentru exercitii abdomen acasa fara echipament</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Vrei un abdomen puternic si plat, fara sa calci in sala? Perfect, poti face <strong>exercitii abdomen acasa fara echipament</strong> si sa vezi rezultate. Uite, nu-i nevoie de abonamente scumpe sau aparate complicate ca sa-ti tonifiezi zona asta.</p>
+        <p>Sincer, am testat o gramada de rutine de-a lungul anilor si am ajuns la concluzia ca simplitatea e cheia. Important e sa stii ce miscari sa faci, cum sa le executi corect si, la fel de important, sa fii constant. E mai usor sa te tii de treaba cand nu depinzi de un anumit loc sau de un anumit echipament, nu crezi?</p>
+        <p>Pe bune, cu doar 15-20 de minute pe zi, poti sa iti transformi abdomenul. Si stai, nu e doar despre cum arati. Un core puternic te ajuta la postura, reduce durerile de spate si imbunatateste performanta in orice alta activitate fizica. Si na, cand te simti bine, arati bine. Pentru a sustine efortul, anumite produse bio pot fi de mare ajutor.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Pulbere Proteica Vegetala BIO (Canepa si Mazare) Nutrimax</h2>
+        <span class="section-tag">~125 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">supliment alimentar, proteina vegetala</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">500g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">proteina de canepa bio, proteina de mazare bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">BIO, Vegan, Fara Gluten</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.25 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Daca ma intrebi pe mine, proteina vegetala e un must pentru oricine face miscare, mai ales cand faci <strong>exercitii abdomen acasa fara echipament</strong> si vrei sa iti refaci muschii. Am descoperit pulberea asta Nutrimax acum vreo 6 luni, cand cautam o alternativa la zer. Are o textura fina, nu e grunjoasa ca alte proteine de mazare.</p>
+        <p>Mirosul e subtil, pamantos, nu are arome artificiale care sa te dea pe spate. Eu o pun in smoothie-uri sau in shake-uri cu lapte vegetal si se dizolva super bine. N-am simtit niciodata balonare de la ea, ceea ce la alte marci mi s-a mai intamplat.</p>
+        <p>Sincer, dupa antrenamente, simt ca ma recuperez mai rapid. Si gustul, desi natural, e ok, nu e neaparat cel mai delicios, dar e usor de mascat. Ambalajul e simplu, o punga resigilabila, practica. Ca idee, o prietena de-a mea, vegana convinsa, zicea ca e singura proteina care nu o deranjeaza la stomac. Si chiar are un profil de aminoacizi complet.</p>
+        <p>Daca vrei sa o incerci pentru recuperare musculara, <a href="/proteine-vegetale-surse-complete/">aceasta optiune e buna</a>.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Profil complet de aminoacizi</li>
+            <li>Digestie usoara, nu baloneaza</li>
+            <li>Gust neutru, usor de integrat in retete</li>
+            <li>Certificata BIO si Vegan</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret mai ridicat fata de proteinele non-bio</li>
+            <li>Disponibilitate limitata in magazinele fizice</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Magneziu Citrat Pulbere BIO Solaris</h2>
+        <span class="section-tag">~60 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">supliment alimentar, minerale</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">150g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">citrat de magneziu bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">BIO</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.40 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Dupa o sesiune intensa de <strong>exercitii abdomen acasa fara echipament</strong>, crampele musculare pot fi o pacoste. Aici intra in scena magneziul. Am inceput sa iau Magneziu Citrat de la Solaris la recomandarea unui antrenor si sincer, am simtit o diferenta. E o pulbere alba, fina, care se dizolva repede in apa. N-are un miros anume, iar gustul e usor acrisor, dar placut, nu e amar. Eu il beau seara, inainte de culcare, si mi se pare ca ma ajuta si sa dorm mai bine, mai relaxat.</p>
+        <p>Ambalajul e o cutie de plastic simpla, dar eficienta. Mi-a placut ca e o forma de magneziu cu o biodisponibilitate mare, adica se absoarbe bine. Pe bune, am avut perioade cand simteam o oboseala cronica si crampe la gambe dupa efort, iar asta m-a ajutat enorm. Nu-i o chestie magica, dar e un suport consistent. Il gasesti usor in majoritatea magazinelor naturiste.</p>
+        <p>Merita incercat daca vrei sa iti sustii corpul dupa efort, poti citi mai multe si despre alte <a href="/suplimente-magneziu-care-e-cel-mai-bun/">suplimente magneziu</a>.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Biodisponibilitate ridicata (citrat de magneziu)</li>
+            <li>Ajuta la relaxarea musculara si somn</li>
+            <li>Gust placut, usor de administrat</li>
+            <li>Certificat BIO</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Poate avea efect laxativ la doze mari</li>
+            <li>Necesita masurare atenta a dozei</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Spirulina Tablete BIO Dragon Superfoods</h2>
+        <span class="section-tag">~100 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">superaliment, supliment alimentar</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">200g (aprox. 400 tablete)</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">spirulina pulbere bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">BIO, Vegan</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.25 lei/tableta</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Spirulina e un superaliment, stii povestea. Am inceput sa iau Spirulina Tablete de la Dragon Superfoods acum cativa ani, in perioadele cand simteam ca imi lipseste energia, mai ales cand faceam multe <strong>exercitii abdomen acasa fara echipament</strong> si aveam nevoie de un boost. Tabletele sunt verzi inchis, compacte, si da, miros a alge.</p>
+        <p>Nu-i cel mai placut miros din lume, sincer, dar te obisnuiesti. Le inghit cu apa, fara probleme. Nu le-am mestecat niciodata, si nici nu recomand, gustul e destul de intens.</p>
+        <p>Ambalajul e o punga resigilabila, ok, nu e cel mai fancy, dar isi face treaba. Ce mi-a placut cel mai mult e ca simt un nivel de energie constant pe parcursul zilei, fara "caderi" bruste. Si parca si imunitatea mea s-a imbunatatit. Nu e un efect imediat, evident, trebuie sa le iei constant, vreo cateva saptamani ca sa vezi ceva. Pana la urma, e un aliment concentrat.</p>
+        <p>Daca vrei sa iti sustii nivelul de energie in mod natural, merita sa citesti despre <a href="/spirulina-beneficii-si-contraindicatii/">spirulina si beneficiile ei</a>.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Sursa excelenta de proteine si nutrienti</li>
+            <li>Ofera energie constanta, fara &quot;caderi&quot;</li>
+            <li>Sustine sistemul imunitar</li>
+            <li>Certificata BIO si Vegan</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Miros si gust specific, nu pe placul tuturor</li>
+            <li>Necesita consum regulat pentru efecte vizibile</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Seminte de Chia BIO SanoVita</h2>
+        <span class="section-tag">~20 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">superaliment, seminte</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">250g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">seminte de chia bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">BIO, Vegan, Fara Gluten</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.08 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Semintele de chia sunt mici, dar pline de putere, pe bune. Eu le-am integrat in dieta mea de ani de zile, mai ales cand sunt activ si fac <strong>exercitii abdomen acasa fara echipament</strong>. Le pun in iaurt, in ovaz, in smoothie-uri, sau imi fac budinca de chia pentru mic dejun. Au o capacitate uimitoare de a absorbi lichide si de a forma un gel, ceea ce le face excelente pentru satietate. Nu au un gust pronuntat, sunt destul de neutre, asa ca nu schimba aroma preparatelor.</p>
+        <p>Ambalajul SanoVita e o punga simpla, resigilabila, care mentine prospetimea. Sincer, am observat ca ma ajuta sa ma simt satula mai mult timp si imi ofera o energie constanta, fara sa simt foamea la scurt timp dupa masa. Sunt o sursa excelenta de fibre, omega-3 si proteine vegetale. Si na, sunt super usor de folosit, nu trebuie sa le gatesti sau sa le prepari in vreun fel complicat.</p>
+        <p>Merita sa le ai in camara daca vrei un boost de nutrienti, mai ales ca sunt printre <a href="/cele-mai-bune-seminte-de-chia/">cele mai bune seminte</a> pentru dieta ta.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Sursa bogata de fibre, omega-3 si proteine</li>
+            <li>Ofera satietate si energie pe termen lung</li>
+            <li>Gust neutru, usor de integrat in diverse retete</li>
+            <li>Certificate BIO</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pot fi scumpe comparativ cu alte seminte</li>
+            <li>Necesita hidratare inainte de consum pentru a evita disconfortul digestiv</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Ulei de Cocos Extra Virgin BIO Dragon Superfoods</h2>
+        <span class="section-tag">~40 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">aliment eco, ulei vegetal</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">500ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">ulei de cocos extra virgin bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">BIO, Vegan, Fara Gluten</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.08 lei/ml</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Uleiul de cocos e un produs versatil, pe bune. Eu il folosesc pentru gatit, dar si ca sursa de energie inainte de antrenament, mai ales cand fac <strong>exercitii abdomen acasa fara echipament</strong> dimineata. Cel de la Dragon Superfoods are un miros divin, de cocos proaspat, si o textura cremoasa cand e solid, se topeste imediat la temperatura camerei. Il pun in cafea, in smoothie-uri sau il folosesc la prajit. E chiar bun, da o aroma exotica mancarurilor.</p>
+        <p>Ambalajul e un borcan de sticla, ceea ce apreciez, mai ales ca il pot refolosi. Sincer, am observat ca imi da un boost de energie fara sa simt "greutate" in stomac. E o grasime sanatoasa, cu trigliceride cu lant mediu (MCTs) care se transforma rapid in energie. Si zic si eu, e super bun si pentru hidratarea pielii, dupa dus. Pana la urma, e un produs multifunctional.</p>
+        <p>Il gasesti la majoritatea magazinelor naturiste si in supermarketuri mari.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Sursa rapida de energie (MCTs)</li>
+            <li>Aroma placuta de cocos, versatil in bucatarie</li>
+            <li>Ambalaj de sticla, reutilizabil</li>
+            <li>Certificat BIO si Extra Virgin</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Continut ridicat de grasimi saturate</li>
+            <li>Pret mai mare decat uleiurile vegetale obisnuite</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Suplimente si alimente bio pentru sustinerea antrenamentelor de abdomen acasa</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Pulbere Proteica Vegetala BIO Nutrimax</td><td>Proteina vegetala</td><td>500g</td><td>BIO, Vegan</td><td>Proteina canepa, mazare</td><td>Recuperare musculara, boost proteic</td></tr>
+          <tr><td>Magneziu Citrat Pulbere BIO Solaris</td><td>Supliment minerale</td><td>150g</td><td>BIO</td><td>Citrat de magneziu</td><td>Relaxare musculara, somn, reducerea crampelor</td></tr>
+          <tr><td>Spirulina Tablete BIO Dragon Superfoods</td><td>Superaliment</td><td>200g (400 tablete)</td><td>BIO, Vegan</td><td>Spirulina pulbere</td><td>Energie constanta, imunitate, nutrienti</td></tr>
+          <tr><td>Seminte de Chia BIO SanoVita</td><td>Superaliment, seminte</td><td>250g</td><td>BIO, Vegan</td><td>Seminte de chia</td><td>Satietate, fibre, omega-3, energie</td></tr>
+          <tr><td>Ulei de Cocos Extra Virgin BIO Dragon Superfoods</td><td>Aliment, ulei vegetal</td><td>500ml</td><td>BIO, Vegan</td><td>Ulei de cocos extra virgin</td><td>Sursa rapida de energie, gatit sanatos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghid complet pentru exercitii abdomen acasa fara echipament</h2>
+      <p>Bon, stai. Acum ca am lamurit cum te poti ajuta cu produse bio, hai sa vedem exact ce <strong>exercitii abdomen acasa fara echipament</strong> poti face. Nu-i nevoie de nimic special, doar de putina motivatie si un spatiu mic. Si, sincer, o saltea de yoga ar fi utila, dar nu e obligatorie.</p>
+        <h3>De ce sa faci exercitii pentru abdomen acasa?</h3>
+        <ul><li><strong>Comoditate maxima:</strong> Le faci cand vrei tu, fara sa depinzi de programul salii.</li><li><strong>Costuri zero:</strong> Nu platesti abonament, nu cumperi echipament.</li><li><strong>Flexibilitate:</strong> Poti ajusta intensitatea si durata in functie de nivelul tau.</li><li><strong>Confidentialitate:</strong> Unii se simt mai confortabil sa se antreneze singuri.</li></ul>
+        <h3>Exercitii esentiale pentru abdomen</h3>
+        <p>Uite cateva miscari de baza, dar super eficiente, care targeteaza toate zonele abdomenului:</p>
+        <ul><li><strong>Crunch-uri clasice:</strong> Stai pe spate, genunchii indoiti, talpile pe podea. Mainile la ceafa sau incrucisate pe piept. Ridica doar umerii si omoplatii de pe sol, contractand abdomenul. Mentine o secunda, apoi revino lent.</li><li><strong>Ridicari de picioare:</strong> Tot pe spate, picioarele intinse. Ridica-le incet, fara sa indoi genunchii, pana la 90 de grade. Coboara-le la fel de incet, fara sa atingi podeaua. Asta lucreaza abdomenul inferior, pe bune.</li><li><strong>Plansa (Plank):</strong> Pozitie de flotare, dar sprijinit pe antebrate. Corpul drept, ca o scandura. Mentine cat de mult poti. E un exercitiu static, dar extrem de eficient pentru tot core-ul.</li><li><strong>Russian Twists:</strong> Stai pe fund, genunchii indoiti, talpile usor ridicate de pe sol (sau pe sol pentru incepatori). Incline-te putin pe spate, mentinand spatele drept. Rasuceste trunchiul dintr-o parte in alta, atingand podeaua cu mainile.</li><li><strong>Mountain Climbers:</strong> In pozitie de flotare, adu alternativ genunchii la piept, ca si cum ai alerga pe loc. Tine ritmul, e cardio si abdomen in acelasi timp.</li></ul>
+        <h3>Cum iti structurezi un antrenament?</h3>
+        <p>Pana la urma, nu e doar despre exercitii, ci si despre cum le pui cap la cap. Iti sugerez sa faci un circuit. De exemplu, 3-4 serii a cate 10-15 repetari (sau 30-60 de secunde pentru plansa si mountain climbers) pentru fiecare exercitiu, cu o pauza de 30-60 de secunde intre serii. Faci asta de 3-4 ori pe saptamana, si zic si eu, o sa vezi rezultate. Nu uita de incalzire si de stretching la final, e crucial.</p>
+        <h3>Greșeli comune de evitat</h3>
+        <ul><li><strong>Fortarea gatului:</strong> Cand faci crunch-uri, nu trage de cap. Abdomenul trebuie sa faca toata treaba.</li><li><strong>Arcuirea spatelui:</strong> La ridicarile de picioare sau la plansa, asigura-te ca spatele ramane drept, lipit de sol (la ridicari) sau in linie dreapta (la plansa).</li><li><strong>Respiratia incorecta:</strong> Expira la efort (cand contracti muschii) si inspira la relaxare. E important.</li><li><strong>Viteza prea mare:</strong> Nu te grabi. Executa miscarile lent si controlat, simtind contractia musculara. Calitatea e mai importanta decat cantitatea.</li></ul>
+        <p>Consistenta e cheia, nu uita. Daca te tii de treaba, o sa vezi ca <strong>exercitii abdomen acasa fara echipament</strong> dau roade. Si nu uita de nutritie, ca un abdomen plat se face si in bucatarie.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">MS</div>
+        <div class="author-info">
+          <h4>Mihai Stanescu</h4>
+          <p class="author-role">Antrenor Personal</p>
+          <p class="author-bio">Mihai este antrenor personal certificat cu experienta de 10 ani in fitness si wellness. Specializat in antrenamente la domiciliu si echipamente fitness pentru acasa.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="exercitii-abdomen-acasa-fara-echipament"
+    currentCategory="fitness-acasa"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="exercitii-abdomen-acasa-fara-echipament"
+    currentCategory="fitness-acasa"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>

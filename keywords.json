@@ -66,11 +66,6 @@
       "categorySlug": "alimentatie-sanatoasa"
     },
     {
-      "keyword": "exercitii abdomen acasa fara echipament",
-      "category": "Fitness Acasa",
-      "categorySlug": "fitness-acasa"
-    },
-    {
       "keyword": "coardă de sarit beneficii si antrenament",
       "category": "Fitness Acasa",
       "categorySlug": "fitness-acasa"
@@ -589,6 +584,13 @@
       "categorySlug": "alimentatie-sanatoasa",
       "excerpt": "Ai nevoie de o alimente bogate in fier lista completa? Stai linistit, am pus cap la cap exact ce-ti trebuie ca sa-ti refaci stocul de energie si vitalitate. Fierul e un mineral crucial pentru corpul nostru, ajuta la transportul oxigenului si la prevenirea anemiei, o problema destul de comuna, mai ales la femei.",
       "date": "2026-03-11T11:11:51.345Z"
+    },
+    {
+      "keyword": "exercitii abdomen acasa fara echipament",
+      "category": "Fitness Acasa",
+      "categorySlug": "fitness-acasa",
+      "excerpt": "Vrei un abdomen puternic si plat, fara sa calci in sala? Perfect, poti face exercitii abdomen acasa fara echipament si sa vezi rezultate. Uite, nu-i nevoie de abonamente scumpe sau aparate complicate ca sa-ti tonifiezi zona asta.",
+      "date": "2026-03-12T11:00:29.240Z"
     }
   ],
   "authors": [
