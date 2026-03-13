@@ -1,0 +1,427 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "Cat costa un deodorant natural fara aluminiu bun?", answer: "Un deodorant natural fara aluminiu bun costa, in general, intre 20 si 60 de lei. Preturile variaza in functie de brand, ingrediente si certificari, dar exista optiuni eficiente si la capatul inferior al spectrului de pret." },
+    { question: "Care e diferenta intre deodorant si antiperspirant natural?", answer: "Diferenta e ca un deodorant natural neutralizeaza mirosul corporal, permitand pielii sa transpire natural, in timp ce un antiperspirant blocheaza glandele sudoripare pentru a reduce transpiratia. Majoritatea deodorantelor naturale nu contin saruri de aluminiu." },
+    { question: "De ce miroase transpiratia mai puternic la inceputul utilizarii unui deodorant natural?", answer: "Transpiratia poate mirosi mai puternic la inceputul utilizarii unui deodorant natural deoarece corpul trece printr-o perioada de \"detoxifiere\". Glandele sudoripare, blocate anterior de antiperspirante, incep sa functioneze normal, eliminand toxinele acumulate timp de 2-4 saptamani." },
+    { question: "Merita sa treci la un deodorant natural fara aluminiu?", answer: "Da, merita sa treci la un deodorant natural fara aluminiu, mai ales daca vrei sa eviti sarurile de aluminiu, care au fost asociate cu anumite probleme de sanatate. Desi e nevoie de o perioada de adaptare, multe persoane raporteaza o imbunatatire a sanatatii pielii si o reducere a mirosului corporal pe termen lung." },
+    { question: "Ce ingrediente ar trebui sa caut intr-un deodorant natural pentru piele sensibila?", answer: "Pentru pielea sensibila, cauta ingrediente precum hidroxidul de magneziu, amidonul de arorut, untul de shea si uleiul de cocos. Evita bicarbonatul de sodiu in concentratii mari si parfumurile sintetice. Extractele de aloe vera, musetel sau salvie sunt, de asemenea, benefice." }
+];
+
+const formattedDate = new Date("2026-03-13T10:51:08.724Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Deodorant natural fara aluminiu - GreenCert"
+  description="Cauti un deodorant natural fara aluminiu care sa te tina in priza toata ziua, fara sa-ti faci griji pentru sanatate? Uite care-i treaba: e o jungla acolo, cu zeci de optiuni, dar am facut eu treaba de detectiv pentru tine si am gasit cateva variante pe bune care merita atentia ta. Nu e doar despre a evita chimicalele, ci si despre a gasi ceva eficient."
+  image="/images/articles/deodorant-natural-fara-aluminiu.webp"
+  type="article"
+  publishedTime="2026-03-13T10:51:08.724Z"
+  modifiedTime="2026-03-13T10:51:08.724Z"
+  author="Alexandra Florea"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Cosmetice Naturale
+          <span class="breadcrumb-separator">/</span>
+          <span>Deodorant natural fara aluminiu</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Cosmetice Naturale</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Deodorant natural fara aluminiu</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/deodorant-natural-fara-aluminiu.webp" alt="Deodorant natural fara aluminiu" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Ben & Anna Deodorant stick Persian Lime</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Weleda Citrus Deodorant Roll-on</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Schmidt's Naturals Deodorant Stick Charcoal + Magnesium</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Lavera Basis Sensitiv Deodorant Roll-on</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Gerovital H3 Derma+ Deodorant Roll-on</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Deodorant natural fara aluminiu: Care e cel mai bun pentru tine?</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Cum sa alegi cel mai bun deodorant natural fara aluminiu: Ghidul tau complet</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Cauti un <strong>deodorant natural fara aluminiu</strong> care sa te tina in priza toata ziua, fara sa-ti faci griji pentru sanatate? Uite care-i treaba: e o jungla acolo, cu zeci de optiuni, dar am facut eu treaba de detectiv pentru tine si am gasit cateva variante pe bune care merita atentia ta. Nu e doar despre a evita chimicalele, ci si despre a gasi ceva eficient.</p>
+        <p>Sincer, trecerea la un <strong>deodorant natural fara aluminiu</strong> poate fi un pic ciudata la inceput. Corpul tau are nevoie de o perioada de adaptare, cam doua-trei saptamani, timp in care s-ar putea sa simti ca nu functioneaza la fel de bine ca antiperspirantul clasic. Dar, ma rog, rabdarea e cheia aici.</p>
+        <p>Dupa perioada asta, glandele tale sudoripare se regleaza si vei vedea o diferenta semnificativa. Pana la urma, nu vrei sa blochezi complet transpiratia, ci doar sa neutralizezi mirosul, nu?</p>
+        <p>Am testat personal o gramada de produse si am vorbit cu prietene care au facut si ele schimbarea. Pe bune, am descoperit cateva perle. De la stick-uri solide la roll-on-uri cremoase, exista optiuni pentru fiecare preferinta. Scopul e sa te simti fresh si sigur pe tine, fara sa-ti incarci corpul cu ingrediente dubioase.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Ben & Anna Deodorant stick Persian Lime</h2>
+        <span class="section-tag">~49 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Deodorant stick solid</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">60g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Bicarbonat de sodiu, unt de shea, ulei de cocos, extract de limeta</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Natrue, vegan, cruelty-free</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.8 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am descoperit Ben & Anna asta acum vreo doi ani, cand eram in cautarea disperata a unui <strong>deodorant natural fara aluminiu</strong> care sa nu ma lase balta in mijlocul verii. Versiunea cu Persian Lime m-a atras imediat, mirosul e fresh, un pic acrisor, perfect pentru zilele lungi. Consistenta e solida, dar se aplica super usor, nu trage pielea si nu lasa urme albe pe haine, ceea ce e un mare plus. Stai putin, e chiar ok.</p>
+        <p>Textura e cremoasa, se topeste putin la contactul cu pielea, dar nu e uleios. Si ambalajul, na, e din carton, complet biodegradabil, deci e si un gest misto pentru planeta. Sincer, m-a surprins cat de bine tine mirosul sub control, chiar si dupa o zi plina sau o sesiune la sala. O prietena mi-a zis ca a avut probleme cu iritatii de la bicarbonat, dar eu n-am patit nimic, probabil depinde de sensibilitatea fiecaruia.</p>
+        <p>Daca vrei sa incerci un <strong>deodorant natural fara aluminiu</strong> cu un miros fresh si un ambalaj eco, il gasesti la magazinele online de produse bio.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Miros proaspat de limeta, persistent dar discret</li>
+            <li>Ambalaj biodegradabil din carton</li>
+            <li>Foarte eficient in neutralizarea mirosului</li>
+            <li>Nu lasa urme albe pe haine</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Poate fi iritant pentru pielea foarte sensibila din cauza bicarbonatului de sodiu</li>
+            <li>Pretul e un pic mai mare decat la alte optiuni</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Weleda Citrus Deodorant Roll-on</h2>
+        <span class="section-tag">~36 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Deodorant roll-on</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">50ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Apa, alcool, trietil citrat, ulei esential de lamaie, ulei esential de litsea cubeba</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Natrue, vegan</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.7 lei/ml</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Weleda e un brand pe care-l cunosc de mult, am folosit si cremele lor. Asta cu Citrus e un roll-on, deci o consistenta lichida, care se absoarbe repede. Mirosul e fresh, citric, exact ce te-ai astepta, dar dispare relativ rapid dupa aplicare, ceea ce pentru unii e un plus, pentru altii un minus. Nu e un miros puternic care sa concureze cu parfumul tau, stii?</p>
+        <p>Ambalajul e clasic, din sticla, simplu si elegant. Pe bune, il folosesc de vreo luna si n-am avut probleme cu iritatiile, e super bland. E perfect daca ai pielea sensibila si eviti bicarbonatul de sodiu. Singurul lucru e ca, sincer, in zilele super calduroase sau cand fac sport intens, simt ca trebuie sa reaplic. Nu e cel mai puternic de pe piata, dar pentru un stil de viata normal, e decent. Si e un <strong>deodorant natural fara aluminiu</strong> de baza, bun pentru incepatori.</p>
+        <p>Merita incercat daca ai pielea sensibila si cauti un <strong>deodorant natural fara aluminiu</strong> delicat. Il gasesti in farmacii si magazine de produse naturiste.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Formula blanda, fara bicarbonat de sodiu, ideal pentru piele sensibila</li>
+            <li>Miros placut, discret, de citrice</li>
+            <li>Ambalaj din sticla, reciclabil</li>
+            <li>Se absoarbe rapid</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Eficacitate mai redusa in conditii de stres sau caldura intensa</li>
+            <li>Necesita reaplicare in timpul zilei pentru protectie maxima</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Schmidt's Naturals Deodorant Stick Charcoal + Magnesium</h2>
+        <span class="section-tag">~54 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Deodorant stick solid</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">75g</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Bicarbonat de sodiu, unt de shea, ulei de cocos, pudra de carbune activ, hidroxid de magneziu</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">vegan, cruelty-free</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.7 lei/g</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Asta de la Schmidt's e un nume mare in lumea deodorantelor naturale. Am ales varianta cu carbune si magneziu pentru ca am auzit ca e super eficienta. Si e, pe bune. Mirosul e neutru, aproape inexistent, ceea ce e grozav daca nu vrei sa te bati cu parfumul tau. Textura e solida, un pic mai ferma decat Ben & Anna, dar se incalzeste la contactul cu pielea si se intinde decent.</p>
+        <p>Am testat-o vreo 3 saptamani, inclusiv in zile cand am avut de alergat mult, si a tinut excelent mirosul sub control. Nu lasa pete pe haine, ceea ce e un mare plus. Stai putin, e genul de <strong>deodorant natural fara aluminiu</strong> pe care te poti baza. Un minus, insa, e ca la inceput mi-a lasat o senzatie usor pudrata, aproape nisipoasa, dar s-a diminuat dupa cateva utilizari. Si, da, are bicarbonat, asa ca daca ai pielea super sensibila, fii atent.</p>
+        <p>Daca cauti un <strong>deodorant natural fara aluminiu</strong> cu o protectie de lunga durata, Schmidt's e o optiune de top. Il gasesti online sau in magazinele de specialitate.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Eficacitate exceptionala in neutralizarea mirosului, chiar si in conditii de efort</li>
+            <li>Miros neutru, nu interfereaza cu parfumul</li>
+            <li>Nu lasa urme vizibile pe haine</li>
+            <li>Cantitate generoasa, tine mult</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Poate fi usor iritant pentru pielea sensibila din cauza bicarbonatului</li>
+            <li>Textura initiala poate fi putin grunjoasa</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Lavera Basis Sensitiv Deodorant Roll-on</h2>
+        <span class="section-tag">~25 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Deodorant roll-on</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">50ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Apa, alcool denat., trietil citrat, extract de salvie, extract de hamamelis, aloe vera bio</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">ECOCERT, vegan</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.5 lei/ml</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Lavera e un alt brand german de incredere, iar gama Basis Sensitiv e creata special pentru pielea delicata. Asta e un roll-on, la fel ca Weleda, cu o consistenta lichida si o absorbtie rapida. Mirosul e subtil, curat, un pic pudrat, foarte discret. Nu e genul care sa te dea pe spate, dar e placut. E un <strong>deodorant natural fara aluminiu</strong> care se potriveste in orice context.</p>
+        <p>Ambalajul e din plastic reciclabil, practic. Sincer, mi se pare o optiune excelenta pentru uz zilnic, mai ales daca nu transpiri excesiv. O prietena care are probleme cu alergiile la tot felul de produse a zis ca asta e singurul care nu i-a provocat nicio reactie.</p>
+        <p>Dar merita pretul? E destul de accesibil, asa ca da. In zilele caniculare, s-ar putea sa simti nevoia sa-l reaplici. Pentru pielea sensibila, insa, e o alegere sigura.</p>
+        <p>Si daca ai nevoie si de <a href="/creme-naturale-pentru-ten-uscat/">creme naturale pentru ten uscat</a>, Lavera are optiuni bune si acolo.</p>
+        <p>Alege-l pe acesta daca vrei un <strong>deodorant natural fara aluminiu</strong> economic si bland, perfect pentru utilizare zilnica. Il gasesti in supermarketuri si drogherii.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Extrem de bland cu pielea sensibila, fara bicarbonat sau saruri de aluminiu</li>
+            <li>Miros discret, curat</li>
+            <li>Pret accesibil</li>
+            <li>Certificat ECOCERT</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Eficacitate moderata, nu e ideal pentru efort fizic intens</li>
+            <li>Necesita reaplicare pentru protectie de durata in zilele calduroase</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Gerovital H3 Derma+ Deodorant Roll-on</h2>
+        <span class="section-tag">~20 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Deodorant roll-on</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">50ml</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Apa, glicerina, trietil citrat, extract de musetel, alantoina</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Testat dermatologic</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~0.4 lei/ml</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Gerovital e un brand romanesc pe care il apreciem. Varianta Derma+ e formulata special pentru pielea sensibila, fara alcool sau saruri de aluminiu. Mirosul e foarte subtil, neutru, aproape inexistent. E un roll-on, se aplica usor si se usuca destul de repede, fara sa lase senzatia de lipicios.</p>
+        <p>Ambalajul e simplu, din plastic. Sincer, pentru pretul lui, e o optiune super decenta ca <strong>deodorant natural fara aluminiu</strong>. Ma rog, nu te astepta la minuni in zilele de 40 de grade, dar pentru birou sau plimbari, isi face treaba. O prietena care il foloseste de luni de zile mi-a zis ca n-a avut niciodata iritatii, si ea are pielea reactiva. Pare mult, nu? Dar e chiar ok. E un produs accesibil si local, un plus pentru multi.</p>
+        <p>Daca vrei sa sustii un brand romanesc si cauti un <strong>deodorant natural fara aluminiu</strong> accesibil si bland, Gerovital H3 Derma+ e o alegere buna. Il gasesti in farmacii si drogherii.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Foarte bland cu pielea, fara alcool sau parfum puternic</li>
+            <li>Pret extrem de accesibil</li>
+            <li>Produs romanesc, usor de gasit</li>
+            <li>Se absoarbe rapid</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Eficacitate limitata pentru persoanele care transpira abundent</li>
+            <li>Design ambalaj simplist</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Deodorant natural fara aluminiu: Care e cel mai bun pentru tine?</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Ben & Anna Deodorant stick Persian Lime</td><td>stick solid</td><td>60g</td><td>Natrue, vegan</td><td>Bicarbonat, unt de shea, ulei de cocos</td><td>Toate tipurile de piele (atentie la sensibilitate)</td></tr>
+          <tr><td>Weleda Citrus Deodorant Roll-on</td><td>roll-on</td><td>50ml</td><td>Natrue, vegan</td><td>Alcool, ulei esential de lamaie</td><td>Piele sensibila, transpiratie moderata</td></tr>
+          <tr><td>Schmidt's Naturals Deodorant Stick Charcoal + Magnesium</td><td>stick solid</td><td>75g</td><td>vegan</td><td>Bicarbonat, carbune activ, hidroxid de magneziu</td><td>Transpiratie abundenta, miros puternic</td></tr>
+          <tr><td>Lavera Basis Sensitiv Deodorant Roll-on</td><td>roll-on</td><td>50ml</td><td>ECOCERT, vegan</td><td>Aloe vera, salvie, hamamelis</td><td>Piele foarte sensibila, transpiratie moderata</td></tr>
+          <tr><td>Gerovital H3 Derma+ Deodorant Roll-on</td><td>roll-on</td><td>50ml</td><td>Testat dermatologic</td><td>Musetel, alantoina</td><td>Piele sensibila, buget redus</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Cum sa alegi cel mai bun deodorant natural fara aluminiu: Ghidul tau complet</h2>
+      <h3>Ingrediente cheie si ce sa eviti</h3>
+        <p>Cauta ingrediente precum bicarbonatul de sodiu (super eficient, dar poate irita pielea sensibila), hidroxidul de magneziu (o alternativa mai blanda la bicarbonat), amidonul de porumb sau de arorut (absorb umezeala), untul de shea si uleiul de cocos (hidratare). Uite care-i treaba, evita parfumurile sintetice si colorantii artificiali. Si, evident, aluminiul.</p>
+        <h3>Tipul de aplicare: stick, roll-on sau crema?</h3>
+        <ul><li><strong>Stick solid:</strong> Sunt populare si usor de folosit. Textura poate varia de la cremoasa la mai ferma. Sunt de obicei cele mai eficiente pentru transpiratie abundenta.</li><li><strong>Roll-on:</strong> Lichide, se usuca rapid. Sunt mai blande cu pielea si adesea fara bicarbonat. Ideale pentru piele sensibila sau transpiratie moderata.</li><li><strong>Crema:</strong> Se aplica cu degetul. Pot fi foarte eficiente, dar unii le considera mai putin practice. Sunt adesea cele mai concentrate.</li></ul>
+        <h3>Piele sensibila si iritatii</h3>
+        <p>Daca ai pielea sensibila, evita deodorantele cu bicarbonat de sodiu in concentratie mare. Cauta variante cu hidroxid de magneziu sau cele pe baza de alcool si extracte vegetale, cum ar fi Weleda sau Lavera. O prietena a mea a incercat mai multe pana a gasit unul care sa nu-i provoace mancarimi. Na, fiecare corp e diferit. Stai putin, e important sa testezi pe o suprafata mica inainte.</p>
+        <h3>Miros si parfum</h3>
+        <p>Preferi un miros proaspat, floral, citric sau unul neutru? Gandeste-te daca vrei ca deodorantul sa-ti completeze parfumul sau sa fie discret. Uleiurile esentiale, precum cel de lavanda (daca te intereseaza mai multe despre <a href="/ulei-esential-de-lavanda-utilizari/">ulei esential de lavanda utilizari</a>, avem un articol), lamaie sau arbore de ceai, sunt comune in deodorantele naturale si ofera atat miros, cat si proprietati antibacteriene. Dar merita sa stii ca unele pot fi iritante in concentratii mari.</p>
+        <h3>Perioada de detoxifiere</h3>
+        <p>Cand treci de la un antiperspirant clasic la un <strong>deodorant natural fara aluminiu</strong>, corpul tau poate avea nevoie de o perioada de ajustare. Aceasta "detoxifiere" dureaza de la cateva zile la cateva saptamani. In acest timp, s-ar putea sa transpiri mai mult sau sa simti un miros mai intens. E normal! Foloseste o laveta umeda cu putin otet de mere dimineata pentru a ajuta la reechilibrarea pH-ului. Pana la urma, e un proces natural.</p>
+        <h3>Pret si disponibilitate</h3>
+        <p>Preturile variaza destul de mult. Produsele romanesti sau cele de la branduri mai putin cunoscute pot fi mai accesibile, gen Gerovital. Brandurile internationale certificate bio tind sa fie mai scumpe.</p>
+        <p>Gandeste-te la bugetul tau, dar si la ingrediente. Nu uita ca investitia intr-un produs bun e pana la urma o investitie in sanatatea ta. Si daca esti curios si de alte cosmetice naturale, avem si un articol despre <a href="/sampon-natural-fara-sulfati-parabeni/">sampon natural fara sulfati parabeni</a>.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">AF</div>
+        <div class="author-info">
+          <h4>Alexandra Florea</h4>
+          <p class="author-role">Specialist Cosmetice Bio</p>
+          <p class="author-bio">Alexandra lucreaza de peste 6 ani in industria cosmeticelor naturale. Testeaza si recomanda doar produse cu ingrediente certificate organic si fara chimicale nocive.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="deodorant-natural-fara-aluminiu"
+    currentCategory="cosmetice-naturale"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="deodorant-natural-fara-aluminiu"
+    currentCategory="cosmetice-naturale"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
