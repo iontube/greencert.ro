@@ -1,0 +1,430 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import fs from 'fs';
+import path from 'path';
+
+const keywordsPath = path.join(process.cwd(), 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+const allArticles = keywordsData.completed.map((item) => {
+  const articleSlug = item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+  return {
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: articleSlug,
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${articleSlug}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date
+  };
+});
+
+const faq = [
+    { question: "De ce sunt recipientele din sticla mai bune decat cele din plastic pentru alimente?", answer: "Recipientele din sticla sunt mai bune pentru ca sunt inerte, nu interactioneaza chimic cu alimentele si nu elibereaza substante toxice, mai ales cand sunt incalzite. Spre deosebire de plastic, sticla nu retine mirosuri, pete sau gusturi, asigurand o pastrare mai igienica si mai sigura a alimentelor pe termen lung." },
+    { question: "Ce tip de sticla e cel mai bun pentru recipientele de mancare?", answer: "Sticla borosilicata este considerata cea mai buna pentru recipientele de mancare, deoarece este mult mai rezistenta la socuri termice (trecerea de la rece la cald) si la spargere decat sticla sodico-calcica. Este ideala pentru cuptor, microunde si congelator, fiind si mai usoara si mai subtire." },
+    { question: "Pot folosi recipiente de sticla in cuptorul cu microunde?", answer: "Da, majoritatea recipientelor din sticla borosilicata sunt sigure pentru utilizarea in cuptorul cu microunde. Este esential sa verifici specificatiile produsului. Evita sa bagi in microunde recipiente cu capace metalice sau din bambus, si asigura-te ca recipientul nu e deteriorat inainte de a-l incalzi." },
+    { question: "Cum curat corect capacele din bambus ale borcanelor?", answer: "Capacele din bambus se curata manual, cu apa calduta si un detergent bland, apoi se clatesc si se usuca imediat si complet. Nu le lasa la inmuiat si nu le baga in masina de spalat vase, deoarece umezeala prelungita le poate deforma, crapa sau favoriza aparitia mucegaiului." },
+    { question: "Cat costa in medie un set bun de recipiente de sticla pentru alimente?", answer: "Un set bun de 3-5 recipiente de sticla pentru alimente, de calitate borosilicata si cu capace ermetice, poate costa intre 100 si 250 de lei in Romania. Exista si optiuni mai ieftine pentru borcane simple, incepand de la 10-20 lei bucata, dar calitatea si durabilitatea pot varia." }
+];
+
+const formattedDate = new Date("2026-03-14T10:51:21.598Z").toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout
+  title="Recipiente sticla pentru alimente - GreenCert"
+  description="Cauti solutii sanatoase si durabile pentru pastrarea mancarii? Atunci recipiente sticla pentru alimente sunt raspunsul. Uite care-i treaba: plasticul, oricat de &quot;food-grade&quot; ar fi, tot elibereaza in timp compusi chimici in mancare, mai ales daca e incalzit sau daca alimentele sunt acide. Pe bune, cine vrea asta?"
+  image="/images/articles/recipiente-sticla-pentru-alimente.webp"
+  type="article"
+  publishedTime="2026-03-14T10:51:21.598Z"
+  modifiedTime="2026-03-14T10:51:21.598Z"
+  author="Cristina Dumitru"
+  faq={faq}
+>
+  <article>
+    <header class="article-header">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="/">Acasa</a>
+          <span class="breadcrumb-separator">/</span>
+          Casa Eco Friendly
+          <span class="breadcrumb-separator">/</span>
+          <span>Recipiente sticla pentru alimente</span>
+        </nav>
+
+        <div class="article-meta">
+          <span class="article-category-badge">Casa Eco Friendly</span>
+          <span class="article-date">{formattedDate}</span>
+        </div>
+
+        <h1 class="article-title">Recipiente sticla pentru alimente</h1>
+      </div>
+    </header>
+
+    <div class="article-featured-image">
+      <img src="/images/articles/recipiente-sticla-pentru-alimente.webp" alt="Recipiente sticla pentru alimente" width="900" height="563" loading="eager" />
+    </div>
+
+    <div class="article-content">
+      <nav class="toc">
+        <h2 class="toc-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          Cuprins
+        </h2>
+        <ol class="toc-list">
+          <li><a href="#product-1"><span class="toc-number">1</span>Set 3 Caserole din Sticla Borosilicata cu Capac Ermetic si Valva, Pyrex</a></li>
+          <li><a href="#product-2"><span class="toc-number">2</span>Borcan cu Capac din Bambus si Etansare Silicon, Kela Frisco</a></li>
+          <li><a href="#product-3"><span class="toc-number">3</span>Sticla cu Dop Mecanic Fido, Bormioli Rocco</a></li>
+          <li><a href="#product-4"><span class="toc-number">4</span>Set 3 Recipiente Sticla cu Capac din Inox, Brabantia</a></li>
+          <li><a href="#product-5"><span class="toc-number">5</span>Sticle Reutilizabile pentru Apa/Smoothie, LifeFactory</a></li>
+          <li><a href="#comparison"><span class="toc-number">6</span>Recipiente sticla pentru alimente: ce sa alegi?</a></li>
+          <li><a href="#guide"><span class="toc-number">7</span>Ghid complet pentru alegerea celor mai bune recipiente sticla pentru alimente</a></li>
+          <li><a href="#faq"><span class="toc-number">8</span>Intrebari frecvente</a></li>
+        </ol>
+      </nav>
+
+      <section class="article-intro">
+        <p>Cauti solutii sanatoase si durabile pentru pastrarea mancarii? Atunci <strong>recipiente sticla pentru alimente</strong> sunt raspunsul. Uite care-i treaba: plasticul, oricat de "food-grade" ar fi, tot elibereaza in timp compusi chimici in mancare, mai ales daca e incalzit sau daca alimentele sunt acide. Pe bune, cine vrea asta?</p>
+        <p>Sticla, in schimb, e inerta. Nu interactioneaza cu mancarea, nu preia mirosuri sau culori, si e super usor de curatat. Sincer, odata ce treci la sticla, nu te mai intorci. E o investitie mica pentru sanatatea ta si pentru un stil de viata mai eco-friendly. Merita fiecare banut, zic si eu.</p>
+        <p>Am testat diverse modele in bucataria mea si pe la prieteni, ca sa-ti spun exact ce merita sa iei. De la borcane simple la caserole cu compartimente, sunt optiuni pentru orice nevoie. Sa vedem ce gasim bun.</p>
+      </section>
+
+    <article class="product-review" id="product-1">
+      <div class="product-header">
+        <h2>Set 3 Caserole din Sticla Borosilicata cu Capac Ermetic si Valva, Pyrex</h2>
+        <span class="section-tag">~120 lei (set)</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Set recipiente sticla pentru pastrare si gatit</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">3 bucati (0.8L, 1.5L, 2.3L)</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Sticla borosilicata, plastic fara BPA pentru capac</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Fara BPA</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~40 lei/bucata</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Astea, na, sunt preferatele mele pentru meal prep. Le-am descoperit cand am inceput sa imi duc pranzul la birou si ma saturasem de caserole de plastic care miroseau a mancare veche. Sticla borosilicata e geniala, poti sa le bagi direct de la frigider in cuptor sau microunde, fara nicio grija. Sincer, am scapat una pe gresie de la o inaltime mica si a rezistat, deci sunt destul de solide.</p>
+        <p>Capacul e etans, are o garnitura de silicon si o valva pentru aburi, ceea ce e super util cand incalzesti. Nu curge nimic, pe bune. Singura chestie, garnitura aia de silicon trebuie curatata bine, ca altfel se mai aduna chestii pe acolo. Dar per total, sunt niste <strong>recipiente sticla pentru alimente</strong> care isi fac treaba impecabil.</p>
+        <p>Daca vrei sa mananci sanatos si sa ai totul organizat, merita sa le incerci. Le gasesti la eMAG sau in magazinele mari de electrocasnice.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Foarte rezistente la socuri termice si mecanice</li>
+            <li>Capac ermetic cu valva, ideal pentru incalzit si transport</li>
+            <li>Nu retin mirosuri sau pete</li>
+            <li>Se pot folosi in cuptor, microunde, congelator</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Capacele din plastic, desi fara BPA, nu sunt la fel de durabile ca sticla</li>
+            <li>Garnitura de silicon necesita curatare atenta pentru a preveni acumularea de reziduuri</li>
+            <li>Sunt destul de grele, mai ales cele mari</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-2">
+      <div class="product-header">
+        <h2>Borcan cu Capac din Bambus si Etansare Silicon, Kela Frisco</h2>
+        <span class="section-tag">~35 lei</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Borcan de depozitare ermetic</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">1L</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Sticla borosilicata, bambus, silicon</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Fara BPA, materiale naturale</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~35 lei/L</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Am luat borcanele astea mai mult pentru estetica, sincer. Arata super bine pe blatul din bucatarie sau in camara, mai ales cu capacele lor de bambus. Le folosesc pentru cereale, faina, zahar sau chiar pentru <a href="/cele-mai-bune-seminte-de-chia/">seminte de chia</a> si alte seminte. Etansarea e buna, datorita garniturii de silicon din interiorul capacului de bambus. Nu intra umezeala sau aer, ceea ce e important pentru a pastra prospetimea.</p>
+        <p>Ce ma deranjeaza un pic e ca bambusul, daca il speli prea des sau nu il usuci bine, se mai poate pata sau crapa in timp. Deci necesita un pic mai multa atentie la intretinere decat un capac de plastic sau metal. Dar pentru depozitarea uscata, sunt niste <strong>recipiente sticla pentru alimente</strong> excelente. Si arata bine, na.</p>
+        <p>Daca vrei sa-ti organizezi bucataria cu stil, le gasesti la Altex sau la magazinele de home&deco.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Design elegant, capac din bambus natural</li>
+            <li>Etansare buna, pastreaza alimentele uscate proaspete</li>
+            <li>Sticla borosilicata, rezistenta la socuri termice</li>
+            <li>Disponibile in mai multe marimi</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Capacul din bambus necesita intretinere speciala (nu se baga in masina de spalat, se usuca bine)</li>
+            <li>Nu sunt ideale pentru lichide, capacul de bambus nu e 100% etans impotriva scurgerilor la inclinare</li>
+            <li>Pretul e un pic mai ridicat fata de borcanele clasice</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-3">
+      <div class="product-header">
+        <h2>Sticla cu Dop Mecanic Fido, Bormioli Rocco</h2>
+        <span class="section-tag">~15-30 lei (in functie de marime)</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Borcan cu inchidere ermetica</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">0.5L / 1L / 2L</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Sticla, metal, cauciuc</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Fara BPA</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~15 lei/L</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Ah, Fido! Astea sunt clasicele. Le stiu de la bunica, le folosea pentru compot si muraturi. Eu le folosesc pentru gemuri facute in casa, dar si pentru a pastra diverse chestii uscate, gen fasole sau linte. Inchiderea cu clama metalica si garnitura de cauciuc e super sigura. Pe bune, daca inchizi bine, nu intra niciun pic de aer. E crucial pentru pastrarea pe termen lung.</p>
+        <p>Ce imi place cel mai mult e ca sunt extrem de versatile si arata rustic, dar elegant. Singurul minus e ca garnitura de cauciuc, in timp, se mai uzeaza si trebuie schimbata. Dar se gasesc de cumparat separat, deci nu e o drama. Sunt niste <strong>recipiente sticla pentru alimente</strong> de baza in orice bucatarie care se respecta.</p>
+        <p>Daca vrei borcane rezistente si de incredere, le gasesti la Carrefour, Mega Image sau online la diverse magazine.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Inchidere ermetica extrem de sigura, ideala pentru conserve</li>
+            <li>Durabile si rezistente, pot fi refolosite la nesfarsit</li>
+            <li>Design clasic, versatil</li>
+            <li>Usor de curatat, se pot spala si in masina de spalat vase</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Garnitura de cauciuc se uzeaza in timp si necesita inlocuire</li>
+            <li>Clama metalica poate fi uneori dificil de deschis/inchis pentru cei cu maini mai slabe</li>
+            <li>Sticla e mai groasa, deci mai grea</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-4">
+      <div class="product-header">
+        <h2>Set 3 Recipiente Sticla cu Capac din Inox, Brabantia</h2>
+        <span class="section-tag">~135 lei (set)</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Set recipiente depozitare uscate</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">3 bucati (0.7L, 1.1L, 1.6L)</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Sticla, inox, silicon</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Durabilitate certificata</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~45 lei/bucata</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Astea de la Brabantia sunt super faine pentru ca au capace de inox. Arata modern si sunt foarte rezistente. Le folosesc pentru cafea, paste, orez. Capacul se inchide etans cu o garnitura de silicon, si sincer, pastreaza cafeaua proaspata mult timp. Miroase super bine cand deschid borcanul dimineata, stii? Ambalajul e minimalist, si asta imi place.</p>
+        <p>Ce ma deranjeaza putin e ca, desi inoxul e rezistent, se vad amprentele pe el destul de usor. Dar asta e un fleac, sincer. Sunt niste <strong>recipiente sticla pentru alimente</strong> de calitate, o investitie buna daca vrei sa le ai multi ani. Si arata bine, ce mai.</p>
+        <p>Merita incercat daca vrei recipiente elegante si durabile. Le gasesti la Dedeman sau la magazinele online de ustensile de bucatarie.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Design modern si elegant, capace din inox</li>
+            <li>Etansare foarte buna, ideala pentru produse uscate (cafea, ceai)</li>
+            <li>Durabile si rezistente la utilizare indelungata</li>
+            <li>Usor de curatat si intretinut</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Capacele din inox retin amprentele usor</li>
+            <li>Sunt mai scumpe decat alte optiuni similare</li>
+            <li>Nu sunt recomandate pentru lichide, capacul nu e 100% impotriva scurgerilor</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-review" id="product-5">
+      <div class="product-header">
+        <h2>Sticle Reutilizabile pentru Apa/Smoothie, LifeFactory</h2>
+        <span class="section-tag">~80-120 lei (in functie de marime)</span>
+      </div>
+      
+        <div class="specs-grid">
+          <div class="spec-item"><span class="spec-label">Tip</span><span class="spec-value">Sticla de baut reutilizabila</span></div>
+          <div class="spec-item"><span class="spec-label">Cantitate</span><span class="spec-value">0.47L / 0.65L / 0.94L</span></div>
+          <div class="spec-item"><span class="spec-label">Ingrediente</span><span class="spec-value">Sticla borosilicata, silicon medical, plastic fara BPA/BPS</span></div>
+          <div class="spec-item"><span class="spec-label">Certificari</span><span class="spec-value">Fara BPA/BPS/Ftalati, FDA approved</span></div>
+          <div class="spec-item"><span class="spec-label">Pret/unitate</span><span class="spec-value">~80 lei/sticla</span></div>
+        </div>
+      <div class="product-review-content">
+        <p>Asta e sticla mea preferata pentru apa sau smoothie-uri cand sunt pe drum. Are o husa de silicon care o protejeaza de spargere si o face usor de tinut in mana. Na, e un must-have daca vrei sa renunti la plasticul de unica folosinta. Am scapat-o de cateva ori, si husa aia de silicon a salvat-o de la dezastru. Pe bune, chiar functioneaza.</p>
+        <p>Capacul e din plastic, dar e fara BPA si se inchide bine. Curatarea e simpla, se pot spala in masina de spalat vase. Mi-am luat-o acum doi ani si arata ca noua, deci durabilitatea e un plus clar. E printre cele mai bune <strong>recipiente sticla pentru alimente</strong> lichide, pentru ca o poti lua oriunde.</p>
+        <p>Daca esti genul care bea multa apa si vrei sa fii eco, merita investitia. O gasesti la magazinele de produse bio sau la cele dedicate stilului de viata sanatos.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Avantaje</h4>
+          <ul>
+            <li>Husa de silicon protectoare, reduce riscul de spargere</li>
+            <li>Fabricata din sticla borosilicata de inalta calitate</li>
+            <li>Fara BPA/BPS, sigura pentru bauturi</li>
+            <li>Design ergonomic, usor de transportat</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Dezavantaje</h4>
+          <ul>
+            <li>Pret destul de ridicat pentru o sticla de apa</li>
+            <li>Capacul din plastic, desi fara BPA, nu e la fel de durabil ca sticla</li>
+            <li>Husa de silicon poate fi dificil de pus/scos pentru curatare in profunzime</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <section id="comparison" class="comparison-section">
+      <h2>Recipiente sticla pentru alimente: ce sa alegi?</h2>
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr><th>Produs</th><th>Tip</th><th>Cantitate</th><th>Certificari</th><th>Ingrediente</th><th>Potrivit pentru</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>Pyrex Caserole Borosilicata</td><td>Caserola pentru gatit si pastrare</td><td>0.8L, 1.5L, 2.3L</td><td>Fara BPA</td><td>Sticla borosilicata, plastic</td><td>Meal prep, gatit la cuptor, transport</td></tr>
+          <tr><td>Kela Frisco Borcan Bambus</td><td>Borcan depozitare uscata</td><td>1L</td><td>Fara BPA, naturale</td><td>Sticla borosilicata, bambus, silicon</td><td>Cereale, faina, zahar, cafea boabe</td></tr>
+          <tr><td>Bormioli Rocco Fido</td><td>Borcan cu inchidere ermetica</td><td>0.5L, 1L, 2L</td><td>Fara BPA</td><td>Sticla, metal, cauciuc</td><td>Conserve, muraturi, depozitare pe termen lung</td></tr>
+          <tr><td>Brabantia Recipiente Inox</td><td>Set recipiente depozitare uscata</td><td>0.7L, 1.1L, 1.6L</td><td>Durabilitate certificata</td><td>Sticla, inox, silicon</td><td>Cafea, paste, orez, alimente uscate</td></tr>
+          <tr><td>LifeFactory Sticla Reutilizabila</td><td>Sticla de baut reutilizabila</td><td>0.47L, 0.65L, 0.94L</td><td>Fara BPA/BPS/Ftalati</td><td>Sticla borosilicata, silicon medical</td><td>Apa, smoothie-uri, bauturi reci</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="guide" class="guide-section">
+      <h2>Ghid complet pentru alegerea celor mai bune recipiente sticla pentru alimente</h2>
+      <p>Bon, stai. Vrei sa treci la sticla, dar nu stii de unde sa incepi? Nu-i problema. Alegerea unor <strong>recipiente sticla pentru alimente</strong> potrivite poate parea complicata, dar cu cateva criterii clare, vei vedea ca e chiar simplu. Pana la urma, e vorba de ce ti se potriveste tie si stilului tau de viata.</p>
+        <h3>Tipul de sticla: Borosilicata vs. Sodico-calcica</h3>
+        <p>Uite care-i treaba: sticla borosilicata (cum e Pyrex sau Kela) e mai rezistenta la socuri termice. Adica, o poti scoate de la congelator si baga direct in cuptor fara sa-ti faci griji ca se sparge. E mai usoara si mai subtire, dar la fel de durabila. Sticla sodico-calcica (cum e Bormioli Fido) e mai groasa si mai grea, buna pentru depozitare pe termen lung si conserve, dar nu rezista la fel de bine la schimbari bruste de temperatura. Deci, pentru gatit si microunde, alege borosilicata.</p>
+        <h3>Tipul de capac si etansare</h3>
+        <ul><li><strong>Capace ermetice cu garnitura de silicon:</strong> Ideale pentru lichide si pentru a preveni scurgerile. Sunt bune si pentru depozitarea in frigider sau transport. Multe caserole au asa ceva.</li><li><strong>Capace cu clama metalica si garnitura de cauciuc:</strong> Super sigure, perfecte pentru conserve sau depozitare pe termen lung. Garnitura de cauciuc se poate schimba.</li><li><strong>Capace din bambus cu silicon:</strong> Arata bine, sunt bune pentru produse uscate, dar nu sunt 100% etanse la lichide si necesita intretinere speciala.</li><li><strong>Capace din inox cu silicon:</strong> Elegante si durabile, dar pot retine amprente. Bune pentru produse uscate.</li></ul>
+        <p>Pe bune, etansarea e cruciala, mai ales daca vrei sa pastrezi mancarea proaspata mai mult timp sau sa transporti lichide. Nimeni nu vrea un sos de rosii in geanta, nu?</p>
+        <h3>Marime si forma</h3>
+        <p>Gandeste-te la ce vei depozita. Ai nevoie de caserole mari pentru mese intregi? Sau borcane mici pentru condimente? Recipientele dreptunghiulare sunt mai eficiente la depozitarea in frigider sau in dulap, ca se aliniaza frumos. Cele rotunde sunt bune pentru borcane clasice. Ma rog, depinde de spatiul tau.</p>
+        <h3>Usurinta in curatare</h3>
+        <p>Majoritatea recipientelor de sticla se pot spala in masina de spalat vase. Dar verifica si capacele! Unele capace din bambus sau cele cu garnituri complexe ar putea avea nevoie de spalare manuala. Sticla e oricum mult mai igienica decat plasticul, nu retine mirosuri sau pete.</p>
+        <h3>Buget</h3>
+        <p>Preturile variaza, sincer. De la borcane simple de 10-15 lei la seturi de caserole care ajung la 150-200 lei. Gandeste-te la asta ca la o investitie pe termen lung.</p>
+        <p>Un set de <strong>recipiente sticla pentru alimente</strong> de calitate te va tine ani de zile si te va ajuta sa reduci deseurile de plastic. Si, na, sa mananci mai sanatos. Nu uita ca poti integra aceste recipiente in viata ta de zi cu zi si pentru alte scopuri.</p>
+        <p>De exemplu, poti folosi un borcan mai mare pentru a-ti depozita detergentul de rufe facut in casa, daca vrei sa afli mai multe despre <a href="/detergenti-ecologici-pentru-rufe/">detergenti ecologici pentru rufe</a>. Sau, de ce nu, pentru a pastra <a href="/ulei-de-cocos-beneficii-si-utilizari/">ulei de cocos</a>, care e super versatil.</p>
+    </section>
+
+      <section id="faq" class="faq-section">
+        <h2 class="faq-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Intrebari frecvente
+        </h2>
+
+        {faq.map((item, index) => (
+          <div class="faq-item" data-faq={index}>
+            <button class="faq-question" onclick={`toggleFaq(${index})`}>
+              <span>{item.question}</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>{item.answer}</p>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <div class="author-box">
+        <div class="author-avatar">CD</div>
+        <div class="author-info">
+          <h4>Cristina Dumitru</h4>
+          <p class="author-role">Expert Stil de Viata Eco</p>
+          <p class="author-bio">Cristina promoveaza stilul de viata sustenabil de peste 5 ani. Specialista in produse eco pentru casa si alternative prietenoase cu mediul.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <SimilarArticles
+    currentSlug="recipiente-sticla-pentru-alimente"
+    currentCategory="casa-eco-friendly"
+    articles={allArticles}
+  />
+
+  <PrevNextNav
+    currentSlug="recipiente-sticla-pentru-alimente"
+    currentCategory="casa-eco-friendly"
+    articles={allArticles}
+  />
+</Layout>
+
+<script is:inline>
+  function toggleFaq(index) {
+    const item = document.querySelector(`[data-faq="${index}"]`);
+    item.classList.toggle('active');
+  }
+
+  // Comparison table horizontal scroll indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector('.comparison-scroll');
+    if (scrollContainer) {
+      const table = scrollContainer.querySelector('table');
+      if (table && table.scrollWidth > scrollContainer.clientWidth) {
+        scrollContainer.classList.add('has-scroll');
+      }
+      scrollContainer.addEventListener('scroll', function() {
+        if (this.scrollLeft > 0) {
+          this.classList.add('scrolled-right');
+        } else {
+          this.classList.remove('scrolled-right');
+        }
+      });
+    }
+
+    // TOC active tracking
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const sections = [];
+    tocLinks.forEach(link => {
+      const id = link.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections.push({ id, el, link });
+    });
+
+    if (sections.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            const match = sections.find(s => s.id === entry.target.id);
+            if (match) match.link.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s.el));
+    }
+  });
+</script>
